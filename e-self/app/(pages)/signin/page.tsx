@@ -1,21 +1,22 @@
-// /app/signin/page.tsx
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { loginUser } from '@/app/api/auth'; // Adjust the import path if needed
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign in logic here (e.g., authentication, form validation)
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Redirect to the home page or dashboard after successful sign-in
-    router.push("/");
+    try {
+      const response = await loginUser({ email, password });
+      localStorage.setItem('token', response.token); // Store token
+      router.push("/"); // Redirect to home after login
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (
