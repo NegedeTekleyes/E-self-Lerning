@@ -21,9 +21,10 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-blue-100"> {/* Changed background color */}
       <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg">
         <div className="w-full sm:w-1/2">
+          {/* Keep the image */}
           <Image
             src="/sign-up.png"
             alt="Signup Image"
