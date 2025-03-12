@@ -39,10 +39,17 @@ const Header = () => {
         {/* Cart Icon */}
         <ShoppingCart className="cursor-pointer" onClick={() => router.push("/cart")} />
 
-        {/* Signup/Login */}
+        {/* Sign Up Button */}
         <Link href="/signup">
           <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
             Sign Up
+          </button>
+        </Link>
+
+        {/* Sign In Button */}
+        <Link href="/signin">
+          <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
+            Sign In
           </button>
         </Link>
 
