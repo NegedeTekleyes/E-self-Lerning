@@ -13,7 +13,7 @@ const Header = () => {
   const handleLanguageChange = (lang: string) => setLanguage(lang);
 
   return (
-    <header className="flex items-center justify-between p-4 bg-gray-900 text-white">
+    <header className="flex items-center justify-between p-4 bg-gray-100 text-black">
       {/* Logo */}
       <div className="text-xl font-bold cursor-pointer" onClick={() => router.push("/")}>
         E-Self
@@ -26,7 +26,7 @@ const Header = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search..."
-          className="w-full p-2 rounded bg-gray-800 text-white"
+          className="w-full p-2 rounded-full bg-gray-200 text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#006CFF]"
         />
         {search && (
           <X className="absolute right-10 top-2 cursor-pointer" onClick={handleClearSearch} />
@@ -41,14 +41,16 @@ const Header = () => {
 
         {/* Signup/Login */}
         <Link href="/signup">
-          <button className="bg-blue-500 px-4 py-2 rounded">Sign Up</button>
+          <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
+            Sign Up
+          </button>
         </Link>
 
         {/* Language Switcher */}
         <select
           value={language}
           onChange={(e) => handleLanguageChange(e.target.value)}
-          className="bg-gray-800 text-white p-2 rounded"
+          className="bg-gray-200 text-black p-2 rounded"
         >
           <option value="en">English</option>
           <option value="am">አማርኛ</option>
