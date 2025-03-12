@@ -69,12 +69,12 @@ const Header = () => {
       )}
 
       {/* Right Section for Larger Screens */}
-      <div className="hidden sm:flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         {/* Cart Icon */}
         <ShoppingCart className="cursor-pointer" onClick={() => router.push("/cart")} />
 
         {/* Instructor, Sign Up, and Sign In Buttons */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <div className="flex flex-col md:flex-row gap-2 md:gap-4">
           <Link href="/instructor">
             <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
               Instructor
