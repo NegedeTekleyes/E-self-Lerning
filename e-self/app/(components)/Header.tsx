@@ -48,19 +48,19 @@ const Header = () => {
         <div className="absolute top-16 right-4 bg-white p-4 rounded-lg shadow-lg sm:hidden">
           <div className="flex flex-col gap-4">
             <Link href="/instructor">
-              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
                 Instructor
               </button>
             </Link>
 
             <Link href="/signup">
-              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
                 Sign Up
               </button>
             </Link>
 
             <Link href="/signin">
-              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+              <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
                 Sign In
               </button>
             </Link>
@@ -76,19 +76,19 @@ const Header = () => {
         {/* Instructor, Sign Up, and Sign In Buttons */}
         <div className="flex flex-col sm:flex-row gap-2">
           <Link href="/instructor">
-            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
               Instructor
             </button>
           </Link>
 
           <Link href="/signup">
-            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
               Sign Up
             </button>
           </Link>
 
           <Link href="/signin">
-            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF]">
+            <button className="bg-[#006CFF] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:bg-[#339CFF] active:bg-[#0051A8] focus:ring-0">
               Sign In
             </button>
           </Link>
