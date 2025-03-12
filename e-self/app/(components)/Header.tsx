@@ -27,12 +27,24 @@ const Header = () => {
         {!showSearchBar && (
           <Search
             className="cursor-pointer sm:hidden"
-            onClick={() => setShowSearchBar(true)}
+            onClick={() => setShowSearchBar(true)} // Click to show search input
           />
         )}
-        {/* Show input field when showSearchBar is true */}
+        {/* Show input field when showSearchBar is true, or on wide screens */}
+        {showSearchBar || (
+          <div className="hidden sm:block">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search..."
+              className="w-full p-2 rounded-full bg-gray-200 text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#006CFF]"
+            />
+          </div>
+        )}
+
         {showSearchBar && (
-          <div className="absolute top-0 left-0 w-full p-2 bg-gray-200 rounded-full">
+          <div className="absolute top-0 left-0 w-full p-2 bg-gray-200 rounded-full sm:hidden">
             <input
               type="text"
               value={search}
