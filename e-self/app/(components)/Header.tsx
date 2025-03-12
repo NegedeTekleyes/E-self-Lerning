@@ -46,7 +46,6 @@ const Header = () => {
           </button>
         </Link>
 
-        {/* Sign In Button */}
         <Link href="/signin">
           <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
             Sign In
