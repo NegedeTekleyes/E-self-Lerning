@@ -6,9 +6,20 @@ import Link from 'next/link';
 const SignupPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex flex-col lg:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg">
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg">
+        {/* Image Section */}
+        <div className="w-full sm:w-1/2">
+          <Image
+            src="/sign-up.png"  // Image source
+            alt="Signup Image"
+            width={600}
+            height={400}  // Adjusted to match signup form height proportionally
+            className="object-cover w-full h-full"
+          />
+        </div>
+
         {/* Signup Form Section */}
-        <div className="w-full lg:w-1/2 p-8 flex flex-col justify-between">
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
           <h2 className="text-2xl font-bold text-center mb-6">Sign up with email</h2>
 
           <div className="mb-4">
@@ -57,17 +68,6 @@ const SignupPage = () => {
               Already have an account? <Link href="/signin" className="text-blue-600">Log In</Link>
             </p>
           </div>
-        </div>
-
-        {/* Image Section */}
-        <div className="w-full lg:w-1/2">
-          <Image
-            src="/sign-up.png"  // Image source
-            alt="Signup Image"
-            width={600}
-            height={400}  // Adjusted to match signup form height proportionally
-            className="object-cover w-full h-full"
-          />
         </div>
       </div>
     </div>
