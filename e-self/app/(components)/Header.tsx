@@ -35,17 +35,17 @@ const Header = () => {
         <Search className="absolute right-2 top-2" />
       </div>
 
-      {/* Hamburger Icon for Small Screens */}
-      <div className="sm:hidden flex items-center">
+      {/* Hamburger Icon for Small/Medium Screens */}
+      <div className="lg:hidden flex items-center">
         <Menu
           className="cursor-pointer"
           onClick={() => setShowMenu(!showMenu)} // Toggle the menu visibility
         />
       </div>
 
-      {/* Menu for Small Screens */}
+      {/* Menu for Small and Medium Screens */}
       {showMenu && (
-        <div className="absolute top-16 right-4 bg-white p-4 rounded-lg shadow-lg sm:hidden">
+        <div className="absolute top-16 right-4 bg-white p-4 rounded-lg shadow-lg lg:hidden">
           <div className="flex flex-col gap-4">
             <Link href="/instructor">
               <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
@@ -68,13 +68,13 @@ const Header = () => {
         </div>
       )}
 
-      {/* Right Section for Larger Screens */}
-      <div className="hidden sm:flex items-center gap-4">
+      {/* Right Section for Full Screen (Large Screens) */}
+      <div className="hidden lg:flex items-center gap-4">
         {/* Cart Icon */}
         <ShoppingCart className="cursor-pointer" onClick={() => router.push("/cart")} />
 
-        {/* Instructor, Sign Up, and Sign In Buttons */}
-        <div className="flex flex-col sm:flex-row gap-2">
+        {/* Instructor, Sign Up, and Sign In Buttons for Large Screens */}
+        <div className="flex flex-row gap-2">
           <Link href="/instructor">
             <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
               Instructor
