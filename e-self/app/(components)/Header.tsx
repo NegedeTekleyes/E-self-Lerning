@@ -1,111 +1,73 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Search, ShoppingCart, X, Menu } from "lucide-react";
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Search, X } from 'lucide-react';
+import Link from 'next/link';
+import CartButton from './CartButton';
 
-const Header = () => {
-  const [search, setSearch] = useState("");
-  const [language, setLanguage] = useState("en");
-  const [showMenu, setShowMenu] = useState(false); // State to toggle menu visibility
+export default function Header() {
+  const [search, setSearch] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  const handleClearSearch = () => setSearch("");
-  const handleLanguageChange = (lang: string) => setLanguage(lang);
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('fakeAuthToken'));
+  }, []);
+
+  const handleSearch = () => {
+    if (search.trim()) {
+      router.push(`/courses?search=${encodeURIComponent(search.trim())}`);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('fakeAuthToken');
+    setIsLoggedIn(false);
+    router.push('/');
+  };
 
   return (
-    <header className="flex items-center justify-between p-4 bg-gray-100 text-black">
-      {/* Logo */}
-      <div className="text-xl font-bold cursor-pointer" onClick={() => router.push("/")}>
-        E-Self
-      </div>
-
-      {/* Search Bar */}
-      <div className="relative w-1/3">
+    <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4">
+      <Link href="/" className="text-xl font-bold min-w-fit">E-Self</Link>
+      
+      <div className="relative w-full max-w-2xl">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search..."
-          className="w-full p-2 rounded-full bg-gray-200 text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#006CFF]"
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          placeholder="Search courses..."
+          className="w-full p-2 rounded-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8E1616]"
         />
         {search && (
-          <X className="absolute right-10 top-2 cursor-pointer" onClick={handleClearSearch} />
+          <X className="absolute right-10 top-2 cursor-pointer" onClick={() => setSearch('')} />
         )}
         <Search className="absolute right-2 top-2" />
       </div>
 
-      {/* Hamburger Icon for Small/Medium Screens */}
-      <div className="lg:hidden flex items-center">
-        <Menu
-          className="cursor-pointer"
-          onClick={() => setShowMenu(!showMenu)} // Toggle the menu visibility
-        />
-      </div>
-
-      {/* Menu for Small and Medium Screens */}
-      {showMenu && (
-        <div className="absolute top-16 right-4 bg-white p-4 rounded-lg shadow-lg lg:hidden">
-          <div className="flex flex-col gap-4">
-            <Link href="/instructor">
-              <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
-                Instructor
-              </button>
-            </Link>
-
-            <Link href="/signup">
-              <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
+      <div className="flex items-center gap-4 min-w-fit">
+        <CartButton />
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/instructor" className="hover:text-[#8E1616]">Instructor</Link>
+          {isLoggedIn ? (
+            <button 
+              onClick={handleLogout}
+              className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <>
+              <Link href="/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
                 Sign Up
-              </button>
-            </Link>
-
-            <Link href="/signin">
-              <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
+              </Link>
+              <Link href="/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
                 Sign In
-              </button>
-            </Link>
-          </div>
+              </Link>
+            </>
+          )}
         </div>
-      )}
-
-      {/* Right Section for Full Screen (Large Screens) */}
-      <div className="hidden lg:flex items-center gap-4">
-        {/* Cart Icon */}
-        <ShoppingCart className="cursor-pointer" onClick={() => router.push("/cart")} />
-
-        {/* Instructor, Sign Up, and Sign In Buttons for Large Screens */}
-        <div className="flex flex-row gap-2">
-          <Link href="/instructor">
-            <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
-              Instructor
-            </button>
-          </Link>
-
-          <Link href="/signup">
-            <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
-              Sign Up
-            </button>
-          </Link>
-
-          <Link href="/signin">
-            <button className="bg-[#006CFF] px-4 py-2 rounded transition-all duration-300 hover:bg-[#339CFF]">
-              Sign In
-            </button>
-          </Link>
-        </div>
-
-        {/* Language Switcher */}
-        <select
-          value={language}
-          onChange={(e) => handleLanguageChange(e.target.value)}
-          className="bg-gray-200 text-black p-2 rounded"
-        >
-          <option value="en">English</option>
-          <option value="am">አማርኛ</option>
-        </select>
       </div>
     </header>
   );
-};
-
-export default Header;
+}

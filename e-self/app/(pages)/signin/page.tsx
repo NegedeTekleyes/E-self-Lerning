@@ -20,7 +20,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-100 text-black rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto p-6 bg-[#EEEEEE] text-[#1D1616] rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -49,7 +49,9 @@ const SignIn = () => {
             placeholder="Enter your password"
           />
         </div>
-        <button type="submit" className="w-full bg-[#006CFF] text-white p-2 rounded-md hover:bg-[#339CFF] transition-all">
+        <button 
+          type="submit" 
+          className="w-full bg-[#8E1616] text-white p-2 rounded-md hover:bg-[#D84040] transition-all">
           Sign In
         </button>
       </form>

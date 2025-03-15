@@ -21,10 +21,9 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen"> {/* No background color */}
-      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-lg">
+    <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]"> 
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md">
         <div className="w-full sm:w-1/2">
-          {/* Keep the image */}
           <Image
             src="/sign-up.png"
             alt="Signup Image"
@@ -34,7 +33,7 @@ const SignupPage = () => {
           />
         </div>
         <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
-          <h2 className="text-2xl font-bold text-center mb-6">Sign up with email</h2>
+          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Sign up with email</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <input
@@ -42,7 +41,7 @@ const SignupPage = () => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
                 required
               />
             </div>
@@ -52,17 +51,17 @@ const SignupPage = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
                 required
               />
             </div>
-            <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-300">
+            <button type="submit" className="w-full bg-[#8E1616] text-white py-2 rounded-md hover:bg-[#D84040] transition duration-300">
               Continue with email
             </button>
           </form>
           <div className="mt-6 text-center">
-            <p className="text-xs text-gray-500">
-              Already have an account? <Link href="/signin" className="text-blue-600">Log In</Link>
+            <p className="text-xs text-[#1D1616]">
+              Already have an account? <Link href="/signin" className="text-[#8E1616] hover:text-[#D84040]">Log In</Link>
             </p>
           </div>
         </div>
