@@ -31,8 +31,10 @@ export default function Header() {
     <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full">
       {/* Logo */}
       <Link href="/" className="text-xl font-bold min-w-fit">
-        E-Self
+        <span className="text-[#1D1616]">E</span>
+        <span className="text-[#8E1616]">-Self</span>
       </Link>
+
 
       {/* Search Bar - Fully Visible on Wide Screens, Hidden on Small */}
       <div className="relative w-full max-w-2xl hidden lg:block">
