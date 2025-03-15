@@ -17,7 +17,7 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
       const scrollAmount = direction === 'left' ? -300 : 300;
       sliderRef.current.scrollBy({
         left: scrollAmount,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   };
@@ -25,14 +25,14 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-semibold mb-6">{title}</h2>
-      
+
       <div className="relative group">
         <div
           ref={sliderRef}
-          className="flex overflow-x-auto scrollbar-hide gap-4 pb-4"
+          className="flex overflow-x-auto scrollbar-hide gap-6 pb-4"
         >
           {courses.map((course) => (
-            <div 
+            <div
               key={course.slug}
               className="flex-shrink-0 w-72" // Adjust width as needed
             >
