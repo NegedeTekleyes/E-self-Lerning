@@ -1,21 +1,21 @@
+// app/signin/page.tsx
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser } from '@/app/api/auth'; // Adjust the import path if needed
+import { useAuth } from '../../context/AuthContext';
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await loginUser({ email, password });
-      localStorage.setItem('token', response.token); // Store token
-      router.push("/"); // Redirect to home after login
-    } catch (error) {
-      console.error('Login error:', error);
+    // Replace with actual API call
+    if (email && password) {
+      login(email);
+      router.push("/");
     }
   };
 
@@ -28,7 +28,6 @@ const SignIn = () => {
           <input
             type="email"
             id="email"
-            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -41,7 +40,6 @@ const SignIn = () => {
           <input
             type="password"
             id="password"
-            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
