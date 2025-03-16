@@ -59,7 +59,7 @@ export default function Header() {
 
         {user ? (
           <div className="hidden lg:flex items-center gap-4 relative">
-           <Link href="/my-courses" className="hover:text-[#8E1616]">
+            <Link href="/my-courses" className="hover:text-[#8E1616]">
               My Courses
             </Link>
             <Link href="/instructor" className="hover:text-[#8E1616]">
@@ -72,7 +72,6 @@ export default function Header() {
               <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                 {user.email[0].toUpperCase()}
               </div>
-              <span>{user.email}</span>
             </button>
             <ProfileDropdown 
               isOpen={profileOpen}
