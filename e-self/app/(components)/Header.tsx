@@ -59,6 +59,12 @@ export default function Header() {
 
         {user ? (
           <div className="hidden lg:flex items-center gap-4 relative">
+           <Link href="/my-courses" className="hover:text-[#8E1616]">
+              My Courses
+            </Link>
+            <Link href="/instructor" className="hover:text-[#8E1616]">
+              Instructor
+            </Link>
             <button 
               onClick={() => setProfileOpen(!profileOpen)}
               className="flex items-center gap-2 hover:text-[#8E1616]"

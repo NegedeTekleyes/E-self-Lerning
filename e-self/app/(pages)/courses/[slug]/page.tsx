@@ -22,7 +22,7 @@ export default function CoursePage({ params }: CoursePageProps) {
 
   const handleAddToCart = () => {
     if (!user) {
-      router.push('/signin');
+      router.push('/signup'); // Redirect to signup instead of signin
       return;
     }
     
