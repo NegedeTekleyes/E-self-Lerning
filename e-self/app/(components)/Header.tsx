@@ -22,7 +22,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative">
+    <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative z-50">
       <Link href="/" className="text-xl font-bold min-w-fit">
         <span className="text-[#1D1616]">E</span>
         <span className="text-[#8E1616]">-Self</span>
@@ -95,7 +95,7 @@ export default function Header() {
       </div>
 
       {menuOpen && (
-        <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden">
+        <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden z-[60]">
           <div className="relative w-full">
             <input
               type="text"
