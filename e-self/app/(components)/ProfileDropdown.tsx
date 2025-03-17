@@ -1,17 +1,13 @@
-// app/(components)/ProfileDropdown.tsx
 'use client';
-
 import Link from 'next/link';
 
-export default function ProfileDropdown({
-  isOpen,
-  onClose,
-  onLogout
-}: {
+interface ProfileDropdownProps {
   isOpen: boolean;
   onClose: () => void;
   onLogout: () => void;
-}) {
+}
+
+export default function ProfileDropdown({ isOpen, onClose, onLogout }: ProfileDropdownProps) {
   if (!isOpen) return null;
 
   return (
