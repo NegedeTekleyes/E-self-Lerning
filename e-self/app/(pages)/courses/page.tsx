@@ -1,6 +1,6 @@
 // app/courses/page.tsx
 import CourseList from '@/app/(components)/CourseList';
-import { courses } from '@/app/data/courses';
+import { courses } from '../../data/courses';
 
 interface CoursesPageProps {
   searchParams?: {

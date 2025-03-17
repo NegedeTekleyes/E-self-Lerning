@@ -17,3 +17,37 @@
 .hover-scale:hover {
   transform: translateY(-5px);
 }
+
+:root {
+  --color-primary: #8E1616;
+  --color-primary-hover: #D84040;
+}
+
+.dark {
+  background-color: #1D1616;
+  color: #EEEEEE;
+}
+
+/* Add dark mode transitions */
+html {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Style important buttons */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Dark mode specific overrides */
+.dark .btn-primary {
+  background-color: var(--color-primary);
+}
+
+.dark .btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
