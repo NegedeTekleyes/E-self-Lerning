@@ -93,9 +93,17 @@ export default function Header() {
           </div>
         )}
       </div>
-
       {menuOpen && (
         <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden z-[60]">
+          {/* Close Button */}
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-gray-700">Menu</span>
+            <button onClick={() => setMenuOpen(false)} className="text-gray-500 hover:text-black">
+              <X size={18} />
+            </button>
+          </div>
+          <hr className="my-2" />
+
           <div className="relative w-full">
             <input
               type="text"
@@ -135,6 +143,7 @@ export default function Header() {
           )}
         </div>
       )}
+
     </header>
   );
 }
