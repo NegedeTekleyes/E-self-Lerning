@@ -1,14 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCart } from "../../context/CartContext";
 
 export default function CartPage() {
   const { cartItems, removeFromCart } = useCart();
+  const router = useRouter();
   const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+
+  const handlePayment = (type: "half" | "full") => {
+    if (type === "half") {
+      router.push("/payment/half");
+    } else {
+      router.push("/payment/full");
+    }
+  };
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 pl-38">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-6 pl-42">Your Cart</h1>
       {cartItems.length === 0 ? (
         <p className="text-[#8E1616]">Your cart is empty</p>
       ) : (
@@ -39,13 +49,17 @@ export default function CartPage() {
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <p className="text-lg font-medium">Total: ${totalPrice.toFixed(2)}</p>
             <div className="mt-6 flex flex-col gap-4">
-              <button className="bg-[#8E1616] text-white px-5 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]">
-                Schedule Payment
-              </button>
-              <button className="bg-[#8E1616] text-white px-5 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]">
+              
+              <button 
+                onClick={() => handlePayment("half")}
+                className="bg-[#8E1616] text-white px-5 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]"
+              >
                 Half Payment
               </button>
-              <button className="bg-[#8E1616] text-white px-5 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]">
+              <button 
+                onClick={() => handlePayment("full")}
+                className="bg-[#8E1616] text-white px-5 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]"
+              >
                 Full Payment
               </button>
             </div>
