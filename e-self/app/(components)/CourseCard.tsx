@@ -1,10 +1,9 @@
-// app/(components)/CourseCard.tsx
 import Link from 'next/link';
 import { Course } from '../data/courses';
 
 export default function CourseCard({ course }: { course: Course }) {
   return (
-    <div className="rounded-xl shadow-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300">
+    <div className="rounded-xl shadow-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300 w-72"> {/* Fixed width */}
       <img
         src={course.image}
         alt={course.title}
