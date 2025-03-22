@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';  // Ensure correct import
 
 export default function InstructorLanding() {
   return (
-    <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] pt-4 pb-6 px-6"> {/* Adjust padding to be closer to header */}
+    <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] pt-4 pb-6 px-6">
       <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Left Side: Welcome Text with Animation */}
         <motion.div
@@ -14,8 +14,8 @@ export default function InstructorLanding() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 2 }}
         >
-          <h1 className="text-6xl font-bold text-[#8E1616] mb-6">
-            Welcome, Instructor!
+          <h1 className="text-7xl font-bold mb-6">
+            <span className="text-black">Welcome</span>, <span className="text-[#8E1616]">Instructor!</span> {/* "Instructor" in #8E1616 */}
           </h1>
           <p className="text-2xl text-gray-700 mb-8">
             Empower students by sharing your knowledge. Create and manage your courses easily.
