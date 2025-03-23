@@ -17,7 +17,7 @@ const InstructorSignIn = () => {
       // Simulate login (replace with actual logic)
       localStorage.setItem('instructorAuth', 'true');
       login(email);  // Use the login function if using context
-      router.push('/instructor/landing');
+      router.push('/landing');
     }
   };
 
