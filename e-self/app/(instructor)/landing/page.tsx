@@ -7,12 +7,7 @@ import { motion } from 'framer-motion';
 export default function InstructorLanding() {
   const router = useRouter();
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('instructorAuth');
-    if (!isAuthenticated) {
-      router.push('/instructor/signin');
-    }
-  }, []);
+
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6">
@@ -32,11 +27,11 @@ export default function InstructorLanding() {
           </p>
 
           <div className="mt-6 flex gap-4">
-            <a href="/instructor/create-course" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
+            <a href="/create-course" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
               Create a Course
             </a>
             <a href="/instructor/my-courses" className="bg-gray-200 text-black px-6 py-3 rounded-lg hover:bg-gray-300">
-              Manage Courses
+              dachbord
             </a>
           </div>
         </motion.div>

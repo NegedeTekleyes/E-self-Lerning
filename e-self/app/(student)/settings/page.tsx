@@ -1,6 +1,6 @@
 // app/settings/page.tsx
 'use client';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Settings() {
   const { user } = useAuth();
