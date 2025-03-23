@@ -12,7 +12,7 @@ export default function InstructorSignIn() {
     e.preventDefault();
     // Simulate authentication (replace with actual logic)
     localStorage.setItem('instructorAuth', 'true');
-    router.push('/instructor/landing');
+    router.push('/landing');
   };
 
   return (

@@ -13,7 +13,7 @@ export default function InstructorSignUp() {
     e.preventDefault();
     // Add logic for actual sign-up, and save instructor data
     localStorage.setItem('instructorAuth', 'true');
-    router.push('/instructor/landing');
+    router.push('/landing');
   };
 
   return (
