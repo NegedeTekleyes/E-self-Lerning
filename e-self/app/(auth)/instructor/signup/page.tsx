@@ -1,72 +1,89 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../context/AuthContext';  // If using context for auth
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function InstructorSignUp() {
+const InstructorSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
+  const { login } = useAuth();  // Use context for login if needed
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add logic for actual sign-up, and save instructor data
-    localStorage.setItem('instructorAuth', 'true');
-    router.push('/instructor/landing');
+    if (password === confirmPassword) {
+      // Simulate sign-up (replace with actual logic)
+      localStorage.setItem('instructorAuth', 'true');
+      login(email);  // Use the login function if using context
+      router.push('/instructor/landing');
+    } else {
+      alert("Passwords do not match!");
+    }
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
-      <div className="flex flex-col md:flex-row items-center justify-center space-x-6 md:space-x-12 w-full max-w-5xl">
-        {/* Image Section */}
-        <div className="w-full md:w-1/2">
-          <Image src="/signup1.png" alt="Sign Up" width={400} height={300} className="mb-6 md:mb-0 mx-auto" />
+    <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+        {/* Left side - Image */}
+        <div className="hidden sm:block sm:w-1/2 relative">
+          <Image
+            src="/signup1.png"
+            alt="Sign Up Illustration"
+            fill
+            className="object-cover"
+          />
         </div>
 
-        {/* Form Section */}
-        <div className="w-full md:w-1/2">
-          <form onSubmit={handleSignUp} className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-center">Instructor Sign Up</h2>
-
-            <input 
-              type="email" 
-              placeholder="Email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              className="w-full p-2 border border-gray-300 rounded mb-3"
-              required 
-            />
-
-            <input 
-              type="password" 
-              placeholder="Password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              className="w-full p-2 border border-gray-300 rounded mb-3"
-              required 
-            />
-
-            <input 
-              type="password" 
-              placeholder="Confirm Password" 
-              value={confirmPassword} 
-              onChange={(e) => setConfirmPassword(e.target.value)} 
-              className="w-full p-2 border border-gray-300 rounded mb-3"
-              required 
-            />
-
-            <button type="submit" className="w-full bg-[#8E1616] text-white p-2 rounded hover:bg-[#D84040]">
+        {/* Right side - Sign Up Form */}
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
+          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
+          <form onSubmit={handleSignUp}>
+            <div className="mb-6">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                required
+              />
+            </div>
+            <button type="submit" className="w-full bg-[#8E1616] text-white py-2 rounded-md hover:bg-[#D84040] transition duration-300">
               Sign Up
             </button>
-
-            <p className="mt-4 text-center">
-              Already have an account? <Link href="/instructor/signin" className="text-[#8E1616] hover:underline">Sign In</Link>
-            </p>
           </form>
+          <div className="mt-6 text-center">
+            <p className="text-xs text-[#1D1616]">
+              Already have an account? <Link href="/instructor/signin" className="text-[#8E1616] hover:text-[#D84040]">Log In</Link>
+            </p>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default InstructorSignUp;
