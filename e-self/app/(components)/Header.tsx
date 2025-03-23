@@ -81,15 +81,16 @@ export default function Header() {
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-4">
-            <Link href="/instructor" className="hover:text-[#8E1616]">
+            <Link href="/instructor/signup" className="hover:text-[#8E1616]">
               Instructor
             </Link>
-            <Link href="/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-              Sign Up
-            </Link>
-            <Link href="/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-              Sign In
-            </Link>
+                    <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+          Sign Up (Student)
+        </Link>
+        <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+          Sign In (Student)
+        </Link>
+
           </div>
         )}
       </div>
