@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image'; // Import Image from next/image
+import Image from 'next/image';
 
 export default function InstructorSignUp() {
   const [email, setEmail] = useState('');
@@ -19,46 +19,53 @@ export default function InstructorSignUp() {
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
-      <div className="flex flex-col items-center">
-        <Image src="/signup1.png" alt="Sign Up" width={400} height={300} className="mb-6" />
-        <form onSubmit={handleSignUp} className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-          <h2 className="text-2xl font-bold mb-4 text-center">Instructor Sign Up</h2>
+      <div className="flex flex-col md:flex-row items-center justify-center space-x-6 md:space-x-12 w-full max-w-5xl">
+        {/* Image Section */}
+        <div className="w-full md:w-1/2">
+          <Image src="/signup1.png" alt="Sign Up" width={400} height={300} className="mb-6 md:mb-0 mx-auto" />
+        </div>
 
-          <input 
-            type="email" 
-            placeholder="Email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded mb-3"
-            required 
-          />
+        {/* Form Section */}
+        <div className="w-full md:w-1/2">
+          <form onSubmit={handleSignUp} className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-4 text-center">Instructor Sign Up</h2>
 
-          <input 
-            type="password" 
-            placeholder="Password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded mb-3"
-            required 
-          />
+            <input 
+              type="email" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              className="w-full p-2 border border-gray-300 rounded mb-3"
+              required 
+            />
 
-          <input 
-            type="password" 
-            placeholder="Confirm Password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            className="w-full p-2 border border-gray-300 rounded mb-3"
-            required 
-          />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              className="w-full p-2 border border-gray-300 rounded mb-3"
+              required 
+            />
 
-          <button type="submit" className="w-full bg-[#8E1616] text-white p-2 rounded hover:bg-[#D84040]">
-            Sign Up
-          </button>
+            <input 
+              type="password" 
+              placeholder="Confirm Password" 
+              value={confirmPassword} 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
+              className="w-full p-2 border border-gray-300 rounded mb-3"
+              required 
+            />
 
-          <p className="mt-4 text-center">
-            Already have an account? <Link href="/instructor/signin" className="text-[#8E1616] hover:underline">Sign In</Link>
-          </p>
-        </form>
+            <button type="submit" className="w-full bg-[#8E1616] text-white p-2 rounded hover:bg-[#D84040]">
+              Sign Up
+            </button>
+
+            <p className="mt-4 text-center">
+              Already have an account? <Link href="/instructor/signin" className="text-[#8E1616] hover:underline">Sign In</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </main>
   );
