@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Progress } from '../../(components)/Progress';
+import { handleSubmit } from './handleSubmit';
 
 const steps = [
   'Basic Info', 'Details', 'Requirements', 'Outcomes', 'Extras', 'Instructor'
@@ -24,6 +25,7 @@ export default function CreateCourse() {
     benefits: '',
     includes: '',
     expectations: '',
+    level:'',
     instructorName: '',
   });
 
@@ -34,11 +36,6 @@ export default function CreateCourse() {
 
   const handleNext = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
   const handlePrev = () => setStep((prev) => Math.max(prev - 1, 0));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Course Created:', formData);
-  };
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6">
@@ -54,7 +51,7 @@ export default function CreateCourse() {
         <Progress value={(step / (steps.length - 1)) * 100} className="mb-4" />
         <p className="text-center text-lg font-medium">{steps[step]}</p>
 
-        <form onSubmit={handleSubmit} className="mt-4">
+        <form onSubmit={handleSubmit(formData)} className="mt-4">
           {Object.keys(formData).slice(step * 2, step * 2 + 2).map((field) => (
             <div key={field} className="mb-4">
               <label className="block text-lg font-semibold mb-2">
