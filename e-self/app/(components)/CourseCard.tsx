@@ -28,10 +28,10 @@ export default function CourseCard({ course }: { course: Course }) {
             <span className="font-semibold">${course.price}</span>
           </div>
           <Link href={`/student/courses/${course.slug}`}>
-            <button className="bg-[#8E1616] text-white px-3 py-1 rounded-full text-xs hover:bg-[#D84040] transition-colors">
-              Details
-            </button>
-          </Link>
+          <button className="bg-[#8E1616] text-white px-3 py-1 rounded-full text-xs hover:bg-[#D84040] transition-colors">
+            Details
+          </button>
+        </Link>
         </div>
       </div>
     </div>
