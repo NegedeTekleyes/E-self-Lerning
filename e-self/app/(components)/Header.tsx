@@ -1,4 +1,4 @@
-// app/(components)/Header.tsx
+// components/Header.tsx
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -59,12 +59,28 @@ export default function Header() {
 
         {user ? (
           <div className="hidden lg:flex items-center gap-4 relative">
-            <Link href="/my-courses" className="hover:text-[#8E1616]">
-              My Courses
-            </Link>
-            <Link href="/instructor" className="hover:text-[#8E1616]">
-              Instructor
-            </Link>
+            {user.role === 'student' && (
+              <>
+                <Link href="/student/my-courses" className="hover:text-[#8E1616]">
+                  My Courses
+                </Link>
+                <Link href="/student/profile" className="hover:text-[#8E1616]">
+                  Profile
+                </Link>
+              </>
+            )}
+
+            {user.role === 'instructor' && (
+              <>
+                <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
+                  Dashboard
+                </Link>
+                <Link href="/instructor/create-course" className="hover:text-[#8E1616]">
+                  Create Course
+                </Link>
+              </>
+            )}
+
             <button 
               onClick={() => setProfileOpen(!profileOpen)}
               className="flex items-center gap-2 hover:text-[#8E1616]"
@@ -84,16 +100,16 @@ export default function Header() {
             <Link href="/instructor/signup" className="hover:text-[#8E1616]">
               Instructor
             </Link>
-                    <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-          Sign Up (Student)
-        </Link>
-        <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-          Sign In (Student)
-        </Link>
-
+            <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+              Sign Up (Student)
+            </Link>
+            <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+              Sign In (Student)
+            </Link>
           </div>
         )}
       </div>
+
       {menuOpen && (
         <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden z-[60]">
           {/* Close Button */}
@@ -105,22 +121,10 @@ export default function Header() {
           </div>
           <hr className="my-2" />
 
-          <div className="relative w-full">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder="Search courses..."
-              className="w-full p-2 rounded-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8E1616]"
-            />
-            <Search className="absolute right-4 top-2.5 text-gray-500" />
-          </div>
-
           {user ? (
             <>
-              <Link href="/instructor" className="hover:text-[#8E1616]">
-                Instructor
+              <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
+                Dashboard
               </Link>
               <Link href="/my-courses" className="hover:text-[#8E1616]">
                 My Courses
@@ -144,7 +148,6 @@ export default function Header() {
           )}
         </div>
       )}
-
     </header>
   );
 }

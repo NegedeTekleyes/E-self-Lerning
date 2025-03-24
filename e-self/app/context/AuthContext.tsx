@@ -1,53 +1,37 @@
+// context/AuthContext.tsx
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type User = {
+interface User {
+  role: 'student' | 'instructor';
   email: string;
-  username?: string;
-  profileImage?: string;
-};
+  // Add other user properties as needed
+}
 
-type AuthContextType = {
+interface AuthContextType {
   user: User | null;
-  login: (email: string) => void;
+  login: (email: string, role: 'student' | 'instructor') => void; // Modify login function
   logout: () => void;
-  updateUser: (updates: Partial<User>) => void;
-};
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
-  const login = (email: string) => {
-    const newUser = { email };
-    localStorage.setItem('user', JSON.stringify(newUser));
-    setUser(newUser);
+  const login = (email: string, role: 'student' | 'instructor') => { // Modify login function
+    setUser({ email, role });
+    // Add logic to store tokens, etc.
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
     setUser(null);
-  };
-
-  const updateUser = (updates: Partial<User>) => {
-    setUser((prev) => {
-      const updatedUser = { ...prev, ...updates } as User;
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      return updatedUser;
-    });
+    // Add logic to clear tokens, etc.
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

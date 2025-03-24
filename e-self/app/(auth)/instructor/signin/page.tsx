@@ -10,17 +10,13 @@ const InstructorSignIn = () => {
   const [password, setPassword] = useState('');
   const router = useRouter();
   const { login } = useAuth();  // Use context for login if needed
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email && password) {
-      // Simulate login (replace with actual logic)
-      localStorage.setItem('instructorAuth', 'true');
-      login(email);  // Use the login function if using context
-      router.push('/landing');
+      login(email, 'instructor'); // Set the role here
+      router.push('/landing'); //redirect to the dashboard.
     }
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
       <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">

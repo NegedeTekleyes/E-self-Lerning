@@ -11,16 +11,13 @@ const InstructorSignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
   const { login } = useAuth();  // Use context for login if needed
-
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      // Simulate sign-up (replace with actual logic)
-      localStorage.setItem('instructorAuth', 'true');
-      login(email);  // Use the login function if using context
-      router.push('/landing');
+      login(email, 'instructor'); // Set the role here
+      router.push('/landing'); //redirect to the dashboard.
     } else {
-      alert("Passwords do not match!");
+      alert('Passwords do not match!');
     }
   };
 
