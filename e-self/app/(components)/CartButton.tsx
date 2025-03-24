@@ -8,7 +8,7 @@ export default function CartButton() {
   const { cartItems } = useCart();
 
   return (
-    <Link href="/student/cart" className="relative hover:text-[#8E1616] transition-colors">
+    <Link href="/cart" className="relative hover:text-[#8E1616] transition-colors">
       <ShoppingCart className="w-6 h-6" />
       {cartItems.length > 0 && (
         <span className="absolute -top-2 -right-2 bg-[#8E1616] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
