@@ -13,6 +13,7 @@ const menuItems = [
   { name: "Create Course", icon: <FaBook className="text-[#8E1616]" />, link: "/dashboard/create-course" },
   { name: "Students", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/students" },
   { name: "Modify Course", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
+  { name: "balance", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
   { name: "Get Certificate", icon: <FaGraduationCap className="text-[#8E1616]" />, link: "/dashboard/certificates" },
   { name: "Messages", icon: <FiMessageSquare className="text-[#8E1616]" />, link: "/dashboard/messages", badge: 5 },
   { name: "Settings", icon: <FiSettings className="text-[#8E1616]" />, link: "/dashboard/settings" },
