@@ -1,12 +1,14 @@
-'use client';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import LandingHeader from '../../(components)/LandingHeader';
+
+"use client";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import LandingHeader from "../../(components)/LandingHeader";
 
 export default function InstructorLanding() {
   return (
     <>
-      <LandingHeader />
+      <LandingHeader /> {/* Updated Header with Profile */}
+
       <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6 pt-16">
         <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           
@@ -27,7 +29,6 @@ export default function InstructorLanding() {
               <a href="/dashboard" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
                Dashboard
               </a>
-            
             </div>
           </motion.div>
 
