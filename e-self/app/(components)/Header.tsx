@@ -16,31 +16,9 @@ export default function Header() {
   const { user, logout } = useAuth();
   const [isInstructorDashboard, setIsInstructorDashboard] = useState(false);
 
-  // Ensure instructor header visibility
-  useEffect(() => {
-    if (user?.role === 'instructor') {
-      setIsInstructorDashboard(pathname.startsWith('/instructor'));
-    } else {
-      setIsInstructorDashboard(false);
-    }
-  }, [user, pathname]);
-
-  const handleSearch = () => {
-    if (search.trim()) {
-      router.push(`/courses?search=${encodeURIComponent(search.trim())}`);
-    }
-  };
-
-  // If the instructor is on the dashboard, show a minimal header
-  if (isInstructorDashboard) {
-    return (
-      <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative z-50">
-        <Link href="/dashboard " className="text-xl font-bold min-w-fit">
-          <span className="text-[#1D1616]">E</span>
-          <span className="text-[#8E1616]">-Self</span>
-        </Link>
-      </header>
-    );
+  // Skip header rendering for instructor sign-up, sign-in pages and landing page
+  if (pathname === '/landing') {
+    return null; // No need to render the default header on the landing page
   }
 
   return (
@@ -83,22 +61,11 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-4 relative">
             {user.role === 'student' && (
               <>
-                <Link href="/student/my-courses" className="hover:text-[#8E1616]">
+                <Link href="/my-courses" className="hover:text-[#8E1616]">
                   My Courses
                 </Link>
-                <Link href="/student/profile" className="hover:text-[#8E1616]">
+                <Link href="/profile" className="hover:text-[#8E1616]">
                   Profile
-                </Link>
-              </>
-            )}
-
-            {user.role === 'instructor' && (
-              <>
-                <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
-                  Dashboard
-                </Link>
-                <Link href="/instructor/create-course" className="hover:text-[#8E1616]">
-                  Create Course
                 </Link>
               </>
             )}
@@ -141,18 +108,18 @@ export default function Header() {
           {user ? (
             <>
               {user.role === 'instructor' && (
-                <>
-                  <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
-                    Dashboard
-                  </Link>
-                  <Link href="/instructor/create-course" className="hover:text-[#8E1616]">
-                    Create Course
-                  </Link>
-                </>
-              )}
-              <button onClick={logout} className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white w-full">
-                Sign Out
-              </button>
+                  <>
+                    <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
+                      Dashboard
+                    </Link>
+                    <Link href="/instructor/create-course" className="hover:text-[#8E1616]">
+                      Create Course
+                    </Link>
+                  </>
+                )}
+                <button onClick={logout} className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white w-full">
+                  Sign Out
+                </button>
             </>
           ) : (
             <>
