@@ -3,21 +3,23 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaChartLine, FaBook, FaGraduationCap } from "react-icons/fa";
+import { FaChartLine, FaBook, FaGraduationCap, FaDollarSign } from "react-icons/fa";
 import { FiMessageSquare, FiSettings } from "react-icons/fi";
 import { MdLeaderboard } from "react-icons/md";
+
 import LandingHeader from "../../(components)/LandingHeader";
 
 const menuItems = [
   { name: "Overview", icon: <FaChartLine className="text-[#8E1616]" />, link: "/dashboard/overview" },
   { name: "Create Course", icon: <FaBook className="text-[#8E1616]" />, link: "/dashboard/create-course" },
   { name: "Students", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/students" },
-  { name: "Modify Course", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
-  { name: "balance", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
+  { name: "Modify Course", icon: <FaBook className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
+  { name: "Balance", icon: <FaWallet className="text-[#8E1616]" />, link: "/dashboard/balance" },  // Changed icon to FaWallet for balance
   { name: "Get Certificate", icon: <FaGraduationCap className="text-[#8E1616]" />, link: "/dashboard/certificates" },
   { name: "Messages", icon: <FiMessageSquare className="text-[#8E1616]" />, link: "/dashboard/messages", badge: 5 },
   { name: "Settings", icon: <FiSettings className="text-[#8E1616]" />, link: "/dashboard/settings" },
 ];
+
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
