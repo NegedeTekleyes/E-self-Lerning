@@ -34,8 +34,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-16"} md:w-64`}
+            ${isSidebarOpen ? "w-64" : "w-19"} md:w-64`}
         >
+          {/* Sidebar Toggle Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="md:hidden p-3 text-gray-700 hover:bg-gray-200 w-full flex justify-center"
@@ -48,13 +49,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <li key={item.name}>
                 <Link
                   href={item.link}
-                  className={`flex items-center space-x-2 p-3 rounded-lg 
+                  className={`flex items-center p-3 rounded-lg transition-all duration-200 
                     ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
                 >
-                  <item.icon className="text-[#8E1616] text-xl" />
-                  <span className={`ml-2 ${isSidebarOpen || "hidden"} md:inline-block`}>{item.name}</span>
+                  {/* Large Icon Always Visible */}
+                  <item.icon className="text-[#8E1616] text-3xl md:text-2xl" />
+
+                  {/* Text: Hidden on small screens when sidebar is collapsed */}
+                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:block`}>
+                    {item.name}
+                  </span>
+
+                  {/* Badge (only when sidebar is open) */}
                   {item.badge && isSidebarOpen && (
-                    <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{item.badge}</span>
+                    <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      {item.badge}
+                    </span>
                   )}
                 </Link>
               </li>
