@@ -27,12 +27,12 @@ export default function InstructorLanding() {
           </p>
 
           <div className="mt-6 flex gap-4">
-            <a href="/create-course" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
-              Create a Course
+            <a href="/dashboard" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
+              Dashboard
             </a>
-            <a href="/instructor/my-courses" className="bg-gray-200 text-black px-6 py-3 rounded-lg hover:bg-gray-300">
+            {/* <a href="/instructor/my-courses" className="bg-gray-200 text-black px-6 py-3 rounded-lg hover:bg-gray-300">
               dachbord
-            </a>
+            </a> */}
           </div>
         </motion.div>
 

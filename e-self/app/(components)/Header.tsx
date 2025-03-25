@@ -1,7 +1,6 @@
-// components/Header.tsx
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { Search, X, Menu } from 'lucide-react';
 import Link from 'next/link';
 import CartButton from './CartButton';
@@ -13,13 +12,36 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const { user, logout } = useAuth();
+  const [isInstructorDashboard, setIsInstructorDashboard] = useState(false);
+
+  // Ensure instructor header visibility
+  useEffect(() => {
+    if (user?.role === 'instructor') {
+      setIsInstructorDashboard(pathname.startsWith('/instructor'));
+    } else {
+      setIsInstructorDashboard(false);
+    }
+  }, [user, pathname]);
 
   const handleSearch = () => {
     if (search.trim()) {
       router.push(`/courses?search=${encodeURIComponent(search.trim())}`);
     }
   };
+
+  // If the instructor is on the dashboard, show a minimal header
+  if (isInstructorDashboard) {
+    return (
+      <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative z-50">
+        <Link href="/dashboard " className="text-xl font-bold min-w-fit">
+          <span className="text-[#1D1616]">E</span>
+          <span className="text-[#8E1616]">-Self</span>
+        </Link>
+      </header>
+    );
+  }
 
   return (
     <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative z-50">
@@ -81,7 +103,7 @@ export default function Header() {
               </>
             )}
 
-            <button 
+            <button
               onClick={() => setProfileOpen(!profileOpen)}
               className="flex items-center gap-2 hover:text-[#8E1616]"
             >
@@ -89,11 +111,7 @@ export default function Header() {
                 {user.email[0].toUpperCase()}
               </div>
             </button>
-            <ProfileDropdown 
-              isOpen={profileOpen}
-              onClose={() => setProfileOpen(false)}
-              onLogout={logout}
-            />
+            <ProfileDropdown isOpen={profileOpen} onClose={() => setProfileOpen(false)} onLogout={logout} />
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-4">
@@ -112,7 +130,6 @@ export default function Header() {
 
       {menuOpen && (
         <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden z-[60]">
-          {/* Close Button */}
           <div className="flex justify-between items-center">
             <span className="font-semibold text-gray-700">Menu</span>
             <button onClick={() => setMenuOpen(false)} className="text-gray-500 hover:text-black">
@@ -123,16 +140,17 @@ export default function Header() {
 
           {user ? (
             <>
-              <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
-                Dashboard
-              </Link>
-              <Link href="/my-courses" className="hover:text-[#8E1616]">
-                My Courses
-              </Link>
-              <button
-                onClick={logout}
-                className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white w-full"
-              >
+              {user.role === 'instructor' && (
+                <>
+                  <Link href="/instructor/dashboard" className="hover:text-[#8E1616]">
+                    Dashboard
+                  </Link>
+                  <Link href="/instructor/create-course" className="hover:text-[#8E1616]">
+                    Create Course
+                  </Link>
+                </>
+              )}
+              <button onClick={logout} className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white w-full">
                 Sign Out
               </button>
             </>
