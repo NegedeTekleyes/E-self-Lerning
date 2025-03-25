@@ -7,7 +7,7 @@ export default function InstructorLanding() {
   return (
     <>
       <LandingHeader />
-      <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6">
+      <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6 pt-16">
         <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           
           <motion.div
@@ -24,12 +24,10 @@ export default function InstructorLanding() {
             </p>
 
             <div className="mt-6 flex gap-4">
-              <a href="/instructor/signup" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
-                Get Started
+              <a href="/dashboard" className="bg-[#8E1616] text-white px-6 py-3 rounded-lg hover:bg-[#D84040]">
+               Dashboard
               </a>
-              <a href="/dashboard" className="bg-gray-200 text-black px-6 py-3 rounded-lg hover:bg-gray-300">
-                Dashboard
-              </a>
+            
             </div>
           </motion.div>
 

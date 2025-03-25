@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Reset default margin and padding */
+
 
 /* Custom global styles */
 .scrollbar-hide {
