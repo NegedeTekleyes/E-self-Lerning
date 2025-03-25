@@ -9,13 +9,13 @@ import { MdLeaderboard } from "react-icons/md";
 import LandingHeader from "../../(components)/LandingHeader";
 
 const menuItems = [
-  { name: "Overview", icon: <FaChartLine />, link: "/dashboard/overview" },
-  { name: "Create Course", icon: <FaBook />, link: "/dashboard/create-course" },
-  { name: "Students", icon: <MdLeaderboard />, link: "/dashboard/students" },
-  { name: "Modify Course", icon: <MdLeaderboard />, link: "/dashboard/modify-course" },
-  { name: "Get Certificate", icon: <FaGraduationCap />, link: "/dashboard/certificates" },
-  { name: "Messages", icon: <FiMessageSquare />, link: "/dashboard/messages", badge: 5 },
-  { name: "Settings", icon: <FiSettings />, link: "/dashboard/settings" },
+  { name: "Overview", icon: <FaChartLine className="text-[#8E1616]" />, link: "/dashboard/overview" },
+  { name: "Create Course", icon: <FaBook className="text-[#8E1616]" />, link: "/dashboard/create-course" },
+  { name: "Students", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/students" },
+  { name: "Modify Course", icon: <MdLeaderboard className="text-[#8E1616]" />, link: "/dashboard/modify-course" },
+  { name: "Get Certificate", icon: <FaGraduationCap className="text-[#8E1616]" />, link: "/dashboard/certificates" },
+  { name: "Messages", icon: <FiMessageSquare className="text-[#8E1616]" />, link: "/dashboard/messages", badge: 5 },
+  { name: "Settings", icon: <FiSettings className="text-[#8E1616]" />, link: "/dashboard/settings" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
