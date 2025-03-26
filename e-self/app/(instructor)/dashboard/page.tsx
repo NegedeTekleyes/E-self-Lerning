@@ -56,16 +56,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <item.icon className="text-[#8E1616] text-3xl md:text-2xl" />
 
                   {/* Text: Hidden on small screens when sidebar is collapsed */}
-                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} `}>
+                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:block`}>
                     {item.name}
                   </span>
 
-                  {/* Badge (only when sidebar is open) */}
-                  {item.badge && isSidebarOpen && (
-                    <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                      {item.badge}
-                    </span>
-                  )}
+           
                 </Link>
               </li>
             ))}
