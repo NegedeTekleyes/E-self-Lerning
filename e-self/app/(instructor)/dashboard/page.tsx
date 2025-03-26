@@ -34,17 +34,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-19"} md:w-64`}
+            ${isSidebarOpen ? "w-64" : "w-19"} md:w-64 relative`}
         >
-          {/* Sidebar Toggle Button */}
+          {/* Sidebar Toggle Button (Top Right Corner) */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="md:hidden p-3 text-gray-700 hover:bg-gray-200 w-full flex justify-center"
+            className="absolute top-2 right-2 p-2 text-red-700 hover:bg-gray-200 text-2xl"
           >
-            {isSidebarOpen ? "❌" : "☰"}
+            {isSidebarOpen ? ">" : "<"}
           </button>
 
-          <ul className="mt-5 space-y-4 p-4">
+          <ul className="mt-10 space-y-4 p-4">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <Link
