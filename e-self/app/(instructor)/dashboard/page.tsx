@@ -34,17 +34,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-19"} md:w-64`}
+            ${isSidebarOpen ? "w-64" : "w-16"} md:${isSidebarOpen ? "w-64" : "w-16"}`}
         >
-          {/* Sidebar Toggle Button */}
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="absolute right-2 p-2 text-red-700 hover:bg-gray-200 text-3xl"
-          >
-            {isSidebarOpen ? ">" : "<"}
-          </button>
+          {/* Sidebar Toggle Button (Only Show When Collapsed) */}
+          <div className="flex justify-end p-2">
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="text-red-700 hover:bg-gray-200 text-2xl p-2"
+            >
+              {isSidebarOpen ? ">" : "<"}
+            </button>
+          </div>
 
-          <ul className="mt-5 space-y-4 p-4">
+          {/* Sidebar Menu */}
+          <ul className="mt-2 space-y-4 p-4">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <Link
@@ -52,11 +55,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   className={`flex items-center p-3 rounded-lg transition-all duration-200 
                     ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
                 >
-                  {/* Large Icon Always Visible */}
+                  {/* Icon Always Visible */}
                   <item.icon className="text-[#8E1616] text-3xl md:text-2xl" />
 
-                  {/* Text: Hidden on small screens when sidebar is collapsed */}
-                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:block`}>
+                  {/* Text: Show Only When Sidebar is Open */}
+                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:${isSidebarOpen ? "block" : "hidden"}`}>
                     {item.name}
                   </span>
                 </Link>
@@ -66,7 +69,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </aside>
 
         {/* Main Content */}
-        <main className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16"} md:ml-64`}>
+        <main className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16"} md:${isSidebarOpen ? "ml-64" : "ml-16"}`}>
           {children}
         </main>
       </div>
