@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Sidebar Toggle Button */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="absolute  right-2 p-2 text-red-700 hover:bg-gray-200 text-3xl"
+            className="absolute right-2 p-2 text-red-700 hover:bg-gray-200 text-3xl"
           >
             {isSidebarOpen ? ">" : "<"}
           </button>
@@ -59,8 +59,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:block`}>
                     {item.name}
                   </span>
-
-           
                 </Link>
               </li>
             ))}
