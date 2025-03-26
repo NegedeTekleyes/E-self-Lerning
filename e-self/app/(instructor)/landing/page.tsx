@@ -2,7 +2,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import LandingHeader from "../../(components)/LandingHeader";
+import LandingHeader from "../../(components)/instructor/LandingHeader";
 
 export default function InstructorLanding() {
   return (

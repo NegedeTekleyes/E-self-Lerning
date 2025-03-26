@@ -1,7 +1,7 @@
 // app/(components)/CartButton.tsx
 "use client";
 import Link from 'next/link';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import { ShoppingCart } from 'lucide-react';
 
 export default function CartButton() {

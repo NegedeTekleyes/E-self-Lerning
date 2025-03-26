@@ -1,8 +1,8 @@
 // app/layout.tsx
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-import Header from './(components)/Header';
-import Footer from './(components)/Footer';
+import Header from './(components)/student/Header';
+import Footer from './(components)/student/Footer';
 import '../styles/globals.css';
 
 export const metadata = {

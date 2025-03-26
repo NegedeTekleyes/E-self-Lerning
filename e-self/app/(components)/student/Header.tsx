@@ -4,7 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Search, X, Menu } from 'lucide-react';
 import Link from 'next/link';
 import CartButton from './CartButton';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import ProfileDropdown from './ProfileDropdown';
 
 export default function Header() {

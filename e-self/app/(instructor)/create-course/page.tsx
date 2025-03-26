@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Progress } from '../../(components)/Progress';
+import { Progress } from '../../(components)/student/Progress';
 import { handleSubmit } from './handleSubmit';
 
 const steps = [

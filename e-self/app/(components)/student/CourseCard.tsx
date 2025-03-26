@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Course } from '../data/courses';
+import { Course } from '../../data/courses';
 
 export default function CourseCard({ course }: { course: Course }) {
   return (

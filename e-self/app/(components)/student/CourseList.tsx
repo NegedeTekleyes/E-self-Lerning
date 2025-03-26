@@ -1,6 +1,6 @@
 // app/(components)/CourseCard.tsx
 import Link from 'next/link';
-import { Course } from '../data/courses';
+import { Course } from '../../data/courses';
 
 interface CourseCardProps {
   course: Course;
