@@ -55,11 +55,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   className={`flex items-center p-3 rounded-lg transition-all duration-200 
                     ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
                 >
-                  {/* Icon Always Visible */}
-                  <item.icon className="text-[#8E1616] text-3xl md:text-2xl" />
+                  {/* Icon: Dynamically Change Size */}
+                  <item.icon
+                    className={`text-[#8E1616] 
+                      ${isSidebarOpen ? "text-3xl" : "text-4xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
+                  />
 
                   {/* Text: Show Only When Sidebar is Open */}
-                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"} md:${isSidebarOpen ? "block" : "hidden"}`}>
+                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"}`}>
                     {item.name}
                   </span>
                 </Link>
