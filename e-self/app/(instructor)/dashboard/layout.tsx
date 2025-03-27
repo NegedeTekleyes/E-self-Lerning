@@ -14,7 +14,7 @@ const menuItems = [
   { name: "Create Course", icon: FaBook, link: "/dashboard/create-course" },
   { name: "Students", icon: MdLeaderboard, link: "/dashboard/students" },
   { name: "Balance", icon: FaMoneyBillWave, link: "/dashboard/balance" },
-  { name: "Get Certificate", icon: FaGraduationCap, link: "/dashboard/certificates" },
+  { name: "Get Certificate", icon: FaGraduationCap, link: "/dashboard/certificate" },
   { name: "Messages", icon: FiMessageSquare, link: "/dashboard/messages", badge: 5 },
   { name: "Settings", icon: FiSettings, link: "/dashboard/settings" },
 ];
