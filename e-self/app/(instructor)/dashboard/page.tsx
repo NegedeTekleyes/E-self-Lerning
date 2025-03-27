@@ -1,81 +1,58 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FaChartLine, FaBook, FaGraduationCap, FaMoneyBillWave } from "react-icons/fa";
-import { FiMessageSquare, FiSettings } from "react-icons/fi";
-import { MdLeaderboard } from "react-icons/md";
+import React from "react";
+import { FaBook, FaUserGraduate, FaMoneyBillWave } from "react-icons/fa";
 
-import LandingHeader from "../../(components)/instructor/LandingHeader";
-
-const menuItems = [
-  { name: "Overview", icon: FaChartLine, link: "/dashboard/overview" },
-  { name: "Create Course", icon: FaBook, link: "/dashboard/create-course" },
-  { name: "Students", icon: MdLeaderboard, link: "/dashboard/students" },
-  { name: "Modify Course", icon: FaBook, link: "/dashboard/modify-course" },
-  { name: "Balance", icon: FaMoneyBillWave, link: "/dashboard/balance" },
-  { name: "Get Certificate", icon: FaGraduationCap, link: "/dashboard/certificates" },
-  { name: "Messages", icon: FiMessageSquare, link: "/dashboard/messages", badge: 5 },
-  { name: "Settings", icon: FiSettings, link: "/dashboard/settings" },
-];
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const pathname = usePathname();
-
+export default function Page() {
   return (
-    <>
-      {/* Header */}
-      <LandingHeader />
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold text-gray-800">Instructor Overview</h1>
 
-      {/* Sidebar + Content */}
-      <div className="flex">
-        {/* Sidebar */}
-        <aside
-          className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-18 sm:w-20 md:w-20 lg:w-21"} `}
-        >
-          {/* Sidebar Toggle Button (Only Show When Collapsed) */}
-          <div className="flex justify-end p-2">
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="text-red-700 hover:bg-gray-200 text-2xl p-2"
-            >
-              {isSidebarOpen ? ">" : "<"}
-            </button>
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+        <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+          <FaBook className="text-4xl text-red-600" />
+          <div className="ml-4">
+            <p className="text-lg font-semibold">Total Courses</p>
+            <p className="text-xl font-bold">12</p>
           </div>
+        </div>
 
-          {/* Sidebar Menu */}
-          <ul className="mt-2 space-y-4 p-4">
-            {menuItems.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.link}
-                  className={`flex items-center p-3 rounded-lg transition-all duration-200 
-                    ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
-                >
-                  {/* Icon: Dynamically Change Size */}
-                  <item.icon
-                    className={`text-[#8E1616] 
-                      ${isSidebarOpen ? "text-3xl" : "text-5xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
-                  />
+        <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+          <FaUserGraduate className="text-4xl text-red-600" />
+          <div className="ml-4">
+            <p className="text-lg font-semibold">Total Students</p>
+            <p className="text-xl font-bold">1,245</p>
+          </div>
+        </div>
 
-                  {/* Text: Show Only When Sidebar is Open */}
-                  <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"}`}>
-                    {item.name}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </aside>
-
-        {/* Main Content */}
-        <main className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16 sm:ml-20 md:ml-26 lg:ml-64"}`}>
-          {children}
-        </main>
+        <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+          <FaMoneyBillWave className="text-4xl text-red-600" />
+          <div className="ml-4">
+            <p className="text-lg font-semibold">Total Earnings</p>
+            <p className="text-xl font-bold">$5,320</p>
+          </div>
+        </div>
       </div>
-    </>
+
+      {/* Recent Courses Section */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-gray-800">Recent Courses</h2>
+        <ul className="mt-4 space-y-4">
+          <li className="bg-white p-4 rounded-lg shadow-md flex justify-between">
+            <span>Advanced JavaScript</span>
+            <span className="text-gray-600">120 Students</span>
+          </li>
+          <li className="bg-white p-4 rounded-lg shadow-md flex justify-between">
+            <span>React for Beginners</span>
+            <span className="text-gray-600">98 Students</span>
+          </li>
+          <li className="bg-white p-4 rounded-lg shadow-md flex justify-between">
+            <span>Node.js Masterclass</span>
+            <span className="text-gray-600">150 Students</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }

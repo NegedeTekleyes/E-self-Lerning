@@ -10,10 +10,9 @@ import { MdLeaderboard } from "react-icons/md";
 import LandingHeader from "../../(components)/instructor/LandingHeader";
 
 const menuItems = [
-  { name: "Overview", icon: FaChartLine, link: "/dashboard/overview" },
+  { name: "Overview", icon: FaChartLine, link: "/dashboard" },
   { name: "Create Course", icon: FaBook, link: "/dashboard/create-course" },
   { name: "Students", icon: MdLeaderboard, link: "/dashboard/students" },
-  { name: "Modify Course", icon: FaBook, link: "/dashboard/modify-course" },
   { name: "Balance", icon: FaMoneyBillWave, link: "/dashboard/balance" },
   { name: "Get Certificate", icon: FaGraduationCap, link: "/dashboard/certificates" },
   { name: "Messages", icon: FiMessageSquare, link: "/dashboard/messages", badge: 5 },
