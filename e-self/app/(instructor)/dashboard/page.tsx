@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-20"} md:${isSidebarOpen ? "w-64" : "w-16"}`}
+            ${isSidebarOpen ? "w-64" : "w-18 sm:w-20 md:w-20 lg:w-21"} `}
         >
           {/* Sidebar Toggle Button (Only Show When Collapsed) */}
           <div className="flex justify-end p-2">
@@ -56,12 +56,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
                 >
                   {/* Icon: Dynamically Change Size */}
-              {/* Icon: Dynamically Change Size */}
                   <item.icon
-                        className={`text-[#8E1616] 
-                          ${isSidebarOpen ? "text-2xl" : "text-4xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
-                      />
-
+                    className={`text-[#8E1616] 
+                      ${isSidebarOpen ? "text-3xl" : "text-5xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
+                  />
 
                   {/* Text: Show Only When Sidebar is Open */}
                   <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"}`}>
@@ -74,7 +72,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </aside>
 
         {/* Main Content */}
-        <main className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16"} md:${isSidebarOpen ? "ml-64" : "ml-16"}`}>
+        <main className={`flex-1 p-6 transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16 sm:ml-20 md:ml-26 lg:ml-64"}`}>
           {children}
         </main>
       </div>
