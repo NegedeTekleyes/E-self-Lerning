@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Sidebar */}
         <aside
           className={`bg-white h-screen fixed top-16 left-0 z-40 shadow-md transition-all duration-300 
-            ${isSidebarOpen ? "w-64" : "w-16"} md:${isSidebarOpen ? "w-64" : "w-16"}`}
+            ${isSidebarOpen ? "w-64" : "w-20"} md:${isSidebarOpen ? "w-64" : "w-16"}`}
         >
           {/* Sidebar Toggle Button (Only Show When Collapsed) */}
           <div className="flex justify-end p-2">
@@ -56,10 +56,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     ${pathname === item.link ? "bg-red-500 text-white" : "text-gray-700 hover:bg-gray-200"}`}
                 >
                   {/* Icon: Dynamically Change Size */}
+              {/* Icon: Dynamically Change Size */}
                   <item.icon
-                    className={`text-[#8E1616] 
-                      ${isSidebarOpen ? "text-3xl" : "text-4xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
-                  />
+                        className={`text-[#8E1616] 
+                          ${isSidebarOpen ? "text-2xl" : "text-4xl"} md:${isSidebarOpen ? "text-2xl" : "text-4xl"}`}
+                      />
+
 
                   {/* Text: Show Only When Sidebar is Open */}
                   <span className={`ml-2 ${isSidebarOpen ? "block" : "hidden"}`}>
