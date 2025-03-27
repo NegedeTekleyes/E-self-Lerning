@@ -1,23 +1,67 @@
 "use client";
-
-import React from "react";
-import { FaBook, FaUserGraduate, FaMoneyBillWave, FaExclamationCircle } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaBook, FaUserGraduate, FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-    
-
-      <div className="flex justify-between mt-6 bg-white p-4 rounded-lg shadow-md">
-        <div>
-          <p className="text-lg font-semibold text-gray-800">Hi, <span className="font-bold">Instructor Name</span></p>
+      {/* Top Section */}
+      <div className="flex justify-between items-center mt-6 bg-white p-4 rounded-lg shadow-md">
+        <div className="relative">
+          <p className="text-lg font-semibold text-gray-800">
+            Hi, <span className="font-bold">Instructor Name</span>
+          </p>
           <p className="text-sm text-gray-600">Today's Report</p>
         </div>
-        <div className="text-right">
-          <p className="text-lg font-semibold text-gray-800">Updates</p>
-          <p className="text-sm text-red-600 flex items-center">
-         
-          </p>
+        
+        {/* Profile Dropdown */}
+        <div className="relative">
+          <FaUserCircle
+            className="text-3xl cursor-pointer text-gray-700"
+            onClick={() => setIsProfileOpen(!isProfileOpen)}
+          />
+          {isProfileOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4">
+              <ul className="space-y-3">
+                <li>
+                  <button
+                    onClick={() => router.push("/instructor/edit-profile")}
+                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                  >
+                    Edit Profile
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/instructor/settings")}
+                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                  >
+                    Settings
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/instructor/change-password")}
+                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                  >
+                    Change Password
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => router.push("/")}
+                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
