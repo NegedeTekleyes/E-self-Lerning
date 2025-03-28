@@ -1,6 +1,6 @@
 
-import CourseListSlider from './(components)/CourseListSlider';
-import Hero from './(components)/Hero';
+import CourseListSlider from './(components)/student/CourseListSlider';
+import Hero from './(components)/student/Hero';
 import { courses } from './data/courses';
 
 export default function Home() {
