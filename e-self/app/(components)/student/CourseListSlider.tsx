@@ -24,12 +24,12 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
 
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-semibold mb-6">{title}</h2>
+      <h2 className="text-2xl font-semibold mb-6 ">{title}</h2>
 
-      <div className="relative group">
+      <div className="relative">
         <div
-          ref={sliderRef}
-          className="flex overflow-x-auto scrollbar-hide gap-6 pb-4"
+          // ref={sliderRef}
+          className="flex justify-center items-center gap-6 pb-4 overflow-x-auto scrollbar-hide"
         >
           {courses.map((course) => (
             <div
