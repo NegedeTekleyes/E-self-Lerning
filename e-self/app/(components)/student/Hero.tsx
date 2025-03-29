@@ -58,18 +58,18 @@ const Hero = () => {
           </main>
         </div>
       </div>
-      {/* Conditionally render the image based on screen size */}
-      {!isSmallScreen && (
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <Image
-            src={isSmallScreen ? "/Adobe Express - file (2).png" : "/Adobe Express - file.png"}
-            className="w-full object-contain"
-            alt="Hero Image"
-            width={600}
-            height={500}
-          />
-        </div>
-      )}
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+        <Image
+          src={isSmallScreen ? "/hero-.png" : "/Adobe Express - file.png"}
+          className="w-full object-cover lg:object-top" 
+          alt="Hero Image"
+          width={600}
+          height={500}
+          style={{
+            objectPosition: isSmallScreen ? "top" : "center", 
+          }}
+        />
+      </div>
     </div>
   );
 };
