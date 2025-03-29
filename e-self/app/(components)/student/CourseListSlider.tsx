@@ -12,7 +12,7 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
   const sliderRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="mb-8 px-0 lg:px-24"> {/* No padding by default, only on large screens */}
+    <div className="mb-8 px-0 lg:px-24"> 
       <h2 className="text-2xl font-semibold mb-6">{title}</h2>
 
       <div className="relative">
