@@ -1,4 +1,3 @@
-// app/(components)/CourseListSlider.tsx
 'use client';
 import { useRef } from 'react';
 import CourseCard from './CourseCard';
@@ -23,34 +22,31 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
   };
 
   return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-semibold mb-6 ">{title}</h2>
+    <div className="mb-8 px-25"> 
+      <h2 className="text-2xl font-semibold mb-6">{title}</h2>
 
       <div className="relative">
         <div
-          // ref={sliderRef}
-          className="flex justify-center items-center gap-6 pb-4 overflow-x-auto scrollbar-hide"
+          ref={sliderRef}
+          className="flex gap-6 pb-4 overflow-x-auto scrollbar-hide"
         >
           {courses.map((course) => (
-            <div
-              key={course.slug}
-              className="flex-shrink-0 w-72" // Adjust width as needed
-            >
+            <div key={course.slug} className="flex-shrink-0 w-72">
               <CourseCard course={course} />
             </div>
           ))}
         </div>
 
-        {/* Navigation Arrows */}
+    
         <button
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
+          className="absolute left-3 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
         >
           &lt;
         </button>
         <button
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
+          className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
         >
           &gt;
         </button>
