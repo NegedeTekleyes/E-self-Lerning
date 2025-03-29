@@ -25,9 +25,10 @@ const Hero = () => {
 
   return (
     <div className="relative bg-white overflow-hidden z-40 h-screen">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28 flex flex-col lg:flex-row items-center justify-between">
+      <div className="max-w-7xl mx-auto h-full">
+        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32 h-full">
+          <main className="mt-6 mx-auto max-w-7xl px-4 sm:mt-8 sm:px-6 md:mt-12 lg:mt-16 lg:px-8 xl:mt-20 flex flex-col lg:flex-row items-center justify-center lg:justify-between h-full min-h-screen lg:min-h-[calc(100vh+100px)]">
+            {/* Text Section */}
             <div className="text-center lg:text-left lg:w-1/2">
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Welcome to E-Self</span>
@@ -55,13 +56,14 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-            {/* Image */}
+
+            {/* Image Section */}
             <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 sm:w-full md:w-3/4 h-full">
               <Image
                 src={isSmallScreen ? "/hero-.png" : "/Adobe Express - file.png"}
                 className="w-full object-cover lg:object-top"
                 alt="Hero Image"
-                width={isSmallScreen ? 400 : 600} 
+                width={isSmallScreen ? 400 : 500} 
                 height={isSmallScreen ? 300 : 500} 
                 style={{
                   objectPosition: isSmallScreen ? "top" : "center",
