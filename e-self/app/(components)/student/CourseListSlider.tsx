@@ -37,19 +37,7 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
           ))}
         </div>
 
-    
-        <button
-          onClick={() => scroll('left')}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
-        >
-          &lt;
-        </button>
-        <button
-          onClick={() => scroll('right')}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-[#8E1616] text-white p-3 rounded-full opacity-100 transition-opacity duration-200 shadow-lg hover:bg-[#D84040]"
-        >
-          &gt;
-        </button>
+      
       </div>
     </div>
   );
