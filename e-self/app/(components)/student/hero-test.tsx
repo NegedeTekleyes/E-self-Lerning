@@ -1,8 +1,28 @@
 "use client";
 
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const Hero = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <section className="relative flex items-center justify-center bg-gray-100 px-6 py-16">
       <div className="container mx-auto flex flex-col md:flex-row items-center">
@@ -28,7 +48,7 @@ const Hero = () => {
           <div className="relative w-full max-w-sm">
             <div className="absolute inset-y-0 right-0 w-3/4 bg-gray-200 skew-x-12"></div>
             <Image
-              src="/Untitled (Website).png" // Ensure this is the correct path
+              src={isSmallScreen ? "/hero-png.png" : "/Untitled (Website).png"} // Conditionally set image source
               width={500}
               height={500}
               alt="Instructor"
