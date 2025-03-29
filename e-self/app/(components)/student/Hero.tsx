@@ -24,7 +24,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative bg-white overflow-hidden z-40">
+    <div className="relative bg-white overflow-hidden z-40 h-screen"> {/* Added h-screen to make the Hero section take full viewport height */}
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
           <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
@@ -58,15 +58,16 @@ const Hero = () => {
           </main>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 sm:w-full md:w-3/4 h-full"> {/* Set h-full to ensure the image fills the height */}
         <Image
           src={isSmallScreen ? "/hero-.png" : "/Adobe Express - file.png"}
-          className="w-full object-cover lg:object-top" 
+          className="w-full object-cover lg:object-top"
           alt="Hero Image"
-          width={600}
-          height={500}
+          width={isSmallScreen ? 400 : 600} 
+          height={isSmallScreen ? 300 : 500} 
           style={{
-            objectPosition: isSmallScreen ? "top" : "center", 
+            objectPosition: isSmallScreen ? "top" : "center",
           }}
         />
       </div>
