@@ -11,18 +11,8 @@ interface CourseListSliderProps {
 export default function CourseListSlider({ title, courses }: CourseListSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (sliderRef.current) {
-      const scrollAmount = direction === 'left' ? -300 : 300;
-      sliderRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   return (
-    <div className="mb-8 px-25"> 
+    <div className="mb-8 px-6 sm:px-1 lg:px-24"> {/* Responsive spacing */}
       <h2 className="text-2xl font-semibold mb-6">{title}</h2>
 
       <div className="relative">
@@ -36,8 +26,6 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
             </div>
           ))}
         </div>
-
-      
       </div>
     </div>
   );
