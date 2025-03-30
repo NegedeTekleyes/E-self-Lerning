@@ -1,13 +1,39 @@
-// app/(components)/Hero.tsx
-import Image from 'next/image';
+"use client";
 
-export default function Hero() {
+import Image from "next/image";
+import { useState, useEffect } from "react";
+
+const Hero = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="relative bg-white overflow-hidden z-40"> {/* Changed bg-[#EEEEEE] to bg-white */}
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32"> {/* Changed bg-[#EEEEEE] to bg-white */}
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
+    <div className="relative bg-white overflow-hidden z-40 h-screen">
+      <div className="max-w-7xl mx-auto h-full">
+        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32 h-full">
+          <main
+            className={` lg:min-h-[calc(100vh+100px)] ${
+              !isSmallScreen ? "  lg:mb-100" : "pt-24 pb-24" //Added lg:mb-50 for full screen
+            }`}
+          >
+            {/* Text Section */}
+            <div className="text-center lg:text-left lg:w-1/2 lg:pt-20 ">
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                 <span className="block xl:inline">Welcome to E-Self</span>
                 <span className="block text-[#8E1616] xl:inline"> – A Great Choice!</span>
@@ -34,20 +60,25 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+
+            {/* Image Section */}
+            <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 sm:w-full md:w-3/4 h-full">
+              <Image
+                src={isSmallScreen ? "/hero-.png" : "/Adobe Express - file.png"}
+                className="w-full object-cover lg:object-top"
+                alt="Hero Image"
+                width={isSmallScreen ? 400 : 500}
+                height={isSmallScreen ? 300 : 500}
+                style={{
+                  objectPosition: isSmallScreen ? "top" : "center",
+                }}
+              />
+            </div>
           </main>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <Image
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="/Adobe Express - file.png"
-          alt=""
-          width={500}
-          height={500}
-          layout="responsive"
-        />
-    
-      </div>
     </div>
   );
-}
+};
+
+export default Hero;
