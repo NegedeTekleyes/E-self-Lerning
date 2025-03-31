@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import { Course } from '../../data/courses';
 
-export default function CourseCard({ course }: { course: Course }) {
+interface CourseCardProps {
+  course: Course;
+}
+export default function CourseCard({ course }: CourseCardProps) {
   return (
     <div className="w-72 h-[400px] rounded-xl shadow-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300 flex flex-col"> 
       <img

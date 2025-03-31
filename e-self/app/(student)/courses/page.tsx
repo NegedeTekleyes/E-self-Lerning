@@ -1,5 +1,4 @@
-// app/courses/page.tsx
-import CourseList from '@/app/(components)/CourseList';
+import CourseList from '../../(components)/student/CourseList'; // Make sure this import path is correct
 import { courses } from '../../data/courses';
 
 interface CoursesPageProps {
@@ -25,7 +24,7 @@ export default function CoursesPage({ searchParams }: CoursesPageProps) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">All Courses</h1>
-      <CourseList courses={filteredCourses} />
+      <CourseList courses={filteredCourses} /> {/* This passes the array to CourseList */}
     </div>
   );
 }
