@@ -1,8 +1,8 @@
-import CourseCard from './CourseCard'; // Import CourseCard component
+import CourseCard from './CourseCard'; 
 import { Course } from '../../data/courses';
 
 interface CourseListProps {
-  courses: Course[]; // Accepts an array of courses
+  courses: Course[]; 
 }
 
 export default function CourseList({ courses }: CourseListProps) {

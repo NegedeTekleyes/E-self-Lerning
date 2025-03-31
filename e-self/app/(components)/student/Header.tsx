@@ -15,17 +15,13 @@ export default function Header() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
-  // Skip header rendering for instructor sign-up, sign-in pages and landing page
   if (pathname === '/landing') {
-    return null; // No need to render the default header on the landing page
+    return null; 
   }
 
-  // Define the handleSearch function
   const handleSearch = () => {
     if (search.trim()) {
-      // You can replace this with your actual search logic, e.g., routing to search results
       console.log('Searching for:', search);
-      // Example: router.push(`/search?query=${search}`);
     }
   };
 
@@ -41,7 +37,7 @@ export default function Header() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearch()} // Call handleSearch when Enter is pressed
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           placeholder="Search courses..."
           className="w-full p-2 rounded-full bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8E1616]"
         />
@@ -90,7 +86,12 @@ export default function Header() {
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-4">
-            {/* Only show student sign-up and sign-in links */}
+            {/* Instructor Button */}
+            <Link href="/instracter/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+              Instructor
+            </Link>
+
+            {/* Student Sign-Up & Sign-In */}
             <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
               Sign Up (Student)
             </Link>
@@ -111,7 +112,12 @@ export default function Header() {
           </div>
           <hr className="my-2" />
           
-          {/* Show only student-related options in the menu */}
+          {/* Instructor Button (Mobile Menu) */}
+          <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
+            Instructor
+          </Link>
+
+          {/* Student Sign-Up & Sign-In (Mobile Menu) */}
           <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
             Sign Up
           </Link>
