@@ -4,7 +4,7 @@ import { CartProvider } from './context/CartContext';
 import Footer from './(components)/student/Footer';
 import '../styles/globals.css';
 import React from 'react';
-import LayoutClient from '../app/layoutClient'; // Import the client component
+import LayoutClient from '../app/layoutClient'; 
 
 export const metadata = {
   title: 'E-Self Learning Platform',
