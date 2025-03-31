@@ -86,12 +86,12 @@ export default function Header() {
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-4">
-            {/* Instructor Button */}
-            <Link href="/instracter/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
+          
+            <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
               Instructor
             </Link>
 
-            {/* Student Sign-Up & Sign-In */}
+            
             <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
               Sign Up (Student)
             </Link>
@@ -112,12 +112,11 @@ export default function Header() {
           </div>
           <hr className="my-2" />
           
-          {/* Instructor Button (Mobile Menu) */}
+       
           <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
             Instructor
           </Link>
 
-          {/* Student Sign-Up & Sign-In (Mobile Menu) */}
           <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
             Sign Up
           </Link>
