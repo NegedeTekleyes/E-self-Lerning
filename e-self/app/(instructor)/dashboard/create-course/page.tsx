@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
-import { BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon, ArrowRightIcon} from "@heroicons/react/24/outline";
-// Import icons
+import { BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { AcademicCapIcon as SolidAcademicCapIcon } from "@heroicons/react/24/solid"; // Import solid version of AcademicCapIcon
 
 export default function AddCourse() {
   const [title, setTitle] = useState("");
@@ -12,7 +12,10 @@ export default function AddCourse() {
   return (
     <div className="w-full min-h-screen p-6 flex flex-col gap-6 bg-gray-100 shadow-lg rounded-lg">
       {/* Course Title */}
-      <h1 className="text-3xl font-extrabold text-gray-900">Create a New Course</h1>
+      <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-2">
+        <SolidAcademicCapIcon className="h-8 w-8 text-red-500" /> {/* Add the icon here */}
+        Create a New Course
+      </h1>
       <p className="text-lg text-gray-700">Fill in the details below to create your course.</p>
       
       <div className="flex flex-col">
