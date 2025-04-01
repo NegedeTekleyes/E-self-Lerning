@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon, ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon,  } from "@heroicons/react/24/outline";
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid"; // Import solid version of BookOpenIcon
 
 export default function AddCourse() {
@@ -12,6 +12,11 @@ export default function AddCourse() {
   const [learningObjectives, setLearningObjectives] = useState(["", "", "", ""]);
   const [prerequisites, setPrerequisites] = useState("");
   const [courseAudience, setCourseAudience] = useState("");
+  const [relatedTopic, setRelatedTopic] = useState("");
+  const [videoTime, setVideoTime] = useState("");
+  const [numArticles, setNumArticles] = useState("");
+  const [accessDevices, setAccessDevices] = useState("phone"); // Default to mobile phone
+  const [certificate, setCertificate] = useState(false); // Check if certificate is offered
 
   // Handle next step click
   const handleNextStep = () => {
@@ -173,31 +178,67 @@ export default function AddCourse() {
             </button>
           </div>
 
-          {/* Prerequisites */}
+          {/* Related Topic */}
           <div className="flex flex-col">
             <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
               <TagIcon className="h-6 w-6 text-red-500" />
-              What are the requirements or prerequisites for taking your course?
+              Related Topic
             </label>
-            <textarea
-              value={prerequisites}
-              onChange={(e) => setPrerequisites(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="List required skills, experience, tools or equipment"
+            <input
+              type="text"
+              value={relatedTopic}
+              onChange={(e) => setRelatedTopic(e.target.value)}
+              className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Related Topic for your course"
             />
           </div>
 
-          {/* Intended Learners */}
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <AcademicCapIcon className="h-6 w-6 text-red-500" />
-              Who is this course for?
+          {/* Course Content */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <VideoCameraIcon className="h-6 w-6 text-red-500" />
+              <input
+                type="text"
+                value={videoTime}
+                onChange={(e) => setVideoTime(e.target.value)}
+                placeholder="Total Video Time"
+                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <DocumentTextIcon className="h-6 w-6 text-red-500" />
+              <input
+                type="text"
+                value={numArticles}
+                onChange={(e) => setNumArticles(e.target.value)}
+                placeholder="Number of Articles"
+                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <DevicePhoneMobileIcon className="h-6 w-6 text-red-500" />
+              <DeviceTabletIcon className="h-6 w-6 text-red-500" />
+              <input
+                type="text"
+                value={accessDevices}
+                onChange={(e) => setAccessDevices(e.target.value)}
+                placeholder="Access Devices"
+                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+          </div>
+
+          {/* Certificate */}
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 text-red-500" />
+            <label className="text-lg font-bold text-gray-800">
+              Certificate of Completion
             </label>
-            <textarea
-              value={courseAudience}
-              onChange={(e) => setCourseAudience(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="Write a clear description of the intended learners"
+            <input
+              type="checkbox"
+              checked={certificate}
+              onChange={() => setCertificate(!certificate)}
+              className="h-6 w-6"
             />
           </div>
 
