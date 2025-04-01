@@ -220,7 +220,9 @@ export default function AddCourse() {
 
        
           <div className="flex justify-between mt-4">
-         
+            <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
+              Save Draft
+            </button>
             <button
               onClick={handleNextStep}
               className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 flex items-center gap-2"
