@@ -18,7 +18,8 @@ export default function AddCourse() {
   const [accessDevices, setAccessDevices] = useState("");
   const [certificate, setCertificate] = useState(false);
   const [numSections, setNumSections] = useState(1);
-  const [sections, setSections] = useState([{ numLectures: 0, links: [] }]);
+  const [sections, setSections] = useState([{ numLectures: 0, links: [], pdfLink: "" }]);
+  const [coursePdfLink, setCoursePdfLink] = useState(""); // PDF link for the whole course
 
   // Handle next step click
   const handleNextStep = () => {
@@ -43,7 +44,7 @@ export default function AddCourse() {
 
   // Handle adding more sections
   const handleAddSection = () => {
-    setSections([...sections, { numLectures: 0, links: [] }]);
+    setSections([...sections, { numLectures: 0, links: [], pdfLink: "" }]);
   };
 
   // Handle updating the number of lectures and links for each section
@@ -147,6 +148,21 @@ export default function AddCourse() {
             />
           </div>
 
+          {/* Course PDF Link */}
+          <div className="flex flex-col">
+            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
+              <DocumentTextIcon className="h-6 w-6 text-red-500" />
+              Upload a PDF for the Course (Optional)
+            </label>
+            <input
+              type="text"
+              value={coursePdfLink}
+              onChange={(e) => setCoursePdfLink(e.target.value)}
+              placeholder="Enter the PDF link"
+              className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          </div>
+
           {/* Buttons */}
           <div className="flex justify-between mt-4">
             <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
@@ -194,154 +210,23 @@ export default function AddCourse() {
             </button>
           </div>
 
-          {/* Prerequisites */}
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <TagIcon className="h-6 w-6 text-red-500" />
-              What are the requirements or prerequisites for taking your course?
-            </label>
-            <textarea
-              value={prerequisites}
-              onChange={(e) => setPrerequisites(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="List required skills, experience, tools or equipment"
-            />
-          </div>
-
-          {/* Intended Learners */}
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <AcademicCapIcon className="h-6 w-6 text-red-500" />
-              Who is this course for?
-            </label>
-            <textarea
-              value={courseAudience}
-              onChange={(e) => setCourseAudience(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="Write a clear description of the intended learners"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex justify-between mt-4">
-            <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
-              Save Draft
-            </button>
-            <button
-              onClick={handleNextStep}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 flex items-center gap-2"
-            >
-              Save and Continue
-              <ArrowRightIcon className="h-5 w-5" />
-            </button>
-          </div>
-        </>
-      )}
-
-      {step === 3 && (
-        <>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-2">
-            <SolidBookOpenIcon className="h-8 w-8 text-red-500" />
-            Course Content
-          </h1>
-
-          {/* Course Content */}
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <VideoCameraIcon className="h-6 w-6 text-red-500" />
+          {/* PDF for each section */}
+          {sections.map((section, index) => (
+            <div key={index} className="flex flex-col">
+              <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                <DocumentTextIcon className="h-6 w-6 text-red-500" />
+                PDF for Section {index + 1} (Optional)
+              </label>
               <input
                 type="text"
-                value={videoTime}
-                onChange={(e) => setVideoTime(e.target.value)}
-                placeholder="Total Video Time"
+                value={section.pdfLink}
+                onChange={(e) => handleSectionChange(index, "pdfLink", e.target.value)}
+                placeholder={`Enter PDF link for Section ${index + 1}`}
                 className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
-            </div>
-            <div className="flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              <input
-                type="text"
-                value={numArticles}
-                onChange={(e) => setNumArticles(e.target.value)}
-                placeholder="Number of Articles"
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <DevicePhoneMobileIcon className="h-6 w-6 text-red-500" />
-              <DeviceTabletIcon className="h-6 w-6 text-red-500" />
-              <input
-                type="text"
-                value={accessDevices}
-                onChange={(e) => setAccessDevices(e.target.value)}
-                placeholder="Access Devices"
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-            </div>
-          </div>
-
-          {/* Number of Sections */}
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              Number of Sections
-            </label>
-            <input
-              type="number"
-              value={numSections}
-              onChange={(e) => setNumSections(Number(e.target.value))}
-              className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            />
-          </div>
-
-          {/* Sections */}
-          {Array.from({ length: numSections }).map((_, index) => (
-            <div key={index} className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <label className="text-lg font-bold text-gray-800">Section {index + 1} Lectures</label>
-                <input
-                  type="number"
-                  value={sections[index]?.numLectures}
-                  onChange={(e) =>
-                    handleSectionChange(index, "numLectures", Number(e.target.value))
-                  }
-                  className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-              </div>
-
-              {/* Lecture Links */}
-              {Array.from({ length: sections[index]?.numLectures }).map((_, lectureIndex) => (
-                <div key={lectureIndex} className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder={`Lecture ${lectureIndex + 1} Link`}
-                    value={sections[index]?.links[lectureIndex]}
-                    onChange={(e) => {
-                      const updatedLinks = [...sections[index].links];
-                      updatedLinks[lectureIndex] = e.target.value;
-                      handleSectionChange(index, "links", updatedLinks);
-                    }}
-                    className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
-              ))}
             </div>
           ))}
 
-          {/* Certificate */}
-          <div className="flex items-center gap-2">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              Will students receive a certificate after completing the course?
-            </label>
-            <input
-              type="checkbox"
-              checked={certificate}
-              onChange={() => setCertificate(!certificate)}
-            />
-          </div>
-
-          {/* Buttons */}
           <div className="flex justify-between mt-4">
             <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
               Save Draft
