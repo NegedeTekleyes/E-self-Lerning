@@ -8,74 +8,78 @@ export default function AddCourse() {
   const [description, setDescription] = useState("");
 
   return (
-    <div className="w-full min-h-screen p-4 flex flex-col gap-4 bg-gray-100">
+    <div className="w-full min-h-screen p-6 flex flex-col gap-6 bg-gray-100 shadow-lg rounded-lg">
       {/* Course Title */}
-      <h1 className="text-2xl font-bold text-gray-800">Create a New Course</h1>
-      <p className="text-gray-600">Fill in the details below to create your course.</p>
-      <p><title>title of the course</title></p>
+      <h1 className="text-3xl font-extrabold text-gray-900">Create a New Course</h1>
+      <p className="text-lg text-gray-700">Fill in the details below to create your course.</p>
+      
+      <label className="text-lg font-bold text-gray-800">Title of the Course</label>
       <input
         type="text"
         placeholder="Your course title goes here..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full h-[50px] text-white bg-[#c33932] px-4 text-lg sm:text-base"
+        className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
       />
-       <p className="text-gray-600">catagory of the course</p>
+      
       {/* Category Dropdown */}
+      <label className="text-lg font-bold text-gray-800">Category of the Course</label>
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
       >
-        <option value="web">Web</option>
-        <option value="ui">UI</option>
+        <option value="web">Web Development</option>
+        <option value="ui">UI/UX Design</option>
         <option value="video editing">Video Editing</option>
       </select>
-      <p className="text-gray-600">lavel of the corse</p>
+      
       {/* Level Selection */}
+      <label className="text-lg font-bold text-gray-800">Level of the Course</label>
       <div className="flex gap-4">
-        <label>
+        <label className="flex items-center gap-2">
           <input
             type="radio"
             value="beginner"
             checked={level === "beginner"}
             onChange={() => setLevel("beginner")}
           />
-          Beginner
+          <span className="text-gray-700">Beginner</span>
         </label>
-        <label>
+        <label className="flex items-center gap-2">
           <input
             type="radio"
             value="intermediate"
             checked={level === "intermediate"}
             onChange={() => setLevel("intermediate")}
           />
-          Intermediate
+          <span className="text-gray-700">Intermediate</span>
         </label>
-        <label>
+        <label className="flex items-center gap-2">
           <input
             type="radio"
             value="expert"
             checked={level === "expert"}
             onChange={() => setLevel("expert")}
           />
-          Expert
+          <span className="text-gray-700">Expert</span>
         </label>
       </div>
-      <p className="text-gray-600">description of the course</p>
+      
       {/* Description */}
+      <label className="text-lg font-bold text-gray-800">Description of the Course</label>
       <textarea
-        placeholder="Description (0/2000)"
+        placeholder="Write a brief description of your course... (0/2000)"
         maxLength={2000}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="w-full h-40 p-2 border rounded"
+        className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
       />
 
       {/* Buttons */}
-      <div className="flex justify-between">
-        <button className="px-4 py-2 border rounded">Save Draft</button>
-        <button className="px-4 py-2 bg-[#8E1616] text-white rounded">Save and Continue</button>
+      <div className="flex justify-between mt-4">
+        <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200">Save Draft</button>
+        <button className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700">Save and Continue</button>
       </div>
     </div>
   );
