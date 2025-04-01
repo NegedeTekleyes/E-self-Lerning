@@ -1,102 +1,161 @@
 'use client';
+import React, { useState } from 'react';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Progress } from '../../../(components)/student/Progress';
-import { handleSubmit } from './handleSubmit';
+const AddCourseForm = () => {
+  const [courseTitle, setCourseTitle] = useState('');
+  const [price, setPrice] = useState(3400);
+  const [category, setCategory] = useState('UI/UX Design');
+  const [instructor, setInstructor] = useState('UI/UX Design');
+  const [level, setLevel] = useState('All Level');
+  const [description, setDescription] = useState('Hi Everyone!\n\nPrototyping is a core skill in user experience design that is a powerful approach for all designers and creatives.\n\nIn this class, you\'ll learn the fundamentals of prototyping to redesigning how something works for more fluid usability. We\'ll cover everything you need to know about how to prototype your ideas and guide you to create your first UX (user experience) project right in the center of your own home, which if of course, your kitchen!');
+  const [learnItems, setLearnItems] = useState(['How to create wireframes', 'Creating wireframes from scratch', 'The basics of wireframe prototyping']);
+  const [newLearnItem, setNewLearnItem] = useState('');
 
-const steps = [
-  'Basic Info', 'Details', 'Requirements', 'Outcomes', 'Extras', 'Instructor'
-];
-
-export default function CreateCourse() {
-  const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    detailedDescription: '',
-    duration: '',
-    price: '',
-    imageUrl: '',
-    category: '',
-    prerequisites: '',
-    requirements: '',
-    learningOutcomes: '',
-    benefits: '',
-    includes: '',
-    expectations: '',
-    level:'',
-    instructorName: '',
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleAddLearnItem = () => {
+    if (newLearnItem.trim()) {
+      setLearnItems([...learnItems, newLearnItem]);
+      setNewLearnItem('');
+    }
   };
 
-  const handleNext = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
-  const handlePrev = () => setStep((prev) => Math.max(prev - 1, 0));
-
   return (
-    <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6">
-      <div className="max-w-2xl w-full bg-white p-6 rounded-lg shadow-lg">
-        <motion.h1 className="text-3xl font-bold text-center mb-4"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+    <div className="p-8 bg-white rounded-lg shadow-md max-w-2xl mx-auto">
+      <h2 className="text-2xl font-semibold mb-6">Add New Course</h2>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="courseTitle">
+          Course Title
+        </label>
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="courseTitle"
+          type="text"
+          placeholder="Your course title goes here..."
+          value={courseTitle}
+          onChange={(e) => setCourseTitle(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+          Price
+        </label>
+        <div className="relative">
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            $
+          </span>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pl-7"
+            id="price"
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+          />
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+          Category
+        </label>
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         >
-          Create a New Course
-        </motion.h1>
+          <option>UI/UX Design</option>
+          <option>Web Development</option>
+          <option>Marketing</option>
+        </select>
+      </div>
 
-        <Progress value={(step / (steps.length - 1)) * 100} className="mb-4" />
-        <p className="text-center text-lg font-medium">{steps[step]}</p>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="instructor">
+          Instructor
+        </label>
+        <select
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="instructor"
+          value={instructor}
+          onChange={(e) => setInstructor(e.target.value)}
+        >
+          <option>UI/UX Design</option>
+          <option>John Doe</option>
+          <option>Jane Smith</option>
+        </select>
+      </div>
 
-        <form onSubmit={handleSubmit(formData)} className="mt-4">
-          {Object.keys(formData).slice(step * 2, step * 2 + 2).map((field) => (
-            <div key={field} className="mb-4">
-              <label className="block text-lg font-semibold mb-2">
-                {field.replace(/([A-Z])/g, ' $1').trim()}
-              </label>
-              <input
-                type="text"
-                name={field}
-                value={formData[field]}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                required
-              />
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="level">
+          Level
+        </label>
+        <div className="flex space-x-4">
+          <label className="inline-flex items-center">
+            <input type="radio" className="form-radio" name="level" value="All Level" checked={level === 'All Level'} onChange={() => setLevel('All Level')} />
+            <span className="ml-2">All Level</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input type="radio" className="form-radio" name="level" value="Beginner" checked={level === 'Beginner'} onChange={() => setLevel('Beginner')} />
+            <span className="ml-2">Beginner</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input type="radio" className="form-radio" name="level" value="Intermediate" checked={level === 'Intermediate'} onChange={() => setLevel('Intermediate')} />
+            <span className="ml-2">Intermediate</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input type="radio" className="form-radio" name="level" value="Expert" checked={level === 'Expert'} onChange={() => setLevel('Expert')} />
+            <span className="ml-2">Expert</span>
+          </label>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+          Description
+        </label>
+        <textarea
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="description"
+          rows={5}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          What Students Will Learn
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {learnItems.map((item, index) => (
+            <div key={index} className="bg-gray-200 rounded-full px-3 py-1 text-sm">
+              {item}
             </div>
           ))}
-
-          <div className="flex justify-between mt-6">
-            {step > 0 && (
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-700"
-              >
-                Back
-              </button>
-            )}
-            {step < steps.length - 1 ? (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="bg-[#8E1616] text-white px-6 py-2 rounded-lg hover:bg-[#D84040]"
-              >
-                Next
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-800"
-              >
-                Create Course
-              </button>
-            )}
-          </div>
-        </form>
+        </div>
+        <div className="flex mt-2">
+          <input
+            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline flex-grow mr-2"
+            type="text"
+            placeholder="Add a learning point"
+            value={newLearnItem}
+            onChange={(e) => setNewLearnItem(e.target.value)}
+          />
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleAddLearnItem}
+          >
+            Add
+          </button>
+        </div>
       </div>
-    </main>
+
+      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Save Course
+      </button>
+    </div>
   );
-}
+};
+
+export default AddCourseForm;
