@@ -10,14 +10,17 @@ export default function AddCourse() {
   return (
     <div className="w-full min-h-screen p-4 flex flex-col gap-4 bg-gray-100">
       {/* Course Title */}
+      <h1 className="text-2xl font-bold text-gray-800">Create a New Course</h1>
+      <p className="text-gray-600">Fill in the details below to create your course.</p>
+      <p><title>title of the course</title></p>
       <input
         type="text"
         placeholder="Your course title goes here..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full h-[50px] text-white bg-[#8E1616] px-4 text-lg sm:text-base"
+        className="w-full h-[50px] text-white bg-[#c33932] px-4 text-lg sm:text-base"
       />
-
+       <p className="text-gray-600">catagory of the course</p>
       {/* Category Dropdown */}
       <select
         value={category}
@@ -28,7 +31,7 @@ export default function AddCourse() {
         <option value="ui">UI</option>
         <option value="video editing">Video Editing</option>
       </select>
-
+      <p className="text-gray-600">lavel of the corse</p>
       {/* Level Selection */}
       <div className="flex gap-4">
         <label>
@@ -59,7 +62,7 @@ export default function AddCourse() {
           Expert
         </label>
       </div>
-
+      <p className="text-gray-600">description of the course</p>
       {/* Description */}
       <textarea
         placeholder="Description (0/2000)"
