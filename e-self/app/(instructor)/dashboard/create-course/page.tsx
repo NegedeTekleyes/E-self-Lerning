@@ -1,161 +1,66 @@
 'use client';
-import React, { useState } from 'react';
 
-const AddCourseForm = () => {
-  const [courseTitle, setCourseTitle] = useState('');
-  const [price, setPrice] = useState(3400);
-  const [category, setCategory] = useState('UI/UX Design');
-  const [instructor, setInstructor] = useState('UI/UX Design');
-  const [level, setLevel] = useState('All Level');
-  const [description, setDescription] = useState('Hi Everyone!\n\nPrototyping is a core skill in user experience design that is a powerful approach for all designers and creatives.\n\nIn this class, you\'ll learn the fundamentals of prototyping to redesigning how something works for more fluid usability. We\'ll cover everything you need to know about how to prototype your ideas and guide you to create your first UX (user experience) project right in the center of your own home, which if of course, your kitchen!');
-  const [learnItems, setLearnItems] = useState(['How to create wireframes', 'Creating wireframes from scratch', 'The basics of wireframe prototyping']);
-  const [newLearnItem, setNewLearnItem] = useState('');
+import { useState } from 'react';
+import { Square3Stack3DIcon, UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
-  const handleAddLearnItem = () => {
-    if (newLearnItem.trim()) {
-      setLearnItems([...learnItems, newLearnItem]);
-      setNewLearnItem('');
-    }
-  };
-
-  return (
-    <div className="p-8 bg-white rounded-lg shadow-md max-w-2xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-6">Add New Course</h2>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="courseTitle">
-          Course Title
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="courseTitle"
-          type="text"
-          placeholder="Your course title goes here..."
-          value={courseTitle}
-          onChange={(e) => setCourseTitle(e.target.value)}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-          Price
-        </label>
-        <div className="relative">
-          <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            $
-          </span>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pl-7"
-            id="price"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          />
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
-          Category
-        </label>
-        <select
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option>UI/UX Design</option>
-          <option>Web Development</option>
-          <option>Marketing</option>
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="instructor">
-          Instructor
-        </label>
-        <select
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="instructor"
-          value={instructor}
-          onChange={(e) => setInstructor(e.target.value)}
-        >
-          <option>UI/UX Design</option>
-          <option>John Doe</option>
-          <option>Jane Smith</option>
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="level">
-          Level
-        </label>
-        <div className="flex space-x-4">
-          <label className="inline-flex items-center">
-            <input type="radio" className="form-radio" name="level" value="All Level" checked={level === 'All Level'} onChange={() => setLevel('All Level')} />
-            <span className="ml-2">All Level</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input type="radio" className="form-radio" name="level" value="Beginner" checked={level === 'Beginner'} onChange={() => setLevel('Beginner')} />
-            <span className="ml-2">Beginner</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input type="radio" className="form-radio" name="level" value="Intermediate" checked={level === 'Intermediate'} onChange={() => setLevel('Intermediate')} />
-            <span className="ml-2">Intermediate</span>
-          </label>
-          <label className="inline-flex items-center">
-            <input type="radio" className="form-radio" name="level" value="Expert" checked={level === 'Expert'} onChange={() => setLevel('Expert')} />
-            <span className="ml-2">Expert</span>
-          </label>
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-          Description
-        </label>
-        <textarea
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="description"
-          rows={5}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          What Students Will Learn
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {learnItems.map((item, index) => (
-            <div key={index} className="bg-gray-200 rounded-full px-3 py-1 text-sm">
-              {item}
-            </div>
-          ))}
-        </div>
-        <div className="flex mt-2">
-          <input
-            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline flex-grow mr-2"
-            type="text"
-            placeholder="Add a learning point"
-            value={newLearnItem}
-            onChange={(e) => setNewLearnItem(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleAddLearnItem}
-          >
-            Add
-          </button>
-        </div>
-      </div>
-
-      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        Save Course
-      </button>
-    </div>
-  );
+type TabItem = {
+  label: string;
+  value: string;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+  desc: string;
 };
 
-export default AddCourseForm;
+const tabs: TabItem[] = [
+  {
+    label: 'Dashboard',
+    value: 'dashboard',
+    icon: Square3Stack3DIcon,
+    desc: `It really matters and then like it really doesn't matter.
+      What matters is the people who are sparked by it. And the people
+      who are like offended by it, it doesn't matter.`,
+  },
+  {
+    label: 'Profile',
+    value: 'profile',
+    icon: UserCircleIcon,
+    desc: `Because it's about motivating the doers. Because I'm here
+      to follow my dreams and inspire other people to follow their dreams, too.`,
+  },
+  {
+    label: 'Settings',
+    value: 'settings',
+    icon: Cog6ToothIcon,
+    desc: `We're not always in the position that we want to be at.
+      We're constantly growing. We're constantly making mistakes. We're
+      constantly trying to express ourselves and actualize our dreams.`,
+  },
+];
+
+export default function TabsWithIcon() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  return (
+    <div className="w-full max-w-lg mx-auto p-4">
+      <div className="flex border-b border-gray-300">
+        {tabs.map(({ label, value, icon: Icon }) => (
+          <button
+            key={value}
+            onClick={() => setActiveTab(value)}
+            className={`flex items-center gap-2 p-3 flex-1 text-center border-b-2 transition-colors duration-200
+              ${activeTab === value ? 'border-red-500 text-red-500' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            <Icon className="w-5 h-5" />
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="p-4 bg-gray-100 mt-4 rounded-lg">
+        {tabs.map(({ value, desc }) => (
+          activeTab === value && (
+            <p key={value} className="text-gray-700">{desc}</p>
+          )
+        ))}
+      </div>
+    </div>
+  );
+}
