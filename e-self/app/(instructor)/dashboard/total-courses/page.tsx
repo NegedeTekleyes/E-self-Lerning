@@ -1,7 +1,7 @@
 // app/instructor/total-courses/page.tsx
 "use client";
 import React from 'react';
-
+import { FaPen, FaTrash } from 'react-icons/fa'; // Import icons
 interface Course {
   id: number;
   title: string;
