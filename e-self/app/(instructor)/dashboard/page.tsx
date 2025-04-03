@@ -12,7 +12,7 @@ export default function Page() {
       icon: FaBook,
       title: "Total Courses",
       value: "12",
-      onClick: () => router.push("/instructor/total-courses"), // Add onClick handler
+      onClick: () => router.push("/dashboard/total-courses"), // Add onClick handler
     },
     { icon: FaUserGraduate, title: "Total Students", value: "1,245" },
     { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" },
