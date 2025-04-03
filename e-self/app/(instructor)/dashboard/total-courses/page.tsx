@@ -70,7 +70,7 @@ const sampleCourses: Course[] = [
   }
 ];
 
-function CourseList({ courses, title, color }: { courses: Course[], title: string, color: string }) {
+function CourseList({ courses, title, color, isUnfinished, isPublished }: { courses: Course[], title: string, color: string, isUnfinished?: boolean, isPublished?: boolean }) {
   return (
     <div className="mb-8">
       <h2 className={`text-xl font-semibold mb-4 ${color}`}>{title}</h2>
@@ -87,9 +87,21 @@ function CourseList({ courses, title, color }: { courses: Course[], title: strin
                 <h2 className="text-lg font-semibold">{course.title}</h2>
                 <p className="text-gray-600">{course.description}</p>
               </div>
-              <span className="text-blue-600 font-medium">
-                {course.enrolledStudents} Students
-              </span>
+              <div className="flex items-center space-x-2">
+                <span className="text-blue-600 font-medium">
+                  {course.enrolledStudents} Students
+                </span>
+                {isUnfinished && (
+                  <button className="text-blue-500 hover:text-blue-700">
+                    <FaPen />
+                  </button>
+                )}
+                {isPublished && (
+                  <button className="text-red-500 hover:text-red-700">
+                    <FaTrash />
+                  </button>
+                )}
+              </div>
             </li>
           ))}
         </ul>
@@ -113,11 +125,11 @@ export default function TotalCoursesPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Total Courses</h1>
-      <CourseList courses={thisWeek} title="Published This Week" color="text-green-600" />
-      <CourseList courses={lastMonth} title="Published Last Month" color="text-yellow-600" />
-      <CourseList courses={longTime} title="Published Long Time Ago" color="text-gray-600" />
+      <CourseList courses={thisWeek} title="Published This Week" color="text-green-600" isPublished />
+      <CourseList courses={lastMonth} title="Published Last Month" color="text-yellow-600" isPublished />
+      <CourseList courses={longTime} title="Published Long Time Ago" color="text-gray-600" isPublished />
       <CourseList courses={planned} title="Planned to Publish" color="text-blue-600" />
-      <CourseList courses={unfinished} title="Unfinished Courses" color="text-red-600" />
+      <CourseList courses={unfinished} title="Unfinished Courses" color="text-red-600" isUnfinished />
       <CourseList courses={finished} title="Finished Courses" color="text-purple-600" />
     </div>
   );
