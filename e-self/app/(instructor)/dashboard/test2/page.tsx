@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FaPen, FaTrash } from 'react-icons/fa';
 
+const primaryColor = '#8E1616';
 interface Course {
   id: number;
   title: string;
@@ -58,7 +59,7 @@ const Card: React.FC<CardProps> = ({
             <p className="text-xs text-gray-600">{instructorRole}</p>
           </div>
         </div>
-        <p className="text-sm font-medium text-blue-600 mb-1">{instructorCompany}</p>
+        <p className="text-sm font-medium text-red-600 mb-1">{instructorCompany}</p>
         <p className="text-xs text-gray-500 mb-3">{description}</p>
         <div className="flex items-center space-x-1 text-xs text-gray-700">
           <svg
@@ -255,9 +256,8 @@ const InstructorCoursesPage: React.FC = () => {
             {tabs.map((tab) => (
               <li key={tab.value}>
                 <button
-                  className={`px-4 py-2 text-gray-700 rounded-full bg-white shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    activeTab === tab.value ? 'bg-blue-100 text-blue-700' : ''
-                  }`}
+                  className={`px-4 py-2 rounded-full bg-white shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace('#', '')}
+                    ${activeTab === tab.value ? `bg-${primaryColor} text-white` : 'text-gray-700'}`}
                   onClick={() => setActiveTab(tab.value)}
                 >
                   {tab.label}
