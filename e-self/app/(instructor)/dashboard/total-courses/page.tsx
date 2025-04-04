@@ -1,296 +1,334 @@
 "use client";
-import React from 'react';
-import { FaPen, FaTrash } from 'react-icons/fa'; // Import icons
+import React, { useState } from 'react';
+import { FaPen, FaTrash, FaPlus } from 'react-icons/fa';
+
+const primaryColor = '#8E1616';
+const primaryColorLight = '#B34747'; // Light variation for hover
+const textColor = '#333333'; // Default text color
 
 interface Course {
   id: number;
   title: string;
+  imageUrl: string;
+  altText: string;
+  instructorName: string;
+  instructorRole: string;
+  instructorCompany: string;
+  yearPublished: number;
   description: string;
   enrolledStudents: number;
+  rating: number;
   publishDate: Date;
-  status: 'published' | 'planned' | 'unfinished' | 'finished';
+  reviewCount: string;
+  status: 'published' | 'planned' | 'unfinished' | 'padding-for-publish';
 }
 
-const sampleCourses: Course[] = [
-  {
-    id: 1,
-    title: 'Advanced JavaScript',
-    description: 'Master advanced JavaScript concepts and techniques.',
-    enrolledStudents: 150,
-    publishDate: new Date(2023, 10, 20),
-    status: 'published',
-  },
-  {
-    id: 2,
-    title: 'React for Beginners',
-    description: 'Learn React from scratch and build your first app.',
-    enrolledStudents: 220,
-    publishDate: new Date(2023, 11, 15),
-    status: 'published',
-  },
-  {
-    id: 3,
-    title: 'Node.js Masterclass',
-    description: 'Become a Node.js expert and build scalable applications.',
-    enrolledStudents: 180,
-    publishDate: new Date(2024, 0, 5),
-    status: 'published',
-  },
-  {
-    id: 4,
-    title: 'Python for Data Science',
-    description: 'Learn Python and its libraries for data analysis.',
-    enrolledStudents: 120,
-    publishDate: new Date(2024, 0, 20),
-    status: 'planned',
-  },
-  {
-    id: 5,
-    title: 'Web Development Bootcamp',
-    description: 'Intensive course to become a full-stack web developer.',
-    enrolledStudents: 300,
-    publishDate: new Date(2024, 1, 10),
-    status: 'unfinished',
-  },
-  {
-    id: 6,
-    title: 'Graphic Design Basics',
-    description: 'Learn the fundamentals of graphic design.',
-    enrolledStudents: 80,
-    publishDate: new Date(2023, 9, 1),
-    status: 'finished',
-  },
-  {
-    id: 7,
-    title: 'Mobile App Development',
-    description: 'Build native mobile apps for iOS and Android.',
-    enrolledStudents: 250,
-    publishDate: new Date(2024, 1, 28),
-    status: 'published'
-  }
-];
+interface CardProps extends Course {}
 
-const Card = ({
-  title,
-  enrolled,
-  accuracy,
-  completionRate,
-  category,
-  urgency,
-  editedAgo,
-  questionCount,
-}: {
-  title: string;
-  enrolled: number;
-  accuracy: number;
-  completionRate: number;
-  category: string;
-  urgency: string;
-  editedAgo: string;
-  questionCount: number;
+const Card: React.FC<CardProps> = ({
+  imageUrl,
+  altText,
+  instructorName,
+  instructorRole,
+  instructorCompany,
+  description,
+  rating,
+  reviewCount,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 w-64">
-      <div className="flex justify-end">
-        <span className="bg-purple-200 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-purple-200 dark:text-purple-900">
-          {enrolled} Enrolled
-        </span>
-      </div>
-      <div className="flex justify-center my-4">
-        <div className="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center">
-          <span className="text-4xl text-purple-800">Aa</span>
-        </div>
-      </div>
-      <h3 className="text-lg font-semibold text-center mb-2">{title}</h3>
-      <div className="flex justify-between mb-2">
-        <div>
-          <span className="text-sm font-medium">Accuracy</span>
-          <p className="text-base font-bold">{accuracy}%</p>
-        </div>
-        <div>
-          <span className="text-sm font-medium">Completion Rate</span>
-          <p className="text-base font-bold">{completionRate}%</p>
-        </div>
-      </div>
-      <div className="flex justify-between mb-2">
-        <span className="bg-gray-200 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">
-          {category}
-        </span>
-        <span className="bg-red-200 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">
-          {urgency}
-        </span>
-      </div>
-      <div className="flex justify-between text-xs text-gray-500">
-        <span>Edited {editedAgo} ago</span>
-        <span>{questionCount} Question</span>
-      </div>
-    </div>
-  );
-};
-
-const QuizDashboard = () => {
-  return (
-    <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center">
-          <h1 className="text-2xl font-bold mr-4">Fikri Studio</h1>
-          <div className="flex items-center">
-            <div className="w-6 h-6 bg-gray-300 rounded-full mr-1"></div>
-            <div className="w-6 h-6 bg-gray-300 rounded-full mr-1"></div>
-            <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
-          </div>
-          <button className="ml-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">+</button>
-        </div>
-        <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">Upload</button>
-      </div>
-      <div className="flex items-center mb-4">
-        <button className="text-purple-600 font-semibold mr-2">all course</button>
-        <button className="text-purple-600 font-semibold mr-2">new course</button>
-        <button className="text-purple-600 font-semibold mr-2">finish course</button>
-        <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2">create course</button>
-        <button className="text-purple-600 font-semibold mr-2">padding to publish</button>
-        <button className="text-purple-600 font-semibold mr-2">popular course</button>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center">
-          <span className="text-sm font-semibold mr-2">Total Question: 5 or more</span>
-          <button className="text-purple-600 font-semibold mr-2">Reset</button>
-          <button className="text-purple-600 font-semibold">Add Filter</button>
-        </div>
-        <button className="text-purple-600 font-semibold">Date Create</button>
-      </div>
-      <div className="flex justify-between items-center mb-4">
-        <span className="text-sm font-semibold">100 content</span>
-        <input type="text" placeholder="Search..." className="border border-gray-300 rounded-md px-4 py-2" />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card
-          title="Mastering UI Design for Impactful Solutions"
-          enrolled={10}
-          accuracy={40}
-          completionRate={60}
-          category="UI/UX"
-          urgency="Not Urgent"
-          editedAgo="2h"
-          questionCount={10}
-        />
-        <Card
-          title="A Symphony of Colors in UI Design"
-          enrolled={21}
-          accuracy={20}
-          completionRate={80}
-          category="Instructional Design"
-          urgency="Not Urgent"
-          editedAgo="#h"
-          questionCount={15}
-        />
-        <Card
-          title="Bridging Users and UI in Harmony"
-          enrolled={18}
-          accuracy={100}
-          completionRate={100}
-          category="Experience Design"
-          urgency="Urgent"
-          editedAgo="23h"
-          questionCount={25}
-        />
-        <Card
-          title="Creating Engaging Learning Journeys: UI/UX Best Practices"
-          enrolled={9}
-          accuracy={20}
-          completionRate={100}
-          category="UI/UX"
-          urgency="Urgent"
-          editedAgo="5d"
-          questionCount={30}
-        />
-        <Card
-          title="Designing Intuitive User Interfaces"
-          enrolled={12}
-          accuracy={80}
-          completionRate={80}
-          category="User Interface (UI)"
-          urgency="Not Urgent"
-          editedAgo="2d"
-          questionCount={15}
-        />
-        <Card
-          title="Optimizing User Experience Educational Platforms"
-          enrolled={7}
-          accuracy={0}
-          completionRate={0}
-          category="User Experience"
-          urgency="Urgent"
-          editedAgo="4d"
-          questionCount={25}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default function TotalCoursesPage() {
-  const now = new Date();
-  const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
-  const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-
-  const thisWeek = sampleCourses.filter(course => course.publishDate >= oneWeekAgo && course.status === 'published');
-  const lastMonth = sampleCourses.filter(course => course.publishDate >= oneMonthAgo && course.publishDate < oneWeekAgo && course.status === 'published');
-  const longTime = sampleCourses.filter(course => course.publishDate < oneMonthAgo && course.status === 'published');
-  const planned = sampleCourses.filter(course => course.status === 'planned');
-  const unfinished = sampleCourses.filter(course => course.status === 'unfinished');
-  const finished = sampleCourses.filter(course => course.status === 'finished');
-
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-4">Total Courses</h1>
-      <CourseList courses={thisWeek} title="Published This Week" color="text-green-600" isPublished />
-      <CourseList courses={lastMonth} title="Published Last Month" color="text-yellow-600" isPublished />
-      <CourseList courses={longTime} title="Published Long Time Ago" color="text-gray-600" isPublished />
-      <CourseList courses={planned} title="Planned to Publish" color="text-blue-600" />
-      <CourseList courses={unfinished} title="Unfinished Courses" color="text-red-600" isUnfinished />
-      <CourseList courses={finished} title="Finished Courses" color="text-purple-600" />
-      <QuizDashboard />
-    </div>
-  );
-}
-
-function CourseList({ courses, title, color, isUnfinished, isPublished }: { courses: Course[], title: string, color: string, isUnfinished?: boolean, isPublished?: boolean }) {
-  return (
-    <div className="mb-8">
-      <h2 className={`text-xl font-semibold mb-4 ${color}`}>{title}</h2>
-      {courses.length === 0 ? (
-        <p>No courses found.</p>
-      ) : (
-        <ul className="space-y-4">
-          {courses.map((course) => (
-            <li
-              key={course.id}
-              className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between"
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+      <img src={imageUrl} alt={altText} className="w-full h-32 object-cover" />
+      <div className="p-4">
+        <div className="flex items-center space-x-2 mb-3">
+          <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+            {/* You might replace this with an actual profile image */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <div>
-                <h2 className="text-lg font-semibold">{course.title}</h2>
-                <p className="text-gray-600">{course.description}</p>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-blue-600 font-medium">
-                  {course.enrolledStudents} Students
-                </span>
-                {isUnfinished && (
-                  <button className="text-blue-500 hover:text-blue-700">
-                    <FaPen />
-                  </button>
-                )}
-                {isPublished && (
-                  <button className="text-red-500 hover:text-red-700">
-                    <FaTrash />
-                  </button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-800">{instructorName}</h3>
+            <p className="text-xs text-gray-600">{instructorRole}</p>
+          </div>
+        </div>
+        <h4 className="text-md font-semibold mb-2" style={{ color: primaryColor }}>{instructorCompany}</h4>
+        <p className="text-sm text-gray-700 line-clamp-2 mb-3">{description}</p>
+        <div className="flex items-center justify-between text-xs text-gray-700">
+          <div className="flex items-center space-x-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 text-yellow-500"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.95-.69l1.07-3.292z" />
+            </svg>
+            <span>{rating}</span>
+            <span className="text-gray-400">({reviewCount})</span>
+          </div>
+          {/* Future: Edit and Delete Buttons */}
+          {/* <div className="flex space-x-2">
+            <button className="text-gray-500 hover:text-blue-500 focus:outline-none">
+              <FaPen />
+            </button>
+            <button className="text-gray-500 hover:text-red-500 focus:outline-none">
+              <FaTrash />
+            </button>
+          </div> */}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+const InstructorCoursesPage: React.FC = () => {
+  const allCourses: Course[] = [
+    {
+      id: 1,
+      title: 'Project Management Fundamentals',
+      imageUrl: '/images/project-manager.jpg',
+      altText: 'Project Manager Desk',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2023,
+      description:
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      enrolledStudents: 120,
+      rating: 4.5,
+      publishDate: new Date('2023-05-15'),
+      reviewCount: '22k reviews',
+      status: 'published',
+    },
+    {
+      id: 2,
+      title: 'Web Design Principles',
+      imageUrl: '/images/web-design.jpg',
+      altText: 'Web Design on Laptop',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2024,
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      enrolledStudents: 85,
+      rating: 4.9,
+      publishDate: new Date('2024-01-20'),
+      reviewCount: '35k reviews',
+      status: 'published',
+    },
+    {
+      id: 3,
+      title: 'Data Analysis with Python',
+      imageUrl: '/images/data-analysis.jpg',
+      altText: 'Data Analysis on Laptop',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2024,
+      description:
+        'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      enrolledStudents: 150,
+      rating: 4.7,
+      publishDate: new Date('2024-08-10'),
+      reviewCount: '28k reviews',
+      status: 'published',
+    },
+    {
+      id: 4,
+      title: 'Mobile UI/UX Design',
+      imageUrl: '/images/mobile-ui.jpg',
+      altText: 'Mobile UI Design',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2025,
+      description:
+        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      enrolledStudents: 60,
+      rating: 0,
+      publishDate: new Date(), // Not yet published
+      reviewCount: '0 reviews',
+      status: 'padding-for-publish',
+    },
+    {
+      id: 5,
+      title: 'Advanced JavaScript Concepts',
+      imageUrl: '/images/javascript.jpg', // Replace with your actual image path
+      altText: 'JavaScript Code',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2025,
+      description: 'Exploring advanced topics in JavaScript.',
+      enrolledStudents: 30,
+      rating: 0,
+      publishDate: new Date(), // Not yet finished
+      reviewCount: '0 reviews',
+      status: 'unfinished',
+    },
+    {
+      id: 6,
+      title: 'Introduction to Cloud Computing',
+      imageUrl: '/images/cloud.jpg', // Replace with your actual image path
+      altText: 'Cloud Computing Diagram',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2026,
+      description: 'Planning a course on cloud fundamentals.',
+      enrolledStudents: 0,
+      rating: 0,
+      publishDate: new Date(), // Planned
+      reviewCount: '0 reviews',
+      status: 'planned',
+    },
+    {
+      id: 7,
+      title: 'React Native Development',
+      imageUrl: '/images/react-native.jpg', // Replace with your actual image path
+      altText: 'React Native Components',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2023,
+      description: 'Building cross-platform mobile apps with React Native.',
+      enrolledStudents: 95,
+      rating: 4.6,
+      publishDate: new Date('2023-11-01'),
+      reviewCount: '18k reviews',
+      status: 'published',
+    },
+    {
+      id: 8,
+      title: 'Cybersecurity Basics',
+      imageUrl: '/images/cybersecurity.jpg', // Replace with your actual image path
+      altText: 'Cybersecurity Lock',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2025,
+      description: 'A foundational course on cybersecurity principles.',
+      enrolledStudents: 45,
+      rating: 0,
+      publishDate: new Date(), // Finished but not yet published
+      reviewCount: '0 reviews',
+      status: 'padding-for-publish',
+    },
+  ];
+
+  const [activeTab, setActiveTab] = useState('all');
+  const currentYear = new Date().getFullYear();
+
+  const filteredCourses = React.useMemo(() => {
+    switch (activeTab) {
+      case 'published':
+        return allCourses.filter((course) => course.status === 'published');
+      case 'top-rating':
+        return allCourses
+          .filter((course) => course.status === 'published' && course.rating > 4.5) // Adjust rating threshold as needed
+          .sort((a, b) => b.rating - a.rating);
+      case 'unfinished':
+        return allCourses.filter((course) => course.status === 'unfinished');
+      case 'padding-for-publish':
+        return allCourses.filter((course) => course.status === 'padding-for-publish');
+      case 'planned':
+        return allCourses.filter((course) => course.status === 'planned');
+      case 'past-year':
+        return allCourses.filter((course) => course.status === 'published' && course.yearPublished < currentYear);
+      default:
+        return allCourses;
+    }
+  }, [activeTab, allCourses, currentYear]);
+
+  const tabs = [
+    { value: 'all', label: 'All Courses' },
+    { value: 'published', label: 'Published' },
+    { value: 'top-rating', label: 'Top Rating' },
+    { value: 'unfinished', label: 'Unfinished' },
+    { value: 'padding-for-publish', label: 'Padding for Publish' },
+    { value: 'planned', label: 'Planned' },
+    { value: 'past-year', label: 'Past Year Published' },
+  ];
+
+  return (
+    <div className="bg-gray-100 min-h-screen py-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="md:flex md:items-center md:justify-between mb-6">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2 md:mb-0" style={{ color: primaryColor }}>
+            Your Courses
+          </h2>
+          <button
+            className="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
+              '#',
+              ''
+            )} focus:ring-opacity-50 transition duration-200"
+          >
+            <FaPlus className="inline-block mr-2" />
+            Add New Course
+          </button>
+        </div>
+        <div className="mb-6">
+          <ul className="flex flex-wrap gap-2 md:gap-4">
+            {tabs.map((tab) => (
+              <li key={tab.value}>
+                <button
+                  className={`px-4 py-2 rounded-full shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
+                    '#',
+                    ''
+                  )} focus:ring-opacity-50 transition duration-200
+                    ${
+                      activeTab === tab.value
+                        ? `bg-${primaryColor} text-white hover:bg-${primaryColorLight}`
+                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                    }`}
+                  onClick={() => setActiveTab(tab.value)}
+                >
+                  {tab.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredCourses.map((course) => (
+            <Card key={course.id} {...course} />
+          ))}
+        </div>
+        {filteredCourses.length === 0 && (
+          <div className="text-center text-gray-500 py-4">
+            No courses found for the selected filter.
+          </div>
+        )}
+        {/* Future: Pagination */}
+        <div className="flex justify-center mt-6">
+          <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
+            '#',
+            ''
+          )} focus:ring-opacity-50 mr-2">
+            Previous
+          </button>
+          <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
+            '#',
+            ''
+          )} focus:ring-opacity-50 ml-2">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InstructorCoursesPage;
