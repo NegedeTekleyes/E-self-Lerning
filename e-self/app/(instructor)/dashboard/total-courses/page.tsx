@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { FaPen, FaTrash, FaPlus } from 'react-icons/fa';
+import { useRouter } from 'next/navigation'; // Import useRouter for navigation
 
 const primaryColor = '#8E1616';
 const primaryColorLight = '#B34747'; // Light variation for hover
@@ -93,6 +94,8 @@ const Card: React.FC<CardProps> = ({
 };
 
 const InstructorCoursesPage: React.FC = () => {
+  const router = useRouter(); // Initialize useRouter
+
   const allCourses: Course[] = [
     {
       id: 1,
@@ -262,6 +265,10 @@ const InstructorCoursesPage: React.FC = () => {
     { value: 'past-year', label: 'Past Year Published' },
   ];
 
+  const handleAddCourseClick = () => {
+    router.push('/dashboard/create-course');
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen py-6">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -274,6 +281,7 @@ const InstructorCoursesPage: React.FC = () => {
               '#',
               ''
             )} focus:ring-opacity-50 transition duration-200"
+            onClick={handleAddCourseClick} // Add onClick handler
           >
             <FaPlus className="inline-block mr-2" />
             Add New Course
@@ -327,6 +335,7 @@ const InstructorCoursesPage: React.FC = () => {
           </button>
         </div>
       </div>
+  
     </div>
   );
 };
