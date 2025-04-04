@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 const primaryColor = '#8E1616';
 const primaryColorLight = '#B34747';
-const textColor = '#333333';
 
 interface Course {
   id: number;
@@ -77,7 +76,7 @@ const InstructorCoursesPage: React.FC = () => {
   const [showMobileTabs, setShowMobileTabs] = useState(false);
   const currentYear = new Date().getFullYear();
 
-  const allCourses: Course[] = [/* same course data, just ensure unique IDs */];
+  const allCourses: Course[] = [/* course data */];
 
   const filteredCourses = useMemo(() => {
     switch (activeTab) {
@@ -115,6 +114,7 @@ const InstructorCoursesPage: React.FC = () => {
           </button>
         </div>
 
+        {/* Toggle for small screens */}
         <div className="sm:hidden mb-4">
           <button
             onClick={() => setShowMobileTabs(!showMobileTabs)}
@@ -124,51 +124,55 @@ const InstructorCoursesPage: React.FC = () => {
           </button>
         </div>
 
-        <div className={`mb-6 ${showMobileTabs ? 'block' : 'hidden sm:block'}`}>
-          <ul className="flex flex-row sm:flex-wrap gap-2 md:gap-4 overflow-x-auto sm:overflow-x-hidden">
-            {tabs.map((tab) => (
-              <li key={tab.value}>
-                <button
-                  onClick={() => setActiveTab(tab.value)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition duration-200 whitespace-nowrap ${
-                    activeTab === tab.value
-                      ? 'bg-[#8E1616] text-white hover:bg-[#B34747]'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* Responsive filter layout */}
+        <div className="flex flex-col md:flex-row md:space-x-6">
+          <aside className={`mb-6 md:mb-0 w-full md:w-64 ${showMobileTabs ? 'block' : 'hidden sm:hidden md:block'}`}>
+            <ul className="flex flex-col space-y-2">
+              {tabs.map((tab) => (
+                <li key={tab.value}>
+                  <button
+                    onClick={() => setActiveTab(tab.value)}
+                    className={`w-full text-left px-4 py-2 rounded-md text-sm font-medium transition duration-200 ${
+                      activeTab === tab.value
+                        ? 'bg-[#8E1616] text-white hover:bg-[#B34747]'
+                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </aside>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredCourses.map((course) => (
-            <Card key={course.id} {...course} />
-          ))}
-        </div>
+          {/* Course Grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {filteredCourses.map((course) => (
+                <Card key={course.id} {...course} />
+              ))}
+            </div>
 
-        {filteredCourses.length === 0 && (
-          <div className="text-center text-gray-500 py-4">
-            No courses found for the selected filter.
+            {filteredCourses.length === 0 && (
+              <div className="text-center text-gray-500 py-4">
+                No courses found for the selected filter.
+              </div>
+            )}
+
+            {/* Pagination */}
+            <div className="flex justify-center mt-6">
+              <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium mr-2">
+                Previous
+              </button>
+              <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium ml-2">
+                Next
+              </button>
+            </div>
           </div>
-        )}
-
-        {/* Pagination Buttons */}
-        <div className="flex justify-center mt-6">
-          <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium mr-2">
-            Previous
-          </button>
-          <button className="bg-white text-gray-600 rounded-full shadow-sm px-3 py-2 text-sm font-medium ml-2">
-            Next
-          </button>
         </div>
       </div>
 
-      <footer className="bg-gray-200 py-4 mt-8 text-center text-gray-600">
-        <p>&copy; {new Date().getFullYear()} Your Learning Platform. All rights reserved.</p>
-      </footer>
+
     </div>
   );
 };
