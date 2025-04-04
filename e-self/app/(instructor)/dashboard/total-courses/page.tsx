@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from 'react';
 import { FaPen, FaTrash, FaPlus } from 'react-icons/fa';
@@ -79,14 +80,14 @@ const Card: React.FC<CardProps> = ({
             <span className="text-gray-400">({reviewCount})</span>
           </div>
           {/* Future: Edit and Delete Buttons */}
-          {/* <div className="flex space-x-2">
+          <div className="flex space-x-2">
             <button className="text-gray-500 hover:text-blue-500 focus:outline-none">
               <FaPen />
             </button>
             <button className="text-gray-500 hover:text-red-500 focus:outline-none">
               <FaTrash />
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
@@ -95,8 +96,26 @@ const Card: React.FC<CardProps> = ({
 
 const InstructorCoursesPage: React.FC = () => {
   const router = useRouter(); // Initialize useRouter
+  const [showMobileTabs, setShowMobileTabs] = useState(false);
 
   const allCourses: Course[] = [
+    {
+      id: 1,
+      title: 'Project Management Fundamentals',
+      imageUrl: '/images/project-manager.jpg',
+      altText: 'Project Manager Desk',
+      instructorName: 'Theresa Webb',
+      instructorRole: 'UX/UI designer',
+      instructorCompany: 'Google UX/UI Analytics',
+      yearPublished: 2023,
+      description:
+        'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      enrolledStudents: 120,
+      rating: 4.5,
+      publishDate: new Date('2023-05-15'),
+      reviewCount: '22k reviews',
+      status: 'published',
+    },
     {
       id: 1,
       title: 'Project Management Fundamentals',
@@ -269,6 +288,10 @@ const InstructorCoursesPage: React.FC = () => {
     router.push('/dashboard/create-course');
   };
 
+  const toggleMobileTabs = () => {
+    setShowMobileTabs(!showMobileTabs);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen py-6">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,15 +310,30 @@ const InstructorCoursesPage: React.FC = () => {
             Add New Course
           </button>
         </div>
-        <div className="mb-6">
-          <ul className="flex flex-wrap gap-2 md:gap-4">
+
+        {/* Mobile Tab Toggle Button */}
+        <div className="sm:hidden mb-4">
+          <button
+            className="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
+              '#',
+              ''
+            )} focus:ring-opacity-50 w-full"
+            onClick={toggleMobileTabs}
+          >
+            {showMobileTabs ? 'Hide Filters' : 'Show Filters'}
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div className={`mb-6 ${showMobileTabs ? 'block' : 'hidden sm:block'}`}>
+          <ul className="flex flex-row sm:flex-wrap gap-2 md:gap-4 overflow-x-auto sm:overflow-x-hidden">
             {tabs.map((tab) => (
-              <li key={tab.value}>
+              <li key={tab.value} className="flex-shrink-0">
                 <button
                   className={`px-4 py-2 rounded-full shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-${primaryColor.replace(
                     '#',
                     ''
-                  )} focus:ring-opacity-50 transition duration-200
+                  )} focus:ring-opacity-50 transition duration-200 whitespace-nowrap
                     ${
                       activeTab === tab.value
                         ? `bg-${primaryColor} text-white hover:bg-${primaryColorLight}`
@@ -309,6 +347,7 @@ const InstructorCoursesPage: React.FC = () => {
             ))}
           </ul>
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredCourses.map((course) => (
             <Card key={course.id} {...course} />
@@ -335,7 +374,10 @@ const InstructorCoursesPage: React.FC = () => {
           </button>
         </div>
       </div>
-  
+      <footer className="bg-gray-200 py-4 mt-8 text-center text-gray-600">
+        <p>&copy; {new Date().getFullYear()} Your Learning Platform. All rights reserved.</p>
+        {/* Future: Add more footer links and information */}
+      </footer>
     </div>
   );
 };
