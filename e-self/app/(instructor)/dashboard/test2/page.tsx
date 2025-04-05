@@ -76,7 +76,104 @@ const InstructorCoursesPage: React.FC = () => {
   const [showMobileTabs, setShowMobileTabs] = useState(false);
   const currentYear = new Date().getFullYear();
 
-  const allCourses: Course[] = [/* course data */];
+  const allCourses: Course[] = [
+    {
+      id: 1,
+      title: 'Introduction to React',
+      imageUrl: '/images/react.png', // Replace with your actual image path
+      altText: 'React Logo',
+      instructorName: 'John Doe',
+      instructorRole: 'Frontend Developer',
+      instructorCompany: 'Acme Corp',
+      yearPublished: 2023,
+      description: 'Learn the fundamentals of React and build your first web application.',
+      enrolledStudents: 150,
+      rating: 4.8,
+      publishDate: new Date('2023-08-15'),
+      reviewCount: '25k reviews',
+      status: 'published',
+    },
+    {
+      id: 2,
+      title: 'Node.js for Beginners',
+      imageUrl: '/images/nodejs.png', // Replace with your actual image path
+      altText: 'Node.js Logo',
+      instructorName: 'Jane Smith',
+      instructorRole: 'Backend Developer',
+      instructorCompany: 'Beta Industries',
+      yearPublished: 2024,
+      description: 'Get started with server-side development using Node.js and Express.',
+      enrolledStudents: 120,
+      rating: 4.5,
+      publishDate: new Date('2024-01-20'),
+      reviewCount: '18k reviews',
+      status: 'published',
+    },
+    {
+      id: 3,
+      title: 'Mastering JavaScript Algorithms',
+      imageUrl: '/images/javascript.png', // Replace with your actual image path
+      altText: 'JavaScript Logo',
+      instructorName: 'Peter Jones',
+      instructorRole: 'Software Engineer',
+      instructorCompany: 'Gamma Solutions',
+      yearPublished: 2022,
+      description: 'Improve your problem-solving skills with in-depth JavaScript algorithms and data structures.',
+      enrolledStudents: 90,
+      rating: 4.2,
+      publishDate: new Date('2022-11-05'),
+      reviewCount: '12k reviews',
+      status: 'published',
+    },
+    {
+      id: 4,
+      title: 'UI/UX Design Principles',
+      imageUrl: '/images/ui-ux.png', // Replace with your actual image path
+      altText: 'UI/UX Design Tools',
+      instructorName: 'Alice Brown',
+      instructorRole: 'UI/UX Designer',
+      instructorCompany: 'Delta Designs',
+      yearPublished: 2024,
+      description: 'Learn the core principles of user interface and user experience design.',
+      enrolledStudents: 75,
+      rating: 4.9,
+      publishDate: new Date('2024-05-10'),
+      reviewCount: '30k reviews',
+      status: 'published',
+    },
+    {
+      id: 5,
+      title: 'Building RESTful APIs with Python & Flask',
+      imageUrl: '/images/python.png', // Replace with your actual image path
+      altText: 'Python Logo',
+      instructorName: 'Charlie Wilson',
+      instructorRole: 'Full-Stack Developer',
+      instructorCompany: 'Epsilon Systems',
+      yearPublished: 2025,
+      description: 'Plan and build robust RESTful APIs using Python and the Flask framework.',
+      enrolledStudents: 30,
+      rating: 0,
+      publishDate: new Date(),
+      reviewCount: '0 reviews',
+      status: 'planned',
+    },
+    {
+      id: 6,
+      title: 'Advanced CSS Techniques',
+      imageUrl: '/images/css.png', // Replace with your actual image path
+      altText: 'CSS Logo',
+      instructorName: 'Sophia Garcia',
+      instructorRole: 'Frontend Architect',
+      instructorCompany: 'Zeta Technologies',
+      yearPublished: 2025,
+      description: 'Dive deep into advanced CSS concepts and techniques for modern web development.',
+      enrolledStudents: 20,
+      rating: 0,
+      publishDate: new Date(),
+      reviewCount: '0 reviews',
+      status: 'unfinished',
+    },
+  ];
 
   const filteredCourses = useMemo(() => {
     switch (activeTab) {
