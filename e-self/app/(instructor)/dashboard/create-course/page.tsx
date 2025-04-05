@@ -2,9 +2,21 @@
 import { useState } from "react";
 import {
   BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon,
-  ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon
+  ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon, PlusCircleIcon
 } from "@heroicons/react/24/outline";
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid";
+
+interface Lecture {
+  title: string;
+  videoLink: string;
+  upload?: File | null; // Optional file upload
+}
+
+interface Section {
+  title: string;
+  description: string;
+  lectures: Lecture[];
+}
 
 export default function AddCourse() {
   const [step, setStep] = useState(1);
@@ -19,8 +31,9 @@ export default function AddCourse() {
   const [numArticles, setNumArticles] = useState("");
   const [accessDevices, setAccessDevices] = useState("");
   const [certificate, setCertificate] = useState(false);
-  const [numSections, setNumSections] = useState(1);
-  const [sections, setSections] = useState([{ numLectures: 0, links: [] }]);
+  const [sections, setSections] = useState<Section[]>([
+    { title: "Module 1", description: "", lectures: [] },
+  ]);
 
   const handleNextStep = () => setStep(step + 1);
   const handleAddLearningObjective = () => setLearningObjectives([...learningObjectives, ""]);
@@ -29,10 +42,33 @@ export default function AddCourse() {
     updated[i] = value;
     setLearningObjectives(updated);
   };
-  const handleSectionChange = (i: number, field: string, value: any) => {
-    const updated = [...sections];
-    updated[i][field] = value;
-    setSections(updated);
+
+  const handleSectionChange = (sectionIndex: number, field: keyof Section, value: string) => {
+    const updatedSections = [...sections];
+    updatedSections[sectionIndex] = { ...updatedSections[sectionIndex], [field]: value };
+    setSections(updatedSections);
+  };
+
+  const handleAddLecture = (sectionIndex: number) => {
+    const updatedSections = [...sections];
+    updatedSections[sectionIndex].lectures = [
+      ...updatedSections[sectionIndex].lectures,
+      { title: "", videoLink: "", upload: null },
+    ];
+    setSections(updatedSections);
+  };
+
+  const handleLectureChange = (sectionIndex: number, lectureIndex: number, field: keyof Lecture, value: string | File | null) => {
+    const updatedSections = [...sections];
+    updatedSections[sectionIndex].lectures[lectureIndex] = {
+      ...updatedSections[sectionIndex].lectures[lectureIndex],
+      [field]: value,
+    };
+    setSections(updatedSections);
+  };
+
+  const handleAddSection = () => {
+    setSections([...sections, { title: `Module ${sections.length + 1}`, description: "", lectures: [] }]);
   };
 
   const Label = ({ icon: Icon, text }: { icon: any, text: string }) => (
@@ -167,9 +203,9 @@ export default function AddCourse() {
         <>
           <SectionHeader title="Course Content" />
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 mb-4">
             <div>
-              <Label icon={VideoCameraIcon} text="Total Video Time" />
+              <Label icon={VideoCameraIcon} text="Total Video Time (estimated)" />
               <input
                 value={videoTime}
                 onChange={(e) => setVideoTime(e.target.value)}
@@ -179,7 +215,7 @@ export default function AddCourse() {
             </div>
 
             <div>
-              <Label icon={DocumentTextIcon} text="Number of Articles" />
+              <Label icon={DocumentTextIcon} text="Number of Articles (estimated)" />
               <input
                 value={numArticles}
                 onChange={(e) => setNumArticles(e.target.value)}
@@ -197,42 +233,98 @@ export default function AddCourse() {
             </div>
           </div>
 
-          <div>
-            <Label icon={DocumentTextIcon} text="Number of Sections" />
-            <input
-              type="number"
-              value={numSections}
-              onChange={(e) => setNumSections(Number(e.target.value))}
-              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
-            />
-          </div>
-
-          {Array.from({ length: numSections }).map((_, i) => (
-            <div key={i} className="mt-4 space-y-2">
-              <p className="text-sm text-gray-600">Section {i + 1}</p>
-              <input
-                type="number"
-                value={sections[i]?.numLectures}
-                onChange={(e) => handleSectionChange(i, "numLectures", Number(e.target.value))}
-                placeholder="Number of Lectures"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-              {Array.from({ length: sections[i]?.numLectures }).map((_, j) => (
-                <input
-                  key={j}
-                  type="text"
-                  value={sections[i]?.links[j] || ""}
-                  onChange={(e) => {
-                    const links = [...(sections[i].links || [])];
-                    links[j] = e.target.value;
-                    handleSectionChange(i, "links", links);
-                  }}
-                  placeholder={`Lecture ${j + 1} link`}
-                  className="w-full p-2 border border-gray-200 rounded"
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="mb-6 border p-4 rounded-md bg-white shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-lg font-semibold text-gray-700">{section.title}</h3>
+                {sectionIndex > 0 && (
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-700 text-sm"
+                    onClick={() => {
+                      const updatedSections = [...sections];
+                      updatedSections.splice(sectionIndex, 1);
+                      setSections(updatedSections);
+                    }}
+                  >
+                    Remove Module
+                  </button>
+                )}
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium mb-1">Module Description:</label>
+                <textarea
+                  value={section.description}
+                  onChange={(e) => handleSectionChange(sectionIndex, "description", e.target.value)}
+                  placeholder="Brief description of this module..."
+                  className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400 mb-2"
                 />
+              </div>
+              <h4 className="text-md font-semibold text-gray-600 mb-2">Lectures:</h4>
+              {section.lectures.map((lecture, lectureIndex) => (
+                <div key={lectureIndex} className="mb-3 p-2 border border-gray-200 rounded">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div>
+                      <label className="text-sm text-gray-700 font-medium mb-1 block">Lecture Title:</label>
+                      <input
+                        type="text"
+                        value={lecture.title}
+                        onChange={(e) => handleLectureChange(sectionIndex, lectureIndex, "title", e.target.value)}
+                        placeholder={`Lecture ${lectureIndex + 1} Title`}
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-gray-700 font-medium mb-1 block">Video Link:</label>
+                      <input
+                        type="text"
+                        value={lecture.videoLink}
+                        onChange={(e) => handleLectureChange(sectionIndex, lectureIndex, "videoLink", e.target.value)}
+                        placeholder="Paste video URL (e.g., YouTube, Vimeo)"
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-gray-700 font-medium mb-1 block">Upload Video (Optional):</label>
+                      <input
+                        type="file"
+                        onChange={(e) => handleLectureChange(sectionIndex, lectureIndex, "upload", e.target.files?.[0] || null)}
+                        className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                      />
+                    </div>
+                  </div>
+                  {section.lectures.length > 1 && (
+                    <button
+                      type="button"
+                      className="text-red-500 hover:text-red-700 text-sm mt-1"
+                      onClick={() => {
+                        const updatedSections = [...sections];
+                        updatedSections[sectionIndex].lectures.splice(lectureIndex, 1);
+                        setSections(updatedSections);
+                      }}
+                    >
+                      Remove Lecture
+                    </button>
+                  )}
+                </div>
               ))}
+              <button
+                type="button"
+                onClick={() => handleAddLecture(sectionIndex)}
+                className="text-sm text-red-600 mt-2 flex items-center gap-1"
+              >
+                <PlusCircleIcon className="h-4 w-4" /> Add Lecture
+              </button>
             </div>
           ))}
+
+          <button
+            type="button"
+            onClick={handleAddSection}
+            className="text-sm text-red-600 mt-4 flex items-center gap-1"
+          >
+            <PlusCircleIcon className="h-5 w-5" /> Add Another Module
+          </button>
 
           <div className="flex items-center gap-2 mt-4">
             <input
