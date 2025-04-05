@@ -115,17 +115,17 @@ const InstructorCoursesPage: React.FC = () => {
         </div>
 
         {/* Toggle for small screens */}
-        <div className="sm:hidden mb-4">
+        {/* <div className="sm:hidden mb-4">
           <button
             onClick={() => setShowMobileTabs(!showMobileTabs)}
             className="bg-white text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm w-full"
           >
             {showMobileTabs ? 'Hide Filters' : 'Show Filters'}
           </button>
-        </div>
+        </div> */}
 
         {/* Responsive filter layout */}
-        <div className="flex flex-col md:flex-row md:space-x-6">
+        {/* <div className="flex flex-col md:flex-row md:space-x-6">
           <aside className={`mb-6 md:mb-0 w-full md:w-64 ${showMobileTabs ? 'block' : 'hidden sm:hidden md:block'}`}>
             <ul className="flex flex-col space-y-2">
               {tabs.map((tab) => (
@@ -143,7 +143,7 @@ const InstructorCoursesPage: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </aside>
+          </aside> */}
 
           {/* Course Grid */}
           <div className="flex-1">
