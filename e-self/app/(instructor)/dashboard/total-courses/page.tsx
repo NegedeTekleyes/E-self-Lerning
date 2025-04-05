@@ -69,6 +69,72 @@ const Card: React.FC<Course> = ({
     </div>
   </div>
 );
+const allCourses: Course[] = [
+  {
+    id: 1,
+    title: "Intro to Web Development",
+    imageUrl: "https://source.unsplash.com/400x200/?coding",
+    altText: "Web Development",
+    instructorName: "Jane Doe",
+    instructorRole: "Senior Web Developer",
+    instructorCompany: "TechLabs",
+    yearPublished: 2024,
+    description: "Learn the fundamentals of HTML, CSS, and JavaScript in this beginner-friendly course.",
+    enrolledStudents: 320,
+    rating: 4.8,
+    publishDate: new Date("2024-01-15"),
+    reviewCount: "120",
+    status: "published",
+  },
+  {
+    id: 2,
+    title: "Data Science with Python",
+    imageUrl: "https://source.unsplash.com/400x200/?data,python",
+    altText: "Data Science",
+    instructorName: "John Smith",
+    instructorRole: "Data Analyst",
+    instructorCompany: "DataPro",
+    yearPublished: 2025,
+    description: "Explore data analysis, visualization, and machine learning using Python and Pandas.",
+    enrolledStudents: 540,
+    rating: 4.6,
+    publishDate: new Date("2025-03-10"),
+    reviewCount: "89",
+    status: "top-rating",
+  },
+  {
+    id: 3,
+    title: "Advanced React",
+    imageUrl: "https://source.unsplash.com/400x200/?reactjs",
+    altText: "Advanced React",
+    instructorName: "Sara Lee",
+    instructorRole: "Frontend Engineer",
+    instructorCompany: "Reactify",
+    yearPublished: 2023,
+    description: "Master React patterns, hooks, and performance optimization in this advanced course.",
+    enrolledStudents: 210,
+    rating: 4.3,
+    publishDate: new Date("2023-08-05"),
+    reviewCount: "54",
+    status: "unfinished",
+  },
+  {
+    id: 4,
+    title: "UI/UX Design Basics",
+    imageUrl: "https://source.unsplash.com/400x200/?design,ux",
+    altText: "UI/UX",
+    instructorName: "Michael Roe",
+    instructorRole: "UI Designer",
+    instructorCompany: "DesignCo",
+    yearPublished: 2022,
+    description: "Understand user-centered design principles and tools like Figma for effective UI/UX.",
+    enrolledStudents: 150,
+    rating: 4.0,
+    publishDate: new Date("2022-11-20"),
+    reviewCount: "35",
+    status: "planned",
+  },
+];
 
 const InstructorCoursesPage: React.FC = () => {
   const router = useRouter();
@@ -123,7 +189,22 @@ const InstructorCoursesPage: React.FC = () => {
             {showMobileTabs ? 'Hide Filters' : 'Show Filters'}
           </button>
         </div> */}
-
+           {/* Horizontal Scrollable Tabs */}
+           <div className="mb-6 overflow-x-auto whitespace-nowrap flex space-x-2 px-1">
+          {tabs.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition duration-200 flex-shrink-0 ${
+                activeTab === tab.value
+                  ? "bg-[#8E1616] text-white hover:bg-[#B34747]"
+                  : "bg-white text-gray-700 hover:bg-gray-100"
+              }`}
+             >
+              {tab.label}
+            </button>
+          ))}
+        </div>
         {/* Responsive filter layout */}
         {/* <div className="flex flex-col md:flex-row md:space-x-6">
           <aside className={`mb-6 md:mb-0 w-full md:w-64 ${showMobileTabs ? 'block' : 'hidden sm:hidden md:block'}`}>
@@ -173,7 +254,6 @@ const InstructorCoursesPage: React.FC = () => {
       </div>
 
 
-    </div>
   );
 };
 
