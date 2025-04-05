@@ -170,7 +170,7 @@ const InstructorCoursesPage: React.FC = () => {
 
     return (
         <div className="bg-gray-100 min-h-screen py-6">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="w-full">
                 <div className="md:flex md:items-center md:justify-between mb-6">
                     <h2 className="text-xl font-semibold" style={{ color: primaryColor }}>Your Courses</h2>
                     <button
@@ -182,7 +182,7 @@ const InstructorCoursesPage: React.FC = () => {
                     </button>
                 </div>
 
-                <div className="mb-6 overflow-x-auto whitespace-nowrap flex space-x-2 -mx-4 sm:mx-0 px-4 sm:px-0">
+                <div className="mb-6 overflow-x-auto whitespace-nowrap flex space-x-2 -mx-4 sm:mx-0 px-4 sm:px-0 ">
                     {tabs.map((tab) => (
                       <button
                       key={tab.value}
