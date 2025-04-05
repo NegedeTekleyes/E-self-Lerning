@@ -167,68 +167,68 @@ const InstructorCoursesPage: React.FC = () => {
         { value: 'planned', label: 'Planned' },
         { value: 'past-year', label: 'Past Year' },
     ];
-
     return (
-        <div className="bg-gray-100 min-h-screen py-6">
-            <div className="w-full">
-                <div className="md:flex md:items-center md:justify-between mb-6">
-                    <h2 className="text-xl font-semibold" style={{ color: primaryColor }}>Your Courses</h2>
-                    <button
-                        onClick={() => router.push('/dashboard/create-course')}
-                        className="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 rounded-md shadow-sm transition duration-200"
-                    >
-                        <FaPlus className="inline-block mr-2" />
-                        Add New Course
-                    </button>
-                </div>
-
-                <div className="mb-6 overflow-x-auto whitespace-nowrap flex space-x-2 -mx-4 sm:mx-0 px-4 sm:px-0 ">
-                    {tabs.map((tab) => (
-                      <button
-                      key={tab.value}
-                      onClick={() => setActiveTab(tab.value)}
-                      className={`px-4 py-2 rounded-md text-sm font-medium transition duration-200 flex-shrink-0 ${
-                          activeTab === tab.value
-                              ? "text-white hover:opacity-90"
-                              : "bg-white text-gray-700 hover:bg-gray-100"
-                      }`}
-                      style={
-                          activeTab === tab.value
-                              ? { backgroundColor: primaryColor }
-                              : undefined
-                      }
-                  >
-                      {tab.label}
-                  </button>
-                  
-                    ))}
-                </div>
-
-                <div className="flex-1">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {filteredCourses.map((course) => (
-                            <Card key={course.id} {...course} />
-                        ))}
-                    </div>
-
-                    {filteredCourses.length === 0 && (
-                        <div className="text-center text-gray-500 py-4">
-                            No courses found for the selected filter.
-                        </div>
-                    )}
-
-                    <div className="flex justify-center mt-6">
-                        <button className="bg-white text-gray-600 rounded-md shadow-sm px-4 py-2 text-sm font-medium mr-2 hover:bg-gray-100 transition-colors duration-200">
-                            Previous
-                        </button>
-                        <button className="bg-white text-gray-600 rounded-md shadow-sm px-4 py-2 text-sm font-medium ml-2 hover:bg-gray-100 transition-colors duration-200">
-                            Next
-                        </button>
-                    </div>
-                </div>
+      <div className="bg-gray-50 min-h-screen p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2 mb-4 sm:mb-0">
+              <SolidBookOpenIcon className="h-8 w-8 text-red-600" />
+              Your Courses
+            </h1>
+            <button
+              onClick={() => router.push('/dashboard/create-course')}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            >
+              <PlusIcon className="h-5 w-5" />
+              Add New Course
+            </button>
+          </div>
+  
+          <div className="mb-6 overflow-x-auto">
+            <div className="flex gap-2 pb-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.value}
+                  onClick={() => setActiveTab(tab.value)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeTab === tab.value 
+                      ? 'bg-red-600 text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
+          </div>
+  
+          <div className="flex-1">
+            {filteredCourses.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filteredCourses.map((course) => (
+                    <Card key={course.id} {...course} />
+                  ))}
+                </div>
+                
+                <div className="flex justify-center gap-2 mt-8">
+                  <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Previous
+                  </button>
+                  <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Next
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-12 bg-white rounded-lg">
+                <p className="text-gray-500 text-lg">No courses found for the selected filter.</p>
+              </div>
+            )}
+          </div>
         </div>
+      </div>
     );
-};
-
-export default InstructorCoursesPage;
+  };
+  
+  export default InstructorCoursesPage;
