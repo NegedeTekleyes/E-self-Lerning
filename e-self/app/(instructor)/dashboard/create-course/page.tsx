@@ -2,7 +2,7 @@
 import { useState } from "react";
 import {
   BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon,
-  ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon, PlusCircleIcon
+  ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon, PlusCircleIcon,ArrowUturnLeftIcon, ArrowUturnRightIcon
 } from "@heroicons/react/24/outline";
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid";
 
