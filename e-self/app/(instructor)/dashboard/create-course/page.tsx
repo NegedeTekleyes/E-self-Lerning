@@ -1,18 +1,20 @@
 'use client';
 import { useState } from "react";
-import { BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon, ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon } from "@heroicons/react/24/outline";
+import {
+  BookOpenIcon, TagIcon, AcademicCapIcon, DocumentTextIcon,
+  ArrowRightIcon, VideoCameraIcon, DevicePhoneMobileIcon, DeviceTabletIcon
+} from "@heroicons/react/24/outline";
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid";
 
 export default function AddCourse() {
+  const [step, setStep] = useState(1);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("web");
   const [level, setLevel] = useState("beginner");
   const [description, setDescription] = useState("");
-  const [step, setStep] = useState(1); // To manage multi-step form
-  const [learningObjectives, setLearningObjectives] = useState(["", "", "", ""]);
+  const [learningObjectives, setLearningObjectives] = useState([""]);
   const [prerequisites, setPrerequisites] = useState("");
   const [courseAudience, setCourseAudience] = useState("");
-  const [relatedTopic, setRelatedTopic] = useState("");
   const [videoTime, setVideoTime] = useState("");
   const [numArticles, setNumArticles] = useState("");
   const [accessDevices, setAccessDevices] = useState("");
@@ -20,72 +22,56 @@ export default function AddCourse() {
   const [numSections, setNumSections] = useState(1);
   const [sections, setSections] = useState([{ numLectures: 0, links: [] }]);
 
-  const handleNextStep = () => {
-    if (step === 1) {
-      setStep(2);
-    } else if (step === 2) {
-      setStep(3);
-    }
+  const handleNextStep = () => setStep(step + 1);
+  const handleAddLearningObjective = () => setLearningObjectives([...learningObjectives, ""]);
+  const handleLearningObjectiveChange = (i: number, value: string) => {
+    const updated = [...learningObjectives];
+    updated[i] = value;
+    setLearningObjectives(updated);
+  };
+  const handleSectionChange = (i: number, field: string, value: any) => {
+    const updated = [...sections];
+    updated[i][field] = value;
+    setSections(updated);
   };
 
+  const Label = ({ icon: Icon, text }: { icon: any, text: string }) => (
+    <label className="text-sm text-gray-700 font-medium flex items-center gap-1 mb-1">
+      <Icon className="h-5 w-5 text-red-500" />
+      {text}
+    </label>
+  );
 
-  const handleAddLearningObjective = () => {
-    setLearningObjectives([...learningObjectives, ""]);
-  };
-
-
-  const handleLearningObjectiveChange = (index: number, value: string) => {
-    const updatedObjectives = [...learningObjectives];
-    updatedObjectives[index] = value;
-    setLearningObjectives(updatedObjectives);
-  };
-
-
-  const handleAddSection = () => {
-    setSections([...sections, { numLectures: 0, links: [] }]);
-  };
-
-
-  const handleSectionChange = (index: number, field: string, value: any) => {
-    const updatedSections = [...sections];
-    updatedSections[index][field] = value;
-    setSections(updatedSections);
-  };
+  const SectionHeader = ({ title }: { title: string }) => (
+    <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
+      <SolidBookOpenIcon className="h-6 w-6 text-red-500" />
+      {title}
+    </h2>
+  );
 
   return (
-    <div className="w-full min-h-screen p-6 flex flex-col gap-6 bg-gray-100 shadow-lg rounded-lg">
+    <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-6">
       {step === 1 && (
         <>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-2">
-            <SolidBookOpenIcon className="h-8 w-8 text-red-500" />
-            Create a New Course
-          </h1>
-          <p className="text-lg text-gray-700">Fill in the details below to create your course.</p>
+          <SectionHeader title="Create a New Course" />
+          <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <BookOpenIcon className="h-6 w-6 text-red-500" />
-              Title of the Course
-            </label>
+          <div>
+            <Label icon={BookOpenIcon} text="Course Title" />
             <input
-              type="text"
-              placeholder="Your course title goes here..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+              placeholder="Enter course title"
             />
           </div>
 
-    
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <TagIcon className="h-6 w-6 text-red-500" />
-              Category of the Course
-            </label>
+          <div>
+            <Label icon={TagIcon} text="Category" />
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
             >
               <option value="web">Web Development</option>
               <option value="ui">UI/UX Design</option>
@@ -93,68 +79,38 @@ export default function AddCourse() {
             </select>
           </div>
 
-         
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <AcademicCapIcon className="h-6 w-6 text-red-500" />
-              Level of the Course
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  value="beginner"
-                  checked={level === "beginner"}
-                  onChange={() => setLevel("beginner")}
-                />
-                <span className="text-gray-700">Beginner</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  value="intermediate"
-                  checked={level === "intermediate"}
-                  onChange={() => setLevel("intermediate")}
-                />
-                <span className="text-gray-700">Intermediate</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  value="expert"
-                  checked={level === "expert"}
-                  onChange={() => setLevel("expert")}
-                />
-                <span className="text-gray-700">Expert</span>
-              </label>
+          <div>
+            <Label icon={AcademicCapIcon} text="Level" />
+            <div className="flex gap-4 text-sm text-gray-600">
+              {["beginner", "intermediate", "expert"].map((lvl) => (
+                <label key={lvl} className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value={lvl}
+                    checked={level === lvl}
+                    onChange={() => setLevel(lvl)}
+                  />
+                  {lvl[0].toUpperCase() + lvl.slice(1)}
+                </label>
+              ))}
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              Description of the Course
-            </label>
+          <div>
+            <Label icon={DocumentTextIcon} text="Description" />
             <textarea
-              placeholder="Write a brief description of your course... (0/2000)"
-              maxLength={2000}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Brief course description..."
+              maxLength={2000}
+              className="w-full h-32 p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
             />
           </div>
 
-         
-          <div className="flex justify-between mt-4">
-            <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
-              Save Draft
-            </button>
-            <button
-              onClick={handleNextStep}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 flex items-center gap-2"
-            >
-              Save and Continue
-              <ArrowRightIcon className="h-5 w-5" />
+          <div className="flex justify-between pt-4">
+            <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
+            <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
+              Save and Continue <ArrowRightIcon className="h-4 w-4" />
             </button>
           </div>
         </>
@@ -162,73 +118,46 @@ export default function AddCourse() {
 
       {step === 2 && (
         <>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-2">
-            <SolidBookOpenIcon className="h-8 w-8 text-red-500" />
-            Course Details
-          </h1>
+          <SectionHeader title="Course Details" />
 
-          {/* Learning Objectives */}
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              What will students learn in your course?
-            </label>
-            {learningObjectives.map((objective, index) => (
+          <div>
+            <Label icon={DocumentTextIcon} text="Learning Objectives" />
+            {learningObjectives.map((obj, i) => (
               <input
-                key={index}
-                type="text"
-                value={objective}
-                onChange={(e) => handleLearningObjectiveChange(index, e.target.value)}
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-3"
-                placeholder={`Learning Objective ${index + 1}`}
+                key={i}
+                value={obj}
+                onChange={(e) => handleLearningObjectiveChange(i, e.target.value)}
+                placeholder={`Objective ${i + 1}`}
+                className="w-full mb-2 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
               />
             ))}
-            <button
-              onClick={handleAddLearningObjective}
-              className="text-red-600 mt-2"
-            >
-              + Add More
-            </button>
+            <button onClick={handleAddLearningObjective} className="text-sm text-red-600 mt-1">+ Add more</button>
           </div>
 
-      
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <TagIcon className="h-6 w-6 text-red-500" />
-              What are the requirements or prerequisites for taking your course?
-            </label>
+          <div>
+            <Label icon={TagIcon} text="Prerequisites" />
             <textarea
               value={prerequisites}
               onChange={(e) => setPrerequisites(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="List required skills, experience, tools or equipment"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+              placeholder="Skills or tools required before taking this course"
             />
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <AcademicCapIcon className="h-6 w-6 text-red-500" />
-              Who is this course for?
-            </label>
+          <div>
+            <Label icon={AcademicCapIcon} text="Target Audience" />
             <textarea
               value={courseAudience}
               onChange={(e) => setCourseAudience(e.target.value)}
-              className="w-full h-40 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-              placeholder="Write a clear description of the intended learners"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+              placeholder="Who is this course designed for?"
             />
           </div>
 
-       
-          <div className="flex justify-between mt-4">
-            <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
-              Save Draft
-            </button>
-            <button
-              onClick={handleNextStep}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 flex items-center gap-2"
-            >
-              Save and Continue
-              <ArrowRightIcon className="h-5 w-5" />
+          <div className="flex justify-between pt-4">
+            <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
+            <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
+              Save and Continue <ArrowRightIcon className="h-4 w-4" />
             </button>
           </div>
         </>
@@ -236,113 +165,88 @@ export default function AddCourse() {
 
       {step === 3 && (
         <>
-          <h1 className="text-3xl font-extrabold text-gray-900 flex items-center gap-2">
-            <SolidBookOpenIcon className="h-8 w-8 text-red-500" />
-            Course Content
-          </h1>
+          <SectionHeader title="Course Content" />
 
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <VideoCameraIcon className="h-6 w-6 text-red-500" />
+          <div className="grid gap-4">
+            <div>
+              <Label icon={VideoCameraIcon} text="Total Video Time" />
               <input
-                type="text"
                 value={videoTime}
                 onChange={(e) => setVideoTime(e.target.value)}
-                placeholder="Total Video Time"
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="e.g., 2h 30m"
+                className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
+
+            <div>
+              <Label icon={DocumentTextIcon} text="Number of Articles" />
               <input
-                type="text"
                 value={numArticles}
                 onChange={(e) => setNumArticles(e.target.value)}
-                placeholder="Number of Articles"
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <DevicePhoneMobileIcon className="h-6 w-6 text-red-500" />
-              <DeviceTabletIcon className="h-6 w-6 text-red-500" />
+
+            <div>
+              <Label icon={DevicePhoneMobileIcon} text="Access Devices" />
               <input
-                type="text"
                 value={accessDevices}
                 onChange={(e) => setAccessDevices(e.target.value)}
-                placeholder="Access Devices"
-                className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
               />
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              Number of Sections
-            </label>
+          <div>
+            <Label icon={DocumentTextIcon} text="Number of Sections" />
             <input
               type="number"
               value={numSections}
               onChange={(e) => setNumSections(Number(e.target.value))}
-              className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
             />
           </div>
 
-          {Array.from({ length: numSections }).map((_, index) => (
-            <div key={index} className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <label className="text-lg font-bold text-gray-800">Section {index + 1} Lectures</label>
+          {Array.from({ length: numSections }).map((_, i) => (
+            <div key={i} className="mt-4 space-y-2">
+              <p className="text-sm text-gray-600">Section {i + 1}</p>
+              <input
+                type="number"
+                value={sections[i]?.numLectures}
+                onChange={(e) => handleSectionChange(i, "numLectures", Number(e.target.value))}
+                placeholder="Number of Lectures"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              {Array.from({ length: sections[i]?.numLectures }).map((_, j) => (
                 <input
-                  type="number"
-                  value={sections[index]?.numLectures}
-                  onChange={(e) =>
-                    handleSectionChange(index, "numLectures", Number(e.target.value))
-                  }
-                  className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                  key={j}
+                  type="text"
+                  value={sections[i]?.links[j] || ""}
+                  onChange={(e) => {
+                    const links = [...(sections[i].links || [])];
+                    links[j] = e.target.value;
+                    handleSectionChange(i, "links", links);
+                  }}
+                  placeholder={`Lecture ${j + 1} link`}
+                  className="w-full p-2 border border-gray-200 rounded"
                 />
-              </div>
-
-              {Array.from({ length: sections[index]?.numLectures }).map((_, lectureIndex) => (
-                <div key={lectureIndex} className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder={`Lecture ${lectureIndex + 1} Link`}
-                    value={sections[index]?.links[lectureIndex]}
-                    onChange={(e) => {
-                      const updatedLinks = [...sections[index].links];
-                      updatedLinks[lectureIndex] = e.target.value;
-                      handleSectionChange(index, "links", updatedLinks);
-                    }}
-                    className="w-full h-[50px] text-gray-900 bg-white border border-gray-300 rounded-lg px-4 text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-                  />
-                </div>
               ))}
             </div>
           ))}
 
-    
-          <div className="flex items-center gap-2">
-            <label className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <DocumentTextIcon className="h-6 w-6 text-red-500" />
-              Will students receive a certificate after completing the course?
-            </label>
+          <div className="flex items-center gap-2 mt-4">
             <input
               type="checkbox"
               checked={certificate}
               onChange={() => setCertificate(!certificate)}
             />
+            <span className="text-sm text-gray-700">Students receive certificate upon completion</span>
           </div>
 
-          <div className="flex justify-between mt-4">
-            <button className="px-6 py-3 border border-gray-400 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2">
-              Save Draft
-            </button>
-            <button
-              onClick={handleNextStep}
-              className="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 flex items-center gap-2"
-            >
-              Save and Continue
-              <ArrowRightIcon className="h-5 w-5" />
+          <div className="flex justify-between pt-4">
+            <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
+            <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
+              Save and Continue <ArrowRightIcon className="h-4 w-4" />
             </button>
           </div>
         </>
