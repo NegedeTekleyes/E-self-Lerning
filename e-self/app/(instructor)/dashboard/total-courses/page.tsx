@@ -1,13 +1,17 @@
 "use client";
 import React, { useState, useMemo } from 'react';
-import { FaPen, FaTrash, FaPlus } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { 
+  PencilIcon,
+  TrashIcon,
+  PlusIcon,
+  BookOpenIcon,
+  UserCircleIcon,
+  StarIcon
+} from '@heroicons/react/24/outline';
+import { BookOpenIcon as SolidBookOpenIcon } from '@heroicons/react/24/solid';
 
-const primaryColor = '#8E1616';
-const primaryColorLight = '#B34747';
-const textColorSecondary = '#555';
-const borderColor = '#ddd';
-const shadowColor = 'rgba(0, 0, 0, 0.1)';
+
 
 interface Course {
     id: number;
