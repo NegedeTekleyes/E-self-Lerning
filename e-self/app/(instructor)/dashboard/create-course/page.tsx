@@ -8,8 +8,6 @@ import {
     ArrowRightIcon,
     VideoCameraIcon,
     DevicePhoneMobileIcon,
-    DeviceTabletIcon,
-    ArrowUturnLeftIcon,
     ArrowUturnRightIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/outline";
@@ -59,22 +57,6 @@ export default function AddCourse() {
     const saveHistory = () => {
         setHistory(prev => [...prev, sections]);
         setFuture([]);
-    };
-
-    const undo = () => {
-        if (!history.length) return;
-        const prev = history[history.length - 1];
-        setFuture(f => [sections, ...f]);
-        setSections(prev);
-        setHistory(h => h.slice(0, -1));
-    };
-
-    const redo = () => {
-        if (!future.length) return;
-        const next = future[0];
-        setHistory(h => [...h, sections]);
-        setSections(next);
-        setFuture(f => f.slice(1));
     };
 
     const updateSection = (index: number, field: keyof Section, value: string) => {
@@ -144,7 +126,6 @@ export default function AddCourse() {
         <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-6">
             {step === 1 && (
                 <>
-                 <div className="flex justify-end  mb-10"> </div>
                     <SectionHeader title="Create a New Course" />
                     <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
@@ -153,7 +134,7 @@ export default function AddCourse() {
                         <input
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             placeholder="Enter course title"
                         />
                     </div>
@@ -163,7 +144,7 @@ export default function AddCourse() {
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                         >
                             <option value="web">Web Development</option>
                             <option value="ui">UI/UX Design</option>
@@ -195,12 +176,11 @@ export default function AddCourse() {
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="Brief course description..."
                             maxLength={2000}
-                            className="w-full h-32 p-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+                            className="w-full h-32 p-3 rounded border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                         />
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 pt-6">
-
+                    <div className="flex justify-between gap-2 pt-6">
                         <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
                         <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
                             Save and Continue <ArrowRightIcon className="h-4 w-4" />
@@ -211,7 +191,6 @@ export default function AddCourse() {
 
             {step === 2 && (
                 <>
-                 <div className="flex justify-end  mb-10"> </div>
                     <SectionHeader title="Course Details" />
 
                     <div>
@@ -222,7 +201,7 @@ export default function AddCourse() {
                                 value={obj}
                                 onChange={(e) => handleLearningObjectiveChange(i, e.target.value)}
                                 placeholder={`Objective ${i + 1}`}
-                                className="w-full mb-2 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                                className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             />
                         ))}
                         <button onClick={handleAddLearningObjective} className="text-sm text-red-600 mt-1">+ Add more</button>
@@ -233,7 +212,7 @@ export default function AddCourse() {
                         <textarea
                             value={prerequisites}
                             onChange={(e) => setPrerequisites(e.target.value)}
-                            className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             placeholder="Skills or tools required before taking this course"
                         />
                     </div>
@@ -243,13 +222,12 @@ export default function AddCourse() {
                         <textarea
                             value={courseAudience}
                             onChange={(e) => setCourseAudience(e.target.value)}
-                            className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             placeholder="Who is this course designed for?"
                         />
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 pt-6">
-
+                    <div className="flex justify-between gap-2 pt-6">
                         <button onClick={handlePreviousStep} className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Previous</button>
                         <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
                         <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
@@ -261,10 +239,6 @@ export default function AddCourse() {
 
             {step === 3 && (
                 <>
-                    <div className="flex justify-end  mb-10"> </div>
-                    
-                   
-
                     <SectionHeader title="Course Content" />
 
                     <div className="grid gap-4 mb-4">
@@ -274,7 +248,7 @@ export default function AddCourse() {
                                 value={videoTime}
                                 onChange={(e) => setVideoTime(e.target.value)}
                                 placeholder="e.g., 2h 30m"
-                                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             />
                         </div>
 
@@ -283,7 +257,7 @@ export default function AddCourse() {
                             <input
                                 value={numArticles}
                                 onChange={(e) => setNumArticles(e.target.value)}
-                                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             />
                         </div>
 
@@ -292,7 +266,7 @@ export default function AddCourse() {
                             <input
                                 value={accessDevices}
                                 onChange={(e) => setAccessDevices(e.target.value)}
-                                className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             />
                         </div>
                     </div>
@@ -312,7 +286,7 @@ export default function AddCourse() {
                                 value={section.description}
                                 onChange={(e) => updateSection(sectionIdx, "description", e.target.value)}
                                 placeholder="Module description..."
-                                className="w-full p-2 mb-3 border border-gray-300 rounded focus:ring-2 focus:ring-red-400"
+                                className="w-full p-2 mb-3 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                             />
 
                             {section.lectures.map((lecture, lectureIdx) => (
@@ -322,19 +296,19 @@ export default function AddCourse() {
                                         value={lecture.title}
                                         onChange={(e) => updateLecture(sectionIdx, lectureIdx, "title", e.target.value)}
                                         placeholder="Lecture Title"
-                                        className="w-full mb-2 p-2 border border-gray-300 rounded"
+                                        className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                                     />
                                     <input
                                         type="text"
                                         value={lecture.videoLink}
                                         onChange={(e) => updateLecture(sectionIdx, lectureIdx, "videoLink", e.target.value)}
                                         placeholder="Video URL"
-                                        className="w-full mb-2 p-2 border border-gray-300 rounded"
+                                        className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                                     />
                                     <input
                                         type="file"
                                         onChange={(e) => updateLecture(sectionIdx, lectureIdx, "upload", e.target.files?.[0] || null)}
-                                        className="w-full mb-2 p-2 border border-gray-300 rounded"
+                                        className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                                     />
                                     {section.lectures.length > 1 && (
                                         <button onClick={() => removeLecture(sectionIdx, lectureIdx)} className="text-xs text-red-500 hover:text-red-700">
@@ -366,8 +340,7 @@ export default function AddCourse() {
                         <span className="text-sm text-gray-700">Provide certificate upon completion</span>
                     </div>
 
-                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 pt-6">
-
+                    <div className="flex justify-between gap-2 pt-6">
                         <button onClick={handlePreviousStep} className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Previous</button>
                         <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Save Draft</button>
                         <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
