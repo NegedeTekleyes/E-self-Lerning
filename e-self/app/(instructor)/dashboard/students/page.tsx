@@ -18,6 +18,7 @@ type Student = {
   category: "Beginner" | "Intermediate" | "Advanced";
   status: "Active" | "Inactive";
   enrolledDate: string; // ISO string
+  progress: number; // Progress as a percentage (0-100)
 };
 
 const StudentsList = () => {
@@ -32,6 +33,7 @@ const StudentsList = () => {
       category: "Beginner",
       status: "Active",
       enrolledDate: "2024-12-15",
+      progress: 75, // Example progress
     },
     {
       name: "Jane Smith",
@@ -40,6 +42,7 @@ const StudentsList = () => {
       category: "Advanced",
       status: "Inactive",
       enrolledDate: "2024-11-22",
+      progress: 40, // Example progress
     },
     {
       name: "Tom Jerry",
@@ -48,6 +51,7 @@ const StudentsList = () => {
       category: "Intermediate",
       status: "Active",
       enrolledDate: "2025-01-10",
+      progress: 55, // Example progress
     },
     {
       name: "Aliya Ray",
@@ -56,6 +60,7 @@ const StudentsList = () => {
       category: "Beginner",
       status: "Active",
       enrolledDate: "2025-03-02",
+      progress: 90, // Example progress
     },
   ];
 
@@ -149,6 +154,7 @@ const StudentsList = () => {
                 <th className="px-4 py-3 font-medium">Category</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Enrolled Date</th>
+                <th className="px-4 py-3 font-medium">Progress</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -199,11 +205,20 @@ const StudentsList = () => {
                   <td className="px-4 py-3 text-gray-500">
                     {new Date(student.enrolledDate).toLocaleDateString()}
                   </td>
+                  <td className="px-4 py-3">
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div
+                        className="bg-green-600 h-2.5 rounded-full"
+                        style={{ width: `${student.progress}%` }}
+                      ></div>
+                    </div>
+                    <span className="text-xs text-gray-500">{student.progress}%</span>
+                  </td>
                 </tr>
               ))}
               {filteredStudents.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="text-center p-6 text-gray-400">
+                  <td colSpan={8} className="text-center p-6 text-gray-400">
                     No students found.
                   </td>
                 </tr>
