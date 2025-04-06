@@ -126,6 +126,7 @@ export default function AddCourse() {
         <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-6">
             {step === 1 && (
                 <>
+                <div className="mt-12"></div>
                     <SectionHeader title="Create a New Course" />
                     <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
@@ -191,6 +192,7 @@ export default function AddCourse() {
 
             {step === 2 && (
                 <>
+                <div className="mt-12"></div>
                     <SectionHeader title="Course Details" />
 
                     <div>
@@ -239,6 +241,7 @@ export default function AddCourse() {
 
             {step === 3 && (
                 <>
+                <div className="mt-12"></div>
                     <SectionHeader title="Course Content" />
 
                     <div className="grid gap-4 mb-4">
