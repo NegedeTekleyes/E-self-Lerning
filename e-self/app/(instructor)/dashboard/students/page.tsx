@@ -14,8 +14,10 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 type Student = {
   name: string;
   email: string;
-  enrolledCourses: string[]; // Each course title
+  enrolledCourses: string[]; // Course titles
   category: "Beginner" | "Intermediate" | "Advanced";
+  status: "Active" | "Inactive";
+  enrolledDate: string; // ISO string
 };
 
 const StudentsList = () => {
@@ -28,24 +30,32 @@ const StudentsList = () => {
       email: "john@example.com",
       enrolledCourses: ["React Basics", "Node.js Mastery"],
       category: "Beginner",
+      status: "Active",
+      enrolledDate: "2024-12-15",
     },
     {
       name: "Jane Smith",
       email: "jane@example.com",
       enrolledCourses: ["Node.js Mastery"],
       category: "Advanced",
+      status: "Inactive",
+      enrolledDate: "2024-11-22",
     },
     {
       name: "Tom Jerry",
       email: "tom@example.com",
       enrolledCourses: ["React Basics", "Video Editing"],
       category: "Intermediate",
+      status: "Active",
+      enrolledDate: "2025-01-10",
     },
     {
       name: "Aliya Ray",
       email: "aliya@example.com",
       enrolledCourses: ["Video Editing"],
       category: "Beginner",
+      status: "Active",
+      enrolledDate: "2025-03-02",
     },
   ];
 
@@ -132,11 +142,13 @@ const StudentsList = () => {
           <table className="min-w-full bg-white text-sm text-left">
             <thead className="bg-gradient-to-r from-indigo-50 to-purple-100 text-gray-700">
               <tr>
-                <th className="px-6 py-4 font-medium">#</th>
-                <th className="px-6 py-4 font-medium">Name</th>
-                <th className="px-6 py-4 font-medium">Email</th>
-                <th className="px-6 py-4 font-medium">Enrolled Courses</th>
-                <th className="px-6 py-4 font-medium">Category</th>
+                <th className="px-4 py-3 font-medium">#</th>
+                <th className="px-4 py-3 font-medium">Name</th>
+                <th className="px-4 py-3 font-medium">Email</th>
+                <th className="px-4 py-3 font-medium">Enrolled Courses</th>
+                <th className="px-4 py-3 font-medium">Category</th>
+                <th className="px-4 py-3 font-medium">Status</th>
+                <th className="px-4 py-3 font-medium">Enrolled Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -145,22 +157,22 @@ const StudentsList = () => {
                   key={index}
                   className="hover:bg-purple-50 transition-all duration-200"
                 >
-                  <td className="px-6 py-4">{index + 1}</td>
-                  <td className="px-6 py-4 font-medium text-gray-800">
+                  <td className="px-4 py-3">{index + 1}</td>
+                  <td className="px-4 py-3 font-medium text-gray-800">
                     {student.name}
                   </td>
-                  <td className="px-6 py-4 text-gray-600">{student.email}</td>
-                  <td className="px-6 py-4">
-                    {student.enrolledCourses.map((course, idx) => (
+                  <td className="px-4 py-3 text-gray-600">{student.email}</td>
+                  <td className="px-4 py-3">
+                    {student.enrolledCourses.map((course, i) => (
                       <span
-                        key={idx}
+                        key={i}
                         className="inline-block bg-indigo-100 text-indigo-700 px-3 py-1 text-xs font-semibold rounded-full mr-2 mb-1"
                       >
                         {course}
                       </span>
                     ))}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-3">
                     <span
                       className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
                         student.category === "Beginner"
@@ -173,11 +185,25 @@ const StudentsList = () => {
                       {student.category}
                     </span>
                   </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+                        student.status === "Active"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-gray-200 text-gray-600"
+                      }`}
+                    >
+                      {student.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-500">
+                    {new Date(student.enrolledDate).toLocaleDateString()}
+                  </td>
                 </tr>
               ))}
               {filteredStudents.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="text-center p-6 text-gray-400">
+                  <td colSpan={7} className="text-center p-6 text-gray-400">
                     No students found.
                   </td>
                 </tr>
