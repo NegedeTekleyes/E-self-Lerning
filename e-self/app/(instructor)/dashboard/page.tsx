@@ -12,36 +12,36 @@ export default function Page() {
       icon: FaBook,
       title: "Total Courses",
       value: "12",
-      onClick: () => router.push("/dashboard/total-courses"), // Add onClick handler
+      onClick: () => router.push("/dashboard/total-courses"),
     },
     { icon: FaUserGraduate, title: "Total Students", value: "1,245" },
     { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" },
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      {/* Top Section */}
+    <div className="p-6 bg-[#EEEEEE] min-h-screen">
+      {/* Header */}
       <div className="flex justify-between items-center mt-6 bg-white p-4 rounded-lg shadow-md">
-        <div className="relative">
-          <p className="text-lg font-semibold text-gray-800">
-            Hi, <span className="font-bold">Instructor Name</span>
+        <div>
+          <p className="text-lg font-medium text-[#1D1616]">
+            Hi, <span className="font-semibold">Instructor Name</span>
           </p>
-          <p className="text-sm text-gray-600">Today's Report</p>
+          <p className="text-sm text-[#1D1616]/70">Today's Report</p>
         </div>
 
         {/* Profile Dropdown */}
         <div className="relative">
           <FaUserCircle
-            className="text-3xl cursor-pointer text-gray-700"
+            className="text-3xl cursor-pointer text-[#1D1616]"
             onClick={() => setIsProfileOpen(!isProfileOpen)}
           />
           {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4">
+            <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-10">
               <ul className="space-y-3">
                 <li>
                   <button
                     onClick={() => router.push("/instructor/edit-profile")}
-                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                    className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                   >
                     Edit Profile
                   </button>
@@ -49,7 +49,7 @@ export default function Page() {
                 <li>
                   <button
                     onClick={() => router.push("/instructor/settings")}
-                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                    className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                   >
                     Settings
                   </button>
@@ -57,7 +57,7 @@ export default function Page() {
                 <li>
                   <button
                     onClick={() => router.push("/instructor/change-password")}
-                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                    className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                   >
                     Change Password
                   </button>
@@ -65,7 +65,7 @@ export default function Page() {
                 <li>
                   <button
                     onClick={() => router.push("/")}
-                    className="text-gray-700 hover:text-red-600 w-full text-left"
+                    className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                   >
                     Log Out
                   </button>
@@ -76,35 +76,35 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-lg shadow-lg flex items-center cursor-pointer" // Make it clickable
-            onClick={stat.onClick} // Call onClick if it exists
+            className="bg-white p-6 rounded-lg shadow-lg flex items-center cursor-pointer hover:shadow-xl transition"
+            onClick={stat.onClick}
           >
-            <stat.icon className="text-4xl text-red-600" />
+            <stat.icon className="text-4xl text-[#8E1616]" />
             <div className="ml-4">
-              <p className="text-lg font-semibold">{stat.title}</p>
-              <p className="text-2xl font-bold">{stat.value}</p>
+              <p className="text-lg font-medium text-[#1D1616]">{stat.title}</p>
+              <p className="text-2xl font-bold text-[#1D1616]">{stat.value}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Recent Courses Section */}
+      {/* Recent Courses */}
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Courses</h2>
+        <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Recent Courses</h2>
         <ul className="space-y-4">
           {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map(
             (course, index) => (
               <li
                 key={index}
-                className="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center"
+                className="bg-[#F9F9F9] p-4 rounded-lg shadow-sm flex justify-between items-center"
               >
-                <span className="font-medium text-gray-700">{course}</span>
-                <span className="text-gray-600">
+                <span className="font-medium text-[#1D1616]">{course}</span>
+                <span className="text-[#1D1616]/70">
                   {Math.floor(Math.random() * 200) + 50} Students
                 </span>
               </li>
@@ -117,7 +117,7 @@ export default function Page() {
       <div className="mt-6 text-center">
         <a
           href="/analytics"
-          className="inline-block py-2 px-6 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition"
+          className="inline-block py-2 px-6 bg-[#8E1616] text-white rounded-full shadow-md hover:bg-[#D84040] transition"
         >
           View Analytics
         </a>
