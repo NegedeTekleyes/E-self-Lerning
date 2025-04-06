@@ -157,38 +157,38 @@ const StudentsList = () => {
         </div>
 
         {/* Course Popularity Chart */}
-        <div className="bg-white rounded-lg p-6 shadow mb-8">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Course Popularity
-          </h3>
-          <div className="h-96 w-full"> {/* Increased the height */}
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={courseStats}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="count" fill="#8E1616" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <div className="bg-white rounded-lg p-6 shadow mb-8"> 
+  <h3 className="text-lg font-semibold text-gray-700 mb-4"> 
+    Course Popularity 
+  </h3> 
+  <div className="h-64 w-full mb-8"> {/* Added margin bottom */}
+    <ResponsiveContainer width="100%" height="100%"> 
+      <BarChart data={courseStats}> 
+        <XAxis dataKey="name" /> 
+        <YAxis /> 
+        <Tooltip /> 
+        <Bar dataKey="count" fill="#8E1616" /> 
+      </BarChart> 
+    </ResponsiveContainer> 
+  </div>
+</div>
 
-        {/* Daily Student Enrollment Chart as Line Graph */}
-        <div className="bg-white rounded-lg p-6 shadow mb-8">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Student Enrollment by Day
-          </h3>
-          <div className="h-96 w-full"> {/* Increased the height */}
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dailyEnrollments}>
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="count" stroke="#8E1616" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+{/* Daily Student Enrollment Chart */}
+<div className="bg-white rounded-lg p-6 shadow mb-8"> 
+  <h3 className="text-lg font-semibold text-gray-700 mb-4"> 
+    Student Enrollment by Day 
+  </h3> 
+  <div className="h-64 w-full"> 
+    <ResponsiveContainer width="100%" height="100%"> 
+      <LineChart data={dailyEnrollments}> {/* Changed to LineChart */}
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip />
+        <Line type="monotone" dataKey="count" stroke="#8E1616" />
+      </LineChart>
+    </ResponsiveContainer> 
+  </div> 
+</div>
 
         <div className="overflow-x-auto rounded-xl shadow-lg">
           <table className="min-w-full bg-white text-sm text-left">
