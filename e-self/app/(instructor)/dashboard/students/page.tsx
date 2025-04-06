@@ -127,39 +127,63 @@ const StudentsList = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-white rounded-lg shadow text-sm">
-            <thead className="bg-gray-100 text-left">
-              <tr>
-                <th className="border p-3">#</th>
-                <th className="border p-3">Name</th>
-                <th className="border p-3">Email</th>
-                <th className="border p-3">Enrolled</th>
-                <th className="border p-3">Category</th>
-                <th className="border p-3">Favorite Course</th>
+        <div className="overflow-x-auto rounded-xl shadow-lg">
+        <table className="min-w-full bg-white text-sm text-left">
+          <thead className="bg-gradient-to-r from-indigo-50 to-purple-100 text-gray-700 rounded-t-lg">
+            <tr>
+              <th className="px-6 py-4 font-medium">#</th>
+              <th className="px-6 py-4 font-medium">Name</th>
+              <th className="px-6 py-4 font-medium">Email</th>
+              <th className="px-6 py-4 font-medium">Enrolled</th>
+              <th className="px-6 py-4 font-medium">Category</th>
+              <th className="px-6 py-4 font-medium">Favorite Course</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {filteredStudents.map((student, index) => (
+              <tr
+                key={index}
+                className="hover:bg-purple-50 transition-all duration-200"
+              >
+                <td className="px-6 py-4">{index + 1}</td>
+                <td className="px-6 py-4 font-medium text-gray-800">
+                  {student.name}
+                </td>
+                <td className="px-6 py-4 text-gray-600">{student.email}</td>
+                <td className="px-6 py-4">
+                  <span className="inline-block rounded-full bg-indigo-100 text-indigo-700 px-3 py-1 text-xs font-semibold">
+                    {student.enrolledCourses} courses
+                  </span>
+                </td>
+                <td className="px-6 py-4">
+                  <span
+                    className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+                      student.category === "Beginner"
+                        ? "bg-green-100 text-green-700"
+                        : student.category === "Intermediate"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-blue-100 text-blue-700"
+                    }`}
+                  >
+                    {student.category}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-gray-700 font-medium">
+                  {student.favoriteCourse}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredStudents.map((student, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="border p-3">{index + 1}</td>
-                  <td className="border p-3">{student.name}</td>
-                  <td className="border p-3">{student.email}</td>
-                  <td className="border p-3">{student.enrolledCourses}</td>
-                  <td className="border p-3">{student.category}</td>
-                  <td className="border p-3">{student.favoriteCourse}</td>
-                </tr>
-              ))}
-              {filteredStudents.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="text-center p-6 text-gray-500">
-                    No students match the search/filter.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+            ))}
+            {filteredStudents.length === 0 && (
+              <tr>
+                <td colSpan={6} className="text-center p-6 text-gray-400">
+                  No students found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       </div>
     </div>
   );
