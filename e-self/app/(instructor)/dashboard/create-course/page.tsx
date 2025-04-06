@@ -144,6 +144,7 @@ export default function AddCourse() {
         <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-6">
             {step === 1 && (
                 <>
+                 <div className="flex justify-end  mb-10"> </div>
                     <SectionHeader title="Create a New Course" />
                     <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
@@ -198,7 +199,8 @@ export default function AddCourse() {
                         />
                     </div>
 
-                    <div className="flex justify-between pt-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 pt-6">
+
                         <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
                         <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
                             Save and Continue <ArrowRightIcon className="h-4 w-4" />
@@ -209,6 +211,7 @@ export default function AddCourse() {
 
             {step === 2 && (
                 <>
+                 <div className="flex justify-end  mb-10"> </div>
                     <SectionHeader title="Course Details" />
 
                     <div>
@@ -245,7 +248,8 @@ export default function AddCourse() {
                         />
                     </div>
 
-                    <div className="flex justify-between pt-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2 pt-6">
+
                         <button onClick={handlePreviousStep} className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Previous</button>
                         <button className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-200">Save Draft</button>
                         <button onClick={handleNextStep} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
@@ -257,16 +261,9 @@ export default function AddCourse() {
 
             {step === 3 && (
                 <>
-                    <div className="flex justify-end gap-3">
-                        <button onClick={undo} disabled={!history.length}
-                            className={`flex items-center gap-1 text-sm px-3 py-1 border rounded ${history.length ? 'text-gray-700 hover:bg-gray-200' : 'text-gray-400 cursor-not-allowed'}`}>
-                            <ArrowUturnLeftIcon className="h-4 w-4" /> Undo
-                        </button>
-                        <button onClick={redo} disabled={!future.length}
-                            className={`flex items-center gap-1 text-sm px-3 py-1 border rounded ${future.length ? 'text-gray-700 hover:bg-gray-200' : 'text-gray-400 cursor-not-allowed'}`}>
-                            <ArrowUturnRightIcon className="h-4 w-4" /> Redo
-                        </button>
-                    </div>
+                    <div className="flex justify-end  mb-10"> </div>
+                    
+                   
 
                     <SectionHeader title="Course Content" />
 
