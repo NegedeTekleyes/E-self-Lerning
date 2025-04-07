@@ -1,6 +1,12 @@
 "use client";
 import React, { useMemo, useState } from "react";
+
+
+
 import {
+  PieChart,
+  Pie,
+  Cell,
   BarChart,
   LineChart,
   Bar,
@@ -156,22 +162,40 @@ const StudentsList = () => {
           </div>
         </div>
 
-        {/* Course Popularity Chart */}
-        <div className="bg-white rounded-lg p-6 shadow mb-8">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Course Popularity
-          </h3>
-          <div className="h-96 w-full"> {/* Increased the height */}
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={courseStats}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="count" fill="#8E1616" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+            {/* Course Popularity Pie Chart */}
+      <div className="bg-white rounded-lg p-6 shadow mb-8">
+        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+          Course Popularity
+        </h3>
+        <div className="h-96 w-full flex items-center justify-center">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={courseStats}
+                dataKey="count"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={120}
+                innerRadius={60}
+                fill="#8E1616"
+                label
+                isAnimationActive={true}
+                animationDuration={1000}
+              >
+                {courseStats.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={['#8E1616', '#D84040', '#FF9F66', '#FFC857', '#89CFF0', '#7D5BA6'][index % 6]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </div>
+      </div>
+
 
         {/* Daily Student Enrollment Chart as Line Graph */}
         <div className="bg-white rounded-lg p-6 shadow mb-8">
