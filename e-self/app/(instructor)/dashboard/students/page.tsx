@@ -23,6 +23,8 @@ type Student = {
   progress: number;
 };
 
+const COLORS = ["#8E1616", "#D84040", "#FF9F66", "#FFC857", "#89CFF0", "#7D5BA6"];
+
 const StudentsList = () => {
   const [search, setSearch] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("all");
@@ -85,9 +87,9 @@ const StudentsList = () => {
   ];
 
   const allCourses = useMemo(() => {
-    const courseSet = new Set<string>();
-    students.forEach((s) => s.enrolledCourses.forEach((c) => courseSet.add(c)));
-    return ["all", ...Array.from(courseSet)];
+    const courses = new Set<string>();
+    students.forEach((s) => s.enrolledCourses.forEach((c) => courses.add(c)));
+    return ["all", ...Array.from(courses)];
   }, [students]);
 
   const filteredStudents = useMemo(() => {
@@ -99,40 +101,42 @@ const StudentsList = () => {
         selectedCourse === "all" || s.enrolledCourses.includes(selectedCourse);
       return matchesSearch && matchesCourse;
     });
-  }, [search, selectedCourse, students]);
+  }, [search, selectedCourse]);
 
   const courseStats = useMemo(() => {
-    const courseMap = new Map<string, number>();
-    students.forEach((student) => {
-      student.enrolledCourses.forEach((course) => {
-        courseMap.set(course, (courseMap.get(course) || 0) + 1);
+    const map = new Map<string, number>();
+    students.forEach((s) => {
+      s.enrolledCourses.forEach((c) => {
+        map.set(c, (map.get(c) || 0) + 1);
       });
     });
-    return Array.from(courseMap, ([name, count]) => ({ name, count }));
+    return Array.from(map, ([name, count]) => ({ name, count }));
   }, [students]);
 
   const dailyEnrollments = useMemo(() => {
-    const dateMap = new Map<string, number>();
-    students.forEach((student) => {
-      const date = student.enrolledDate.split("T")[0];
-      dateMap.set(date, (dateMap.get(date) || 0) + 1);
+    const map = new Map<string, number>();
+    students.forEach(({ enrolledDate }) => {
+      const date = enrolledDate.split("T")[0];
+      map.set(date, (map.get(date) || 0) + 1);
     });
-    return Array.from(dateMap, ([date, count]) => ({ date, count }));
+    return Array.from(map, ([date, count]) => ({ date, count })).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
   }, [students]);
 
   return (
     <div className="bg-gray-50 min-h-screen p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-          <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2 mb-4 sm:mb-0">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
             <UserCircleIcon className="h-7 w-7 text-red-600" />
             Enrolled Students
           </h1>
         </div>
 
-        {/* Search + Course Filter */}
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {/* Search + Filter */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <input
             type="text"
             placeholder="Search by name or email..."
@@ -157,51 +161,42 @@ const StudentsList = () => {
           </div>
         </div>
 
-        {/* Course Popularity Chart */}
-        <div className="bg-white rounded-lg p-6 shadow mb-8">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Course Popularity
-          </h3>
-          <div className="h-96 w-full flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={courseStats}
-                  dataKey="count"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={120}
-                  innerRadius={60}
-                  label
-                  isAnimationActive
-                >
-                  {courseStats.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={[
-                        "#8E1616",
-                        "#D84040",
-                        "#FF9F66",
-                        "#FFC857",
-                        "#89CFF0",
-                        "#7D5BA6",
-                      ][index % 6]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        {/* Pie Chart */}
+{/* Pie Chart */}
+<div className="bg-white rounded-lg p-6 shadow">
+  <h3 className="text-lg font-semibold text-gray-700 mb-4">
+    Course Enrollment Distribution
+  </h3>
+  <div className="h-96">
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={courseStats}
+          dataKey="count"
+          nameKey="name"
+          cx="50%"
+          cy="50%"
+          outerRadius={120}
+          innerRadius={60}
+          isAnimationActive
+          label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+        >
+          {courseStats.map((_, i) => (
+            <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
+  </div>
+</div>
 
-        {/* Enrollment Over Time Chart */}
-        <div className="bg-white rounded-lg p-6 shadow mb-8">
-          <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Student Enrollment by Day
-          </h3>
-          <div className="h-96 w-full">
+
+
+        {/* Line Chart */}
+        <div className="bg-white rounded-lg p-6 shadow">
+          <h3 className="text-lg font-semibold text-gray-700 mb-4">Student Enrollment by Day</h3>
+          <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={dailyEnrollments}>
                 <XAxis dataKey="date" />
@@ -213,9 +208,9 @@ const StudentsList = () => {
           </div>
         </div>
 
-        {/* Students Table */}
-        <div className="overflow-x-auto rounded-xl shadow-lg">
-          <table className="min-w-full bg-white text-sm text-left">
+        {/* Student Table */}
+        <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
+          <table className="min-w-full text-sm text-left">
             <thead className="bg-gradient-to-r from-indigo-50 to-purple-100 text-gray-700">
               <tr>
                 <th className="px-4 py-3 font-medium">#</th>
@@ -225,23 +220,19 @@ const StudentsList = () => {
                 <th className="px-4 py-3 font-medium">Category</th>
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Enrolled Date</th>
-                <th className="px-4 py-3 font-medium">Progress</th>
+                <th className="px-4 py-3 font-medium">Progress (%)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {filteredStudents.map((student, index) => (
-                <tr key={index}>
-                  <td className="px-4 py-3">{index + 1}</td>
+              {filteredStudents.map((student, i) => (
+                <tr key={i}>
+                  <td className="px-4 py-3">{i + 1}</td>
                   <td className="px-4 py-3">{student.name}</td>
                   <td className="px-4 py-3">{student.email}</td>
-                  <td className="px-4 py-3">
-                    {student.enrolledCourses.join(", ")}
-                  </td>
+                  <td className="px-4 py-3">{student.enrolledCourses.join(", ")}</td>
                   <td className="px-4 py-3">{student.category}</td>
                   <td className="px-4 py-3">{student.status}</td>
-                  <td className="px-4 py-3">
-                    {new Date(student.enrolledDate).toLocaleDateString()}
-                  </td>
+                  <td className="px-4 py-3">{student.enrolledDate}</td>
                   <td className="px-4 py-3">{student.progress}%</td>
                 </tr>
               ))}
