@@ -14,7 +14,12 @@ export default function Page() {
       value: "12",
       onClick: () => router.push("/dashboard/total-courses"),
     },
-    { icon: FaUserGraduate, title: "Total Students", value: "1,245" },
+    {
+      icon: FaUserGraduate,
+      title: "Total Students",
+      value: "1,245",
+      onClick: () => router.push("/dashboard/students"),  // Navigate to the students page
+    },
     { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" },
   ];
 
