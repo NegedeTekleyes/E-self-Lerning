@@ -161,56 +161,56 @@ const StudentsList = () => {
                     </div>
                 </div>
                 <div className="bg-white rounded-2xl p-6 shadow-lg">
-                    <h3 className="text-xl font-bold text-gray-800 mb-6">
-                        Enrollment Analytics
-                    </h3>
+    <h3 className="text-xl font-bold text-gray-800 mb-6">
+        Enrollment Analytics
+    </h3>
 
-                    <div className="flex flex-col lg:flex-row gap-10">
-                        {/* Pie Chart */}
-                        <div className="flex-1 h-[32rem] sm:h-[36rem] md:h-[40rem] lg:h-[28rem]">
-                            <h4 className="text-md font-semibold text-gray-600 mb-4">
-                                Course Enrollment Distribution
-                            </h4>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                    <Pie
-                                        data={courseStats}
-                                        dataKey="count"
-                                        nameKey="name"
-                                        cx="50%"
-                                        cy="50%"
-                                        outerRadius={130}
-                                        innerRadius={70}
-                                        isAnimationActive
-                                        label={({ name, percent }) =>
-                                            `${name} ${(percent * 100).toFixed(0)}%`
-                                        }
-                                    >
-                                        {courseStats.map((_, i) => (
-                                            <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip />
-                                </PieChart>
-                            </ResponsiveContainer>
-                        </div>
+    <div className="flex flex-col lg:flex-row gap-10">
+        {/* Pie Chart */}
+        <div className="flex-1 h-[40rem] sm:h-[190rem] md:h-[100rem] lg:h-[28rem]">
+            <h4 className="text-md font-semibold text-gray-600 mb-4">
+                Course Enrollment Distribution
+            </h4>
+            <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                    <Pie
+                        data={courseStats}
+                        dataKey="count"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={130}
+                        innerRadius={70}
+                        isAnimationActive
+                        label={({ name, percent }) =>
+                            `${name} ${(percent * 100).toFixed(0)}%`
+                        }
+                    >
+                        {courseStats.map((_, i) => (
+                            <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Tooltip />
+                </PieChart>
+            </ResponsiveContainer>
+        </div>
 
-                        {/* Line Chart */}
-                        <div className="flex-1 h-[32rem] sm:h-[36rem] md:h-[40rem] lg:h-[28rem]">
-                            <h4 className="text-md font-semibold text-gray-600 mb-4">
-                                Student Enrollment by Day
-                            </h4>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={dailyEnrollments}>
-                                    <XAxis dataKey="date" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Line type="monotone" dataKey="count" stroke="#8E1616" />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-                </div>
+        {/* Line Chart */}
+        <div className="flex-1 h-[40rem] sm:h-[190rem] md:h-[100rem] lg:h-[28rem]">
+            <h4 className="text-md font-semibold text-gray-600 mb-4">
+                Student Enrollment by Day
+            </h4>
+            <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={dailyEnrollments}>
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="count" stroke="#8E1616" />
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
+    </div>
+</div>
 
                 {/* Student Table */}
                 <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
