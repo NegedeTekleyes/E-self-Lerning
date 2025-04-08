@@ -1,189 +1,246 @@
+"use client";
 import React from 'react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-const Dashboard = () => {
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+interface Invoice {
+  number: string;
+  to: string;
+  date: string;
+  amount: number;
+  status: 'Due' | 'Paid' | 'Overdue';
+}
+
+interface Transaction {
+  cardType: 'Mastercard' | 'VISA';
+  name: string;
+  expiry: string;
+  amount: number;
+}
+
+const recentInvoices: Invoice[] = [
+  { number: 'INV-0012', to: 'Bruno Marks', date: '10 Oct 2023 | 09:00 PM', amount: 1056, status: 'Due' },
+  { number: 'INV-0015', to: 'Simon Orion', date: '11 Oct 2023 | 02:00 AM', amount: 1799, status: 'Paid' },
+  { number: 'INV-0014', to: 'Annalisa', date: '12 Oct 2023 | 12:00 PM', amount: 1056, status: 'Paid' },
+];
+
+const recentTransactions: Transaction[] = [
+  { cardType: 'Mastercard', name: 'Bruno Marks', expiry: 'Expiry 11/2023', amount: -192 },
+  { cardType: 'VISA', name: 'Bruno Marks', expiry: 'Expiry 11/2023', amount: -110 },
+];
+
+const cashFlowData = {
+  labels: ['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15', 'Oct 16', 'Oct 17'],
+  datasets: [
+    {
+      label: 'Profit',
+      data: [20, 35, 25, 40, 30, 45, 35, 50],
+      backgroundColor: '#a7f3d0', // Tailwind's green-200
+    },
+    {
+      label: 'Income',
+      data: [50, 60, 70, 65, 75, 80, 70, 85],
+      backgroundColor: '#6ee7b7', // Tailwind's green-400
+    },
+    {
+      label: 'Expand',
+      data: [30, 25, 45, 25, 45, 35, 35, 20],
+      backgroundColor: '#34d399', // Tailwind's green-600
+    },
+  ],
+};
+
+const CashFlowAnalytics = () => {
+  const options: any = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Cash Flow analytics',
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: (value: number) => `$${value}k`,
+        },
+      },
+    },
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Saving Summary */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">Saving Summary</h2>
-            <div className="relative">
-              <button
-                className="text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
-                aria-expanded="false"
-                aria-haspopup="true"
-              >
-                This month
-                <svg className="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              {/* Dropdown content (optional) */}
-            </div>
-          </div>
-          {/* Placeholder for the line chart */}
-          <div className="w-full h-32 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
-            {/* Replace this with your actual chart component */}
-            <span>Line Chart Placeholder</span>
-          </div>
+    <div className="bg-white rounded-lg shadow p-6">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">Cash Flow analytics</h2>
+      <div className="flex items-center mb-2">
+        <span className="text-2xl font-bold text-green-600">$524,231</span>
+        <span className="ml-2 text-sm text-green-500">16.5%</span>
+      </div>
+      <div className="flex items-center space-x-4 mb-4">
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-green-200 mr-1"></div>
+          <span className="text-sm text-gray-600">Profit</span>
         </div>
-
-        {/* Saving Goal */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">Saving Goal</h2>
-          </div>
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <div className="flex items-center text-sm text-gray-600">
-                <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 8v1m0-8c-1.11 0-2.08.402-2.599 1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Target Achieved
-              </div>
-              <p className="text-lg font-semibold text-gray-800">$101.00</p>
-            </div>
-            <div>
-              <div className="flex items-center text-sm text-gray-600">
-                <svg className="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                This month Target
-              </div>
-              <p className="text-lg font-semibold text-gray-800">$821.00</p>
-            </div>
-          </div>
-          {/* Placeholder for the gauge chart */}
-          <div className="relative w-32 h-16 mx-auto">
-            <div className="absolute inset-0 bg-gray-200 rounded-full"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
-                {/* Simulate gauge needle */}
-                <div
-                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-green-500 h-full rounded-full origin-bottom transition-transform duration-300"
-                  style={{ width: '6px', transform: 'rotate(60deg)' }} // Adjust rotation based on progress
-                ></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs font-semibold text-gray-700">
-                  {/* Display percentage or progress */}
-                  <span>{Math.round((101 / 821) * 100)}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center text-sm text-gray-600 mt-2">Target vs Achievement</div>
-          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline w-full">
-            Add New
-          </button>
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-green-400 mr-1"></div>
+          <span className="text-sm text-gray-600">Income</span>
         </div>
-
-        {/* Expenses Goals by Category */}
-        <div className="bg-white rounded-lg shadow-md p-6 col-span-1 md:col-span-2 lg:col-span-3">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-700">Expenses Goals by Category</h2>
-            {/* Optional: Add more controls here */}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {/* Housing */}
-            <div className="bg-green-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-green-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-green-700">Housing</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-
-            {/* Feed */}
-            <div className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-gray-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7v-1c0-1.1.9-2 2-2h12a2 2 0 012 2v1m-1 5h-.5m0 0H9m.00 0l-.5-.5M12 16.5l-4.5-4.5m0 0L12 7.5m0 0l4.5 4.5M12 16.5l4.5-4.5m-4.5 4.5v-2.5M12 7.5v2.5"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">Feed</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-
-            {/* Transportation */}
-            <div className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-gray-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17l-5 5m0 0l5-5m-5 5v-5a1 1 0 011-1h3m9 1l-5 5m0 0l5-5m-5 5v-5a1 1 0 011-1h3m-9 0h9"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">Transportation</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-
-            {/* Entertainment */}
-            <div className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-gray-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-2 4l-2 2m0 0l-2-2m2 2l2 2m-2-2l2-2"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">Entertainment</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-
-            {/* Shopping */}
-            <div className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-gray-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">Shopping</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-
-            {/* Others */}
-            <div className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-gray-500 text-white rounded-md flex items-center justify-center mr-2">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">Others</h3>
-              </div>
-              <p className="text-xl font-bold text-gray-800">$101.00</p>
-              <button className="mt-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus-shadow-outline text-sm w-full">
-                Adjust
-              </button>
-            </div>
-          </div>
+        <div className="flex items-center">
+          <div className="w-3 h-3 rounded-full bg-green-600 mr-1"></div>
+          <span className="text-sm text-gray-600">Expand</span>
         </div>
+      </div>
+      <div className="h-64">
+        <Bar options={options} data={cashFlowData} />
       </div>
     </div>
   );
 };
+
+const RecentInvoiceBilling = () => (
+  <div className="bg-white rounded-lg shadow p-6">
+    <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Invoice & Billing</h2>
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+            <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {recentInvoices.map((invoice) => (
+            <tr key={invoice.number}>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{invoice.number}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{invoice.to}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{invoice.date}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">${invoice.amount}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                <span
+                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    invoice.status === 'Due' ? 'bg-yellow-100 text-yellow-800' :
+                    invoice.status === 'Paid' ? 'bg-green-100 text-green-800' :
+                    'bg-red-100 text-red-800'
+                  }`}
+                >
+                  {invoice.status}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const RecentTransactions = () => (
+  <div className="bg-white rounded-lg shadow p-6">
+    <h2 className="text-xl font-semibold text-gray-800 mb-4">Recent Transaction</h2>
+    <ul className="space-y-3">
+      {recentTransactions.map((transaction, index) => (
+        <li key={index} className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            {transaction.cardType === 'Mastercard' && (
+              <div className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center">MC</div>
+            )}
+            {transaction.cardType === 'VISA' && (
+              <div className="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center">VISA</div>
+            )}
+            <div>
+              <p className="text-sm font-medium text-gray-900">{transaction.name}</p>
+              <p className="text-xs text-gray-500">{transaction.expiry}</p>
+            </div>
+          </div>
+          <span className={`text-sm font-semibold ${transaction.amount < 0 ? 'text-red-500' : 'text-green-500'}`}>
+            ${transaction.amount}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const Dashboard = () => (
+  <div className="bg-gray-100 min-h-screen p-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-500">Balance</p>
+            <p className="text-2xl font-bold text-gray-800">$1,200 USD</p>
+          </div>
+          <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md">
+            Transfer <span className="ml-1 text-sm">&#8594;</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Cash Flow Analytics Component */}
+      <CashFlowAnalytics />
+
+      {/* Recent Invoice & Billing Component */}
+      <RecentInvoiceBilling />
+
+      {/* Recent Transactions Component */}
+      <RecentTransactions />
+
+      {/* Placeholder for the top right card */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <p className="text-sm font-medium text-gray-500">Card Holder</p>
+        <p className="text-lg font-semibold text-gray-800">Robert Burner</p>
+        <p className="text-xs text-gray-500">**** **** **** 4567</p>
+        <p className="text-xs text-gray-500">12/24</p>
+      </div>
+
+      {/* Placeholder for All Transactions */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-gray-800">All Transaction</h2>
+          <button className="text-indigo-500 text-sm font-semibold">All Transaction</button>
+        </div>
+        <ul>
+          <li className="flex items-center justify-between py-2">
+            <span className="text-gray-700">+ $192.00</span>
+            <span className="text-gray-500 text-sm">10 Oct</span>
+          </li>
+          <li className="flex items-center justify-between py-2">
+            <span className="text-gray-700">- $110.00</span>
+            <span className="text-gray-500 text-sm">09 Oct</span>
+          </li>
+          {/* Add more transactions here */}
+        </ul>
+      </div>
+
+      {/* Placeholder for Choose Recipient */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">Choose Recipient</h2>
+        {/* Add recipient selection UI here */}
+      </div>
+    </div>
+
+    {/* Smaller Cash Flow Analytics for smaller screens */}
+    <div className="fixed bottom-0 left-0 w-full bg-white shadow py-4 px-6 md:hidden">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-gray-500">Cash Flow analytics</p>
+          <div className="flex items-center">
+            <span className="text-lg font-bold text-green-600">$524,231</span>
+            <span className="ml-1 text-xs text-green-500">16.5%</span>
+          </div>
+        </div>
+        {/* You could add a mini chart or a button to view full analytics */}
+      </div>
+    </div>
+  </div>
+);
 
 export default Dashboard;

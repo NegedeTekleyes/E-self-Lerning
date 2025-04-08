@@ -167,7 +167,7 @@ const StudentsList = () => {
 
     <div className="flex flex-col lg:flex-row gap-10">
         {/* Pie Chart */}
-        <div className="flex-1 h-[40rem] sm:h-[190rem] md:h-[100rem] lg:h-[28rem]">
+        <div className="flex-1 h-[40rem] sm:h-[390rem] md:h-[350rem] lg:h-[28rem]">
             <h4 className="text-md font-semibold text-gray-600 mb-4">
                 Course Enrollment Distribution
             </h4>
@@ -196,7 +196,7 @@ const StudentsList = () => {
         </div>
 
         {/* Line Chart */}
-        <div className="flex-1 h-[40rem] sm:h-[190rem] md:h-[100rem] lg:h-[28rem]">
+        <div className="flex-1 h-[40rem] sm:h-[390rem] md:h-[350rem] lg:h-[28rem]">
             <h4 className="text-md font-semibold text-gray-600 mb-4">
                 Student Enrollment by Day
             </h4>
