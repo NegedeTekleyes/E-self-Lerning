@@ -11,6 +11,7 @@ const InstructorSignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
   const { login } = useAuth();  // Use context for login if needed
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password === confirmPassword) {
@@ -35,8 +36,8 @@ const InstructorSignUp = () => {
         </div>
 
         {/* Right side - Sign Up Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
-          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">student Sign Up</h2>
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[50vh]">
+          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <input
