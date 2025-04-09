@@ -36,8 +36,8 @@ const SignUp = () => {
         </div>
 
         {/* Right side - Sign Up Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh]">
-          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh] xl:min-h-[80vh]">
+          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Student Sign Up</h2>
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <input
