@@ -27,7 +27,7 @@ const InstructorSignUp = () => {
         {/* Left side - Image */}
         <div className="hidden sm:block sm:w-1/2 relative">
           <Image
-            src="/signup1.png"
+            src="/signup.png"
             alt="Sign Up Illustration"
             fill
             className="object-cover"
@@ -36,7 +36,7 @@ const InstructorSignUp = () => {
 
         {/* Right side - Sign Up Form */}
         <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
-          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
+          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">student Sign Up</h2>
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <input
