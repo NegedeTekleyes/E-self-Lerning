@@ -21,7 +21,7 @@ const SignIn = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
-      <div className="flex flex-col sm:flex-row w-full max-w-4xl lg:w-3/4 xl:w-1/2 bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="flex flex-col sm:flex-row w-full max-w-5xl lg:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
         {/* Left Side - Image */}
         <div className="hidden sm:block sm:w-1/2 relative">
           <Image
@@ -33,8 +33,8 @@ const SignIn = () => {
         </div>
 
         {/* Right Side - Sign In Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[50vh]">
-          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Student Sign In</h2>
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh]">
+          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Student Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>

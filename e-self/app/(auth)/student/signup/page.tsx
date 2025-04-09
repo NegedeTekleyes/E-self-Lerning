@@ -5,7 +5,7 @@ import { useAuth } from '../../../context/AuthContext';  // If using context for
 import Link from 'next/link';
 import Image from 'next/image';
 
-const InstructorSignUp = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,11 +24,11 @@ const InstructorSignUp = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
-      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="flex flex-col sm:flex-row w-full max-w-5xl lg:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
         {/* Left side - Image */}
         <div className="hidden sm:block sm:w-1/2 relative">
           <Image
-            src="/signup.png"
+            src="/signin.png"
             alt="Sign Up Illustration"
             fill
             className="object-cover"
@@ -36,8 +36,8 @@ const InstructorSignUp = () => {
         </div>
 
         {/* Right side - Sign Up Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[50vh]">
-          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh]">
+          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <input
@@ -84,4 +84,4 @@ const InstructorSignUp = () => {
   );
 };
 
-export default InstructorSignUp;
+export default SignUp;
