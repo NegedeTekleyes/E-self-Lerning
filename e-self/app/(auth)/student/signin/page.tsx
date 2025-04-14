@@ -34,7 +34,7 @@ const SignIn = () => {
 
         {/* Right Side - Sign In Form */}
         <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh] xl:min-h-[80vh]">
-          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Student Sign In</h2>
+          <h2 className="text-3xl font-bold text-center mb- text-[#1D1616]">Student Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>

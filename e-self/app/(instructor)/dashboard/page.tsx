@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const router = useRouter();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
   const stats = [
     {
       icon: FaBook,
@@ -18,10 +17,16 @@ export default function Page() {
       icon: FaUserGraduate,
       title: "Total Students",
       value: "1,245",
-      onClick: () => router.push("/dashboard/students"),  // Navigate to the students page
+      onClick: () => router.push("/dashboard/students"),
     },
-    { icon: FaMoneyBillWave, title: "Total Earnings", value: "$5,320" },
+    {
+      icon: FaMoneyBillWave,
+      title: "Total Earnings",
+      value: "$5,320",
+      onClick: () => router.push("/dashboard/balance"),
+    },
   ];
+  
 
   return (
     <div className="p-6 bg-[#EEEEEE] min-h-screen">

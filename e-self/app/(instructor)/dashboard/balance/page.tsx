@@ -1,16 +1,21 @@
-"use client";
+import SummaryChart from "../../../(components)/instructor/SummaryChart";
+import SavingGoal from "../../../(components)/instructor/SavingGoal";
+import ExpenseGrid from "../../../(components)/instructor/ExpenseGrid";
 
-import React from "react";
-
-export default function Balance() {
-  const balance = 5320; // Example balance, replace with real data
+export default function DashboardPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold text-gray-800">Earnings Balance</h1>
-      <div className="mt-6">
-        <p className="text-xl">Total Earnings: ${balance}</p>
-        {/* You can add charts or other information here */}
+    <main className="p-6 bg-gray-100 min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 bg-white rounded-2xl shadow p-4">
+          <h2 className="text-xl font-semibold mb-4">Saving Summary</h2>
+          <SummaryChart />
+        </div>
+        <SavingGoal />
       </div>
-    </div>
+
+      <div className="mt-8">
+        <ExpenseGrid />
+      </div>
+    </main>
   );
 }
