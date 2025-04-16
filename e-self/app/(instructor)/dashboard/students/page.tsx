@@ -14,84 +14,19 @@ import {
 } from "recharts";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { Card, CardContent } from "@/components/ui/card";
+import { students as studentData, Student } from "@/app/data/student"; // Import student data
 
 const COLORS = ["#8E1616", "#D84040", "#FF9F66", "#FFC857", "#89CFF0", "#7D5BA6"];
-
-type Student = {
-  name: string;
-  email: string;
-  enrolledCourses: string[];
-  category: "Beginner" | "Intermediate" | "Advanced";
-  status: "Active" | "Inactive";
-  enrolledDate: string;
-  progress: number;
-};
 
 const StudentsList = () => {
   const [search, setSearch] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("all");
-
-  const students: Student[] = [
-    {
-      name: "John Doe",
-      email: "john@example.com",
-      enrolledCourses: ["React Basics", "Node.js Mastery"],
-      category: "Beginner",
-      status: "Active",
-      enrolledDate: "2024-12-15",
-      progress: 75,
-    },
-    {
-      name: "Jane Smith",
-      email: "jane@example.com",
-      enrolledCourses: ["Node.js Mastery"],
-      category: "Advanced",
-      status: "Inactive",
-      enrolledDate: "2024-11-22",
-      progress: 40,
-    },
-    {
-      name: "Tom Jerry",
-      email: "tom@example.com",
-      enrolledCourses: ["React Basics", "Video Editing"],
-      category: "Intermediate",
-      status: "Active",
-      enrolledDate: "2025-01-10",
-      progress: 55,
-    },
-    {
-      name: "Aliya Ray",
-      email: "aliya@example.com",
-      enrolledCourses: ["Video Editing"],
-      category: "Beginner",
-      status: "Active",
-      enrolledDate: "2025-03-02",
-      progress: 90,
-    },
-    {
-      name: "Tomy Jerry",
-      email: "tomy@example.com",
-      enrolledCourses: ["React Basics", "Video Editing"],
-      category: "Intermediate",
-      status: "Active",
-      enrolledDate: "2025-01-10",
-      progress: 55,
-    },
-    {
-      name: "Aliooa Ray",
-      email: "aliyua@example.com",
-      enrolledCourses: ["Video Editing"],
-      category: "Beginner",
-      status: "Active",
-      enrolledDate: "2025-03-02",
-      progress: 90,
-    },
-  ];
+  const students: Student[] = studentData; // Use imported student data
 
   const allCourses = useMemo(() => {
-    const courses = new Set<string>();
-    students.forEach((s) => s.enrolledCourses.forEach((c) => courses.add(c)));
-    return ["all", ...Array.from(courses)];
+    const set = new Set<string>();
+    students.forEach((s) => s.enrolledCourses.forEach((c) => set.add(c)));
+    return ["all", ...Array.from(set)];
   }, [students]);
 
   const filteredStudents = useMemo(() => {
@@ -103,16 +38,16 @@ const StudentsList = () => {
         selectedCourse === "all" || s.enrolledCourses.includes(selectedCourse);
       return matchesSearch && matchesCourse;
     });
-  }, [search, selectedCourse]);
+  }, [search, selectedCourse, students]);
 
   const courseStats = useMemo(() => {
-    const map = new Map<string, number>();
-    students.forEach((s) => {
-      s.enrolledCourses.forEach((c) => {
-        map.set(c, (map.get(c) || 0) + 1);
-      });
-    });
-    return Array.from(map, ([name, count]) => ({ name, count }));
+    const counts = new Map<string, number>();
+    students.forEach((s) =>
+      s.enrolledCourses.forEach((c) =>
+        counts.set(c, (counts.get(c) || 0) + 1)
+      )
+    );
+    return Array.from(counts, ([name, count]) => ({ name, count }));
   }, [students]);
 
   const dailyEnrollments = useMemo(() => {
@@ -129,12 +64,12 @@ const StudentsList = () => {
   return (
     <div className="bg-gray-50 min-h-screen p-6">
       <div className="max-w-7xl mx-auto space-y-8">
-        <div className="flex items-center justify-between">
+        <header className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
             <UserCircleIcon className="h-7 w-7 text-red-600" />
             Enrolled Students
           </h1>
-        </div>
+        </header>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <input
@@ -149,7 +84,7 @@ const StudentsList = () => {
               <button
                 key={course}
                 onClick={() => setSelectedCourse(course)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition whitespace-nowrap ${
                   selectedCourse === course
                     ? "bg-red-600 text-white"
                     : "bg-white text-gray-700 hover:bg-gray-100"
@@ -166,8 +101,8 @@ const StudentsList = () => {
             <h3 className="text-xl font-bold text-gray-800 mb-6">
               Enrollment Analytics
             </h3>
-            <div className="flex flex-col lg:flex-row gap-10">
-              <div className="flex-1 h-[28rem]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              <div className="h-96 w-full">
                 <h4 className="text-md font-semibold text-gray-600 mb-4">
                   Course Enrollment Distribution
                 </h4>
@@ -179,8 +114,8 @@ const StudentsList = () => {
                       nameKey="name"
                       cx="50%"
                       cy="50%"
-                      outerRadius={130}
                       innerRadius={70}
+                      outerRadius={120}
                       label={({ name, percent }) =>
                         `${name} ${(percent * 100).toFixed(0)}%`
                       }
@@ -193,7 +128,8 @@ const StudentsList = () => {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex-1 h-[28rem]">
+
+              <div className="h-96 w-full">
                 <h4 className="text-md font-semibold text-gray-600 mb-4">
                   Student Enrollment by Day
                 </h4>
@@ -202,10 +138,72 @@ const StudentsList = () => {
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
-                    <Line type="monotone" dataKey="count" stroke="#8E1616" />
+                    <Line type="monotone" dataKey="count" stroke="#8E1616" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Student List</h3>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Enrolled Courses
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Enrolled Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Progress
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredStudents.map((student) => (
+                    <tr key={student.email}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {student.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.enrolledCourses.join(", ")}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.category}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.status}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.enrolledDate}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {student.progress}%
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>
