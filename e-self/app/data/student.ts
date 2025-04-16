@@ -101,3 +101,12 @@ export const studentData = [
     enrolledDate: "2023-10-25",
   },
 ];
+export type Student = {
+  name: string;
+  email: string;
+  enrolledCourses: string[];
+  category: string;
+  status: string;
+  progress: number;
+  enrolledDate: string;
+};

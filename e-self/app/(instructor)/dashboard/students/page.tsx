@@ -21,7 +21,8 @@ const COLORS = ["#8E1616", "#D84040", "#FF9F66", "#FFC857", "#89CFF0", "#7D5BA6"
 const StudentsList = () => {
   const [search, setSearch] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("all");
-  const students: Student[] = studentsData.map(student => ({ // Adapt the data structure
+
+  const students: Student[] = studentsData.map((student) => ({
     name: student.name,
     email: student.email,
     enrolledCourses: student.enrolledCourses,
@@ -61,7 +62,6 @@ const StudentsList = () => {
   const dailyEnrollments = useMemo(() => {
     const map = new Map<string, number>();
     students.forEach(({ enrolledDate }) => {
-      // Assuming enrolledDate is in "YYYY-MM-DD" format
       map.set(enrolledDate, (map.get(enrolledDate) || 0) + 1);
     });
     return Array.from(map, ([date, count]) => ({ date, count })).sort(
@@ -218,17 +218,6 @@ const StudentsList = () => {
       </div>
     </div>
   );
-};
-
-// Define the Student type to match your data structure
-type Student = {
-  name: string;
-  email: string;
-  enrolledCourses: string[];
-  category: string; // Assuming category is a string like "Web Development", "Design"
-  status: string;
-  progress: number;
-  enrolledDate: string;
 };
 
 export default StudentsList;
