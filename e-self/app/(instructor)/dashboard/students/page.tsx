@@ -14,14 +14,22 @@ import {
 } from "recharts";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { Card, CardContent } from "@/components/ui/card";
-import { students as studentData, Student } from "@/app/data/student"; // Import student data
+import { studentData as studentsData, Student } from "@/app/data/student"; // Import student data
 
 const COLORS = ["#8E1616", "#D84040", "#FF9F66", "#FFC857", "#89CFF0", "#7D5BA6"];
 
 const StudentsList = () => {
   const [search, setSearch] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("all");
-  const students: Student[] = studentData; // Use imported student data
+  const students: Student[] = studentsData.map(student => ({ // Adapt the data structure
+    name: student.name,
+    email: student.email,
+    enrolledCourses: student.enrolledCourses,
+    category: student.category,
+    status: student.status,
+    progress: student.progress,
+    enrolledDate: student.enrolledDate,
+  }));
 
   const allCourses = useMemo(() => {
     const set = new Set<string>();
@@ -53,8 +61,8 @@ const StudentsList = () => {
   const dailyEnrollments = useMemo(() => {
     const map = new Map<string, number>();
     students.forEach(({ enrolledDate }) => {
-      const date = enrolledDate.split("T")[0];
-      map.set(date, (map.get(date) || 0) + 1);
+      // Assuming enrolledDate is in "YYYY-MM-DD" format
+      map.set(enrolledDate, (map.get(enrolledDate) || 0) + 1);
     });
     return Array.from(map, ([date, count]) => ({ date, count })).sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -210,6 +218,17 @@ const StudentsList = () => {
       </div>
     </div>
   );
+};
+
+// Define the Student type to match your data structure
+type Student = {
+  name: string;
+  email: string;
+  enrolledCourses: string[];
+  category: string; // Assuming category is a string like "Web Development", "Design"
+  status: string;
+  progress: number;
+  enrolledDate: string;
 };
 
 export default StudentsList;
