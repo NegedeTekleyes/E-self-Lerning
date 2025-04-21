@@ -15,7 +15,7 @@ const InstructorSignUp = () => {
     e.preventDefault();
     if (password === confirmPassword) {
       login(email, 'instructor'); // Set the role here
-      router.push('/landing'); //redirect to the dashboard.
+      router.push('/dashboard'); //redirect to the dashboard.
     } else {
       alert('Passwords do not match!');
     }

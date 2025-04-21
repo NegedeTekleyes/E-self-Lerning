@@ -1,11 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { FaBook, FaUserGraduate, FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
+import {
+  FaBook,
+  FaUserGraduate,
+  FaMoneyBillWave,
+  FaUserCircle,
+} from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function Page() {
   const router = useRouter();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
   const stats = [
     {
       icon: FaBook,
@@ -26,7 +33,6 @@ export default function Page() {
       onClick: () => router.push("/dashboard/balance"),
     },
   ];
-  
 
   return (
     <div className="p-6 bg-[#EEEEEE] min-h-screen">
@@ -89,39 +95,45 @@ export default function Page() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
         {stats.map((stat, index) => (
-          <div
+          <Card
             key={index}
-            className="bg-white p-6 rounded-lg shadow-lg flex items-center cursor-pointer hover:shadow-xl transition"
             onClick={stat.onClick}
+            className="cursor-pointer hover:shadow-xl transition border-none bg-white"
           >
-            <stat.icon className="text-4xl text-[#8E1616]" />
-            <div className="ml-4">
+            <CardHeader>
+              <stat.icon className="text-4xl text-[#8E1616]" />
+            </CardHeader>
+            <CardContent>
               <p className="text-lg font-medium text-[#1D1616]">{stat.title}</p>
               <p className="text-2xl font-bold text-[#1D1616]">{stat.value}</p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
       {/* Recent Courses */}
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Recent Courses</h2>
-        <ul className="space-y-4">
-          {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map(
-            (course, index) => (
-              <li
-                key={index}
-                className="bg-[#F9F9F9] p-4 rounded-lg shadow-sm flex justify-between items-center"
-              >
-                <span className="font-medium text-[#1D1616]">{course}</span>
-                <span className="text-[#1D1616]/70">
-                  {Math.floor(Math.random() * 200) + 50} Students
-                </span>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
+      <Card className="mt-8 shadow-md">
+        <CardHeader>
+          <h2 className="text-xl font-semibold text-[#1D1616]">Recent Courses</h2>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-4">
+            {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map(
+              (course, index) => (
+                <li
+                  key={index}
+                  className="bg-[#F9F9F9] p-4 rounded-lg shadow-sm flex justify-between items-center"
+                >
+                  <span className="font-medium text-[#1D1616]">{course}</span>
+                  <span className="text-[#1D1616]/70">
+                    {Math.floor(Math.random() * 200) + 50} Students
+                  </span>
+                </li>
+              )
+            )}
+          </ul>
+        </CardContent>
+      </Card>
 
       {/* Analytics Button */}
       <div className="mt-6 text-center">

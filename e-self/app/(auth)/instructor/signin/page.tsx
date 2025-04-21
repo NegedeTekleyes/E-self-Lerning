@@ -14,7 +14,7 @@ const InstructorSignIn = () => {
     e.preventDefault();
     if (email && password) {
       login(email, 'instructor'); // Set the role here
-      router.push('/landing'); //redirect to the dashboard.
+      router.push('/dashboard'); //redirect to the dashboard.
     }
   };
   return (
