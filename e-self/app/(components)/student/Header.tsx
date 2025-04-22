@@ -1,8 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { Search, X, Menu } from 'lucide-react';
 import Link from 'next/link';
+import { Search, X, Menu } from 'lucide-react';
 import CartButton from './CartButton';
 import { useAuth } from '../../context/AuthContext';
 import ProfileDropdown from './ProfileDropdown';
@@ -11,13 +12,18 @@ export default function Header() {
   const [search, setSearch] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
   const { user, logout } = useAuth();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  if (pathname === '/dashboard') {
-    return null; 
-  }
+  // Hide header on instructor pages
+  const hideOnPaths = [
+    '/dashboard',
+    '/instructor',
+    '/instructor/signin',
+    '/instructor/signup',
+  ];
+  if (hideOnPaths.some((path) => pathname.startsWith(path))) return null;
 
   const handleSearch = () => {
     if (search.trim()) {
@@ -26,12 +32,13 @@ export default function Header() {
   };
 
   return (
-    <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md gap-4 w-full relative z-50">
-      <Link href="/" className="text-xl font-bold min-w-fit">
+    <header className="flex items-center justify-between p-4 bg-[#EEEEEE] shadow-md w-full z-50">
+      <Link href="/" className="text-xl font-bold text-[#1D1616]">
         <span className="text-[#1D1616]">E</span>
         <span className="text-[#8E1616]">-Self</span>
       </Link>
 
+      {/* Search bar */}
       <div className="relative w-full max-w-2xl hidden lg:block">
         <input
           type="text"
@@ -43,42 +50,34 @@ export default function Header() {
         />
         {search && (
           <X
-            className="absolute right-10 top-2.5 cursor-pointer text-gray-500 hover:text-black"
+            className="absolute right-10 top-2.5 cursor-pointer text-gray-500"
             onClick={() => setSearch('')}
           />
         )}
         <Search className="absolute right-4 top-2.5 text-gray-500" />
       </div>
 
+      {/* Right-side buttons */}
       <div className="flex items-center gap-4">
-        <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-          <Search />
-        </button>
-
         <CartButton />
-
         <button className="lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
           <Menu />
         </button>
 
+        {/* Authenticated User */}
         {user ? (
-          <div className="hidden lg:flex items-center gap-4 relative">
+          <div className="hidden lg:flex items-center gap-4">
             {user.role === 'student' && (
               <>
-                <Link href="/my-courses" className="hover:text-[#8E1616]">
-                  My Courses
-                </Link>
-                <Link href="/profile" className="hover:text-[#8E1616]">
-                  Profile
-                </Link>
+                <Link href="/my-courses" className="hover:text-[#8E1616]">My Courses</Link>
+                <Link href="/profile" className="hover:text-[#8E1616]">Profile</Link>
               </>
             )}
-
             <button
+              className="flex items-center gap-2"
               onClick={() => setProfileOpen(!profileOpen)}
-              className="flex items-center gap-2 hover:text-[#8E1616]"
             >
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-[#1D1616] font-bold">
                 {user.email[0].toUpperCase()}
               </div>
             </button>
@@ -86,43 +85,19 @@ export default function Header() {
           </div>
         ) : (
           <div className="hidden lg:flex items-center gap-4">
-          
-            <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-              Instructor
-            </Link>
-
-            
-            <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-              Sign Up (Student)
-            </Link>
-            <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white">
-              Sign In (Student)
-            </Link>
+            <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Instructor</Link>
+            <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign Up</Link>
+            <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign In</Link>
           </div>
         )}
       </div>
 
+      {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-md p-4 flex flex-col gap-3 lg:hidden z-[60]">
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-700">Menu</span>
-            <button onClick={() => setMenuOpen(false)} className="text-gray-500 hover:text-black">
-              <X size={18} />
-            </button>
-          </div>
-          <hr className="my-2" />
-          
-       
-          <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
-            Instructor
-          </Link>
-
-          <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
-            Sign Up
-          </Link>
-          <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded hover:bg-[#D84040] text-white text-center">
-            Sign In
-          </Link>
+        <div className="absolute top-16 right-4 bg-white w-48 shadow-lg p-4 rounded-md flex flex-col gap-3 lg:hidden">
+          <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white text-center">Instructor</Link>
+          <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white text-center">Sign Up</Link>
+          <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded text-white text-center">Sign In</Link>
         </div>
       )}
     </header>

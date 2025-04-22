@@ -1,50 +1,32 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-export default function LandingHeader() {
+const LandingHeader = () => {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Optional: hide header on certain pages
-  if (pathname === "/instructor/signin" || pathname === "/instructor/signup") {
-    return null;
-  }
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 px-6 py-3 flex items-center justify-between transition-shadow ${
-        scrolled ? "shadow-md bg-white" : "bg-white"
-      }`}
-    >
-      <Link href="/dashboard" className="flex items-center gap-2">
-        <Image
-          src="/logo.svg"
-          alt="Instructor Logo"
-          width={40}
-          height={40}
-          className="object-contain"
-        />
-        <span className="text-xl font-semibold text-[#8E1616] hidden sm:inline">
-          Instructor Panel
-        </span>
-      </Link>
+    <header className="w-full bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/instructor/landing" className="text-2xl font-bold flex items-center">
+          <span className="text-[#1D1616]">E</span>
+          <span className="text-[#8E1616]">-Self</span>
+        </Link>
 
-      <div className="text-sm text-gray-600 hidden sm:block">
-        Welcome back!
+   
+
+        {/* Sign out */}
+        <Link
+          href="/instructor/signout"
+          className="px-4 py-2 border border-[#1D1616] rounded-md text-sm hover:bg-[#8E1616] hover:text-white transition"
+        >
+          Sign Out
+        </Link>
       </div>
     </header>
   );
-}
+};
+
+export default LandingHeader;
