@@ -1,44 +1,244 @@
 "use client";
+import React, { useState } from 'react';
 
-import React, { useState } from "react";
+const InstructorSettingsPage: React.FC = () => {
+  // State for demonstration (you'd manage actual data with hooks/state management)
+  const [profileName, setProfileName] = useState('John Doe');
+  const [profileBio, setProfileBio] = useState('Experienced educator in web development and design.');
+  const [email, setEmail] = useState('john.doe@example.com');
+  const [phone, setPhone] = useState('+1 123 456 7890');
+  const [teachingLanguage, setTeachingLanguage] = useState('English');
+  const [preferredCategories, setPreferredCategories] = useState<string[]>(['Technology', 'Design']);
+  const [enrollmentAlerts, setEnrollmentAlerts] = useState(true);
+  const [studentMessages, setStudentMessages] = useState(true);
+  const [paymentUpdates, setPaymentUpdates] = useState(false);
+  const [bankInfo, setBankInfo] = useState('**** **** **** 1234');
+  const [paymentMethod, setPaymentMethod] = useState('Bank Transfer'); // or 'Telebirr'
 
-export default function Settings() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // Placeholder functions for actions
+  const handleProfileEdit = () => {
+    alert('Edit Profile clicked');
+    // Implement profile editing logic (e.g., open a modal)
+  };
+
+  const handleChangePassword = () => {
+    alert('Change Password clicked');
+    // Implement change password logic (e.g., open a modal)
+  };
+
+  const handleViewEarnings = () => {
+    alert('View Earnings clicked');
+    // Navigate to earnings page
+  };
 
   const handleSave = () => {
-    console.log("Settings updated:", { email, password });
+    alert('Settings Saved!');
+    // Implement save logic (e.g., API call to update settings)
+  };
+
+  const handleCancel = () => {
+    alert('Changes Cancelled!');
+    // Implement cancel logic (e.g., reset form to initial state or navigate back)
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const options = Array.from(e.target.selectedOptions).map(option => option.value);
+    setPreferredCategories(options);
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold text-gray-800">Settings</h1>
-      <form className="mt-6 space-y-4">
-        <input
-          type="email"
-          placeholder="Update Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-        />
-        <input
-          type="password"
-          placeholder="Update Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg"
-        />
+    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">Instructor Settings</h1>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Sidebar (or top section on smaller screens) */}
+        <div className="lg:col-span-1 space-y-8">
+
+          {/* Profile Info */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Profile Info</h2>
+            <div className="flex items-center mb-4">
+              {/* Placeholder for Profile Picture */}
+              <img
+                src="https://via.placeholder.com/100" // Replace with actual profile picture URL
+                alt="Profile"
+                className="w-20 h-20 rounded-full mr-4 object-cover"
+              />
+              <div>
+                <p className="text-lg font-medium text-gray-900">{profileName}</p>
+                <p className="text-sm text-gray-600">{profileBio}</p>
+              </div>
+            </div>
+            <button
+              onClick={handleProfileEdit}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              Edit Profile
+            </button>
+          </div>
+
+          {/* Payment & Earnings */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Payment & Earnings</h2>
+            <div className="mb-4">
+              <p className="text-sm font-medium text-gray-600">Bank Information:</p>
+              <p className="text-gray-800">{bankInfo}</p>
+            </div>
+            <div className="mb-4">
+              <p className="text-sm font-medium text-gray-600">Payment Method:</p>
+              <p className="text-gray-800">{paymentMethod}</p>
+            </div>
+            <button
+              onClick={handleViewEarnings}
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+            >
+              View Earnings
+            </button>
+          </div>
+
+        </div>
+
+        {/* Right Content Area (or bottom section on smaller screens) */}
+        <div className="lg:col-span-2 space-y-8">
+
+          {/* Account Settings */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Account Settings</h2>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <button
+                onClick={handleChangePassword}
+                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+              >
+                Change Password
+              </button>
+            </div>
+          </div>
+
+          {/* Teaching Preferences */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Teaching Preferences</h2>
+            <div className="mb-4">
+              <label htmlFor="language" className="block text-sm font-medium text-gray-700">Teaching Language</label>
+              <select
+                id="language"
+                value={teachingLanguage}
+                onChange={(e) => setTeachingLanguage(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+                <option value="French">French</option>
+                {/* Add more languages as needed */}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="categories" className="block text-sm font-medium text-gray-700">Preferred Course Categories</label>
+              {/* Multi-select dropdown - basic implementation. A dedicated library might be better for complex UIs. */}
+              <select
+                id="categories"
+                multiple
+                value={preferredCategories}
+                onChange={handleCategoryChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-32" // Increased height for multiple selections
+              >
+                <option value="Technology">Technology</option>
+                <option value="Design">Design</option>
+                <option value="Business">Business</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Photography">Photography</option>
+                {/* Add more categories as needed */}
+              </select>
+            </div>
+          </div>
+
+          {/* Notification Settings */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Notification Settings</h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Enrollment Alerts</span>
+                <label htmlFor="enrollmentToggle" className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="enrollmentToggle"
+                    className="sr-only peer"
+                    checked={enrollmentAlerts}
+                    onChange={() => setEnrollmentAlerts(!enrollmentAlerts)}
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Student Messages</span>
+                <label htmlFor="messagesToggle" className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="messagesToggle"
+                    className="sr-only peer"
+                    checked={studentMessages}
+                    onChange={() => setStudentMessages(!studentMessages)}
+                  />
+                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Payment Updates</span>
+                <label htmlFor="paymentToggle" className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="paymentToggle"
+                    className="sr-only peer"
+                    checked={paymentUpdates}
+                    onChange={() => setPaymentUpdates(!paymentUpdates)}
+                  />
+                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="mt-8 flex justify-end space-x-4">
         <button
-          type="button"
-          onClick={handleSave}
-          className="w-full py-3 bg-red-600 text-white rounded-lg"
+          onClick={handleCancel}
+          className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
         >
-          Save Changes
+          Cancel
         </button>
-      </form>
+        <button
+          onClick={handleSave}
+          className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        >
+          Save Settings
+        </button>
+      </div>
     </div>
   );
-}
+};
 
-
-
+export default InstructorSettingsPage;

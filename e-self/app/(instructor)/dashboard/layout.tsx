@@ -10,9 +10,9 @@ import {
   FaMoneyBillWave,
 } from "react-icons/fa";
 import { FiMessageSquare, FiSettings } from "react-icons/fi";
-import { MdLeaderboard } from "react-icons/md";
-
 import LandingHeader from "../../(components)/instructor/LandingHeader";
+
+import { MdLeaderboard } from "react-icons/md"
 
 const menuItems = [
   { name: "Overview", icon: FaChartLine, link: "/dashboard" },

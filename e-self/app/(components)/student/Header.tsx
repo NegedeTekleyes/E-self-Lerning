@@ -15,7 +15,7 @@ export default function Header() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
-  if (pathname === '/landing') {
+  if (pathname === '/dashboard') {
     return null; 
   }
 
