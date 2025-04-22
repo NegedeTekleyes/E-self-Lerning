@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState } from 'react';
+import Image from 'next/image'; // Import Image component
 
 const InstructorSettingsPage: React.FC = () => {
   // State for demonstration (you'd manage actual data with hooks/state management)
@@ -47,50 +49,56 @@ const InstructorSettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Instructor Settings</h1>
+    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 bg-[#EEEEEE] min-h-screen text-[#1D1616]">
+      <h1 className="text-3xl font-bold text-[#1D1616] mb-8">Instructor Settings</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Sidebar (or top section on smaller screens) */}
         <div className="lg:col-span-1 space-y-8">
 
           {/* Profile Info */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Profile Info</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Profile Info</h2>
             <div className="flex items-center mb-4">
               {/* Placeholder for Profile Picture */}
-              <img
-                src="https://via.placeholder.com/100" // Replace with actual profile picture URL
-                alt="Profile"
-                className="w-20 h-20 rounded-full mr-4 object-cover"
-              />
+              <div className="w-20 h-20 rounded-full mr-4 bg-gray-200 flex items-center justify-center text-3xl font-bold text-gray-600 overflow-hidden">
+                 {/* Using Next/Image for potentially optimized images */}
+                 {/* Replace with actual image source logic */}
+                 <Image
+                   src="/placeholder-profile.png" // Use a placeholder or dynamic path
+                   alt="Profile"
+                   width={80}
+                   height={80}
+                   objectFit="cover"
+                 />
+              </div>
               <div>
-                <p className="text-lg font-medium text-gray-900">{profileName}</p>
+                <p className="text-lg font-medium text-[#1D1616]">{profileName}</p>
                 <p className="text-sm text-gray-600">{profileBio}</p>
               </div>
             </div>
             <button
               onClick={handleProfileEdit}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="px-4 py-2 bg-[#8E1616] text-white rounded-md hover:bg-[#D84040] focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:ring-opacity-50"
             >
               Edit Profile
             </button>
           </div>
 
           {/* Payment & Earnings */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Payment & Earnings</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Payment & Earnings</h2>
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-600">Bank Information:</p>
-              <p className="text-gray-800">{bankInfo}</p>
+              <p className="text-sm font-medium text-gray-700">Bank Information:</p>
+              <p className="text-[#1D1616]">{bankInfo}</p>
             </div>
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-600">Payment Method:</p>
-              <p className="text-gray-800">{paymentMethod}</p>
+              <p className="text-sm font-medium text-gray-700">Payment Method:</p>
+              <p className="text-[#1D1616]">{paymentMethod}</p>
             </div>
             <button
               onClick={handleViewEarnings}
-              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+              className="px-4 py-2 border border-gray-300 text-[#1D1616] rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
             >
               View Earnings
             </button>
@@ -102,8 +110,8 @@ const InstructorSettingsPage: React.FC = () => {
         <div className="lg:col-span-2 space-y-8">
 
           {/* Account Settings */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Account Settings</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Account Settings</h2>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
               <input
@@ -111,7 +119,7 @@ const InstructorSettingsPage: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:border-[#8E1616] sm:text-sm text-[#1D1616]"
               />
             </div>
             <div className="mb-4">
@@ -121,13 +129,13 @@ const InstructorSettingsPage: React.FC = () => {
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:border-[#8E1616] sm:text-sm text-[#1D1616]"
               />
             </div>
             <div>
               <button
                 onClick={handleChangePassword}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+                className="px-4 py-2 border border-gray-300 text-[#1D1616] rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
               >
                 Change Password
               </button>
@@ -135,15 +143,15 @@ const InstructorSettingsPage: React.FC = () => {
           </div>
 
           {/* Teaching Preferences */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Teaching Preferences</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Teaching Preferences</h2>
             <div className="mb-4">
               <label htmlFor="language" className="block text-sm font-medium text-gray-700">Teaching Language</label>
               <select
                 id="language"
                 value={teachingLanguage}
                 onChange={(e) => setTeachingLanguage(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:border-[#8E1616] sm:text-sm text-[#1D1616]"
               >
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
@@ -159,7 +167,7 @@ const InstructorSettingsPage: React.FC = () => {
                 multiple
                 value={preferredCategories}
                 onChange={handleCategoryChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm h-32" // Increased height for multiple selections
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:border-[#8E1616] sm:text-sm h-32 text-[#1D1616]" // Increased height for multiple selections
               >
                 <option value="Technology">Technology</option>
                 <option value="Design">Design</option>
@@ -172,8 +180,8 @@ const InstructorSettingsPage: React.FC = () => {
           </div>
 
           {/* Notification Settings */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Notification Settings</h2>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-[#1D1616] mb-4">Notification Settings</h2>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-700">Enrollment Alerts</span>
@@ -185,7 +193,7 @@ const InstructorSettingsPage: React.FC = () => {
                     checked={enrollmentAlerts}
                     onChange={() => setEnrollmentAlerts(!enrollmentAlerts)}
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#8E1616] dark:peer-focus:ring-[#8E1616] rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-[#8E1616]"></div>
                 </label>
               </div>
 
@@ -199,7 +207,7 @@ const InstructorSettingsPage: React.FC = () => {
                     checked={studentMessages}
                     onChange={() => setStudentMessages(!studentMessages)}
                   />
-                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#8E1616] dark:peer-focus:ring-[#8E1616] rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-[#8E1616]"></div>
                 </label>
               </div>
 
@@ -213,7 +221,7 @@ const InstructorSettingsPage: React.FC = () => {
                     checked={paymentUpdates}
                     onChange={() => setPaymentUpdates(!paymentUpdates)}
                   />
-                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"></div>
+                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#8E1616] dark:peer-focus:ring-[#8E1616] rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-500 peer-checked:bg-[#8E1616]"></div>
                 </label>
               </div>
             </div>
@@ -226,13 +234,13 @@ const InstructorSettingsPage: React.FC = () => {
       <div className="mt-8 flex justify-end space-x-4">
         <button
           onClick={handleCancel}
-          className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
+          className="px-6 py-2 border border-gray-300 text-[#1D1616] rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-opacity-50"
         >
           Cancel
         </button>
         <button
           onClick={handleSave}
-          className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+          className="px-6 py-2 bg-[#8E1616] text-white rounded-md hover:bg-[#D84040] focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:ring-opacity-50"
         >
           Save Settings
         </button>
