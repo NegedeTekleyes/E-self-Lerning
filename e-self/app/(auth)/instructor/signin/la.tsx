@@ -23,7 +23,7 @@ const InstructorSignUp = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
-      <div className="flex flex-col sm:flex-row w-full max-w-5xl lg:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
         {/* Left side - Image */}
         <div className="hidden sm:block sm:w-1/2 relative">
           <Image
@@ -35,8 +35,8 @@ const InstructorSignUp = () => {
         </div>
 
         {/* Right side - Sign Up Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh] xl:min-h-[80vh]">
-          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
+        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between">
+          <h2 className="text-2xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
           <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <input
