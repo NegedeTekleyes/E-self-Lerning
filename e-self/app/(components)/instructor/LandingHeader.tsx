@@ -17,7 +17,7 @@ const LandingHeader = () => {
 
         {/* Sign out */}
         <Link
-          href="/instructor/signout"
+          href="/"
           className="px-4 py-2 border border-[#1D1616] rounded-md text-sm hover:bg-[#8E1616] hover:text-white transition"
         >
           Sign Out
