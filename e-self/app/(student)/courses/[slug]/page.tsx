@@ -3,11 +3,16 @@ import { useCart } from '../../../context/CartContext';
 import { courses } from '@/app/data/courses';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { PageProps } from 'next'; // Import PageProps
+import { NextPage } from 'next';
 
-// Use PageProps directly. It already includes a 'params' property
-// that is correctly typed for dynamic routes.
-export default function CoursePage({ params }: PageProps<{ slug: string }>) {
+// Define the type for the props
+interface CoursePageProps {
+  params: {
+    slug: string;
+  };
+}
+
+const CoursePage: NextPage<CoursePageProps> = ({ params }) => {
   const { addToCart } = useCart();
   // Ensure `slug` is being correctly matched
   const course = courses.find((c) => c.slug === params.slug);
@@ -132,4 +137,6 @@ export default function CoursePage({ params }: PageProps<{ slug: string }>) {
       </div>
     </div>
   );
-}
+};
+
+export default CoursePage;
