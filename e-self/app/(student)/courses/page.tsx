@@ -1,17 +1,13 @@
 'use client';
+// import { useCart } from '../../../context/CartContext'; // Not used here
 import CourseList from '../../(components)/student/CourseList'; // Correct import path
 import { courses } from '../../data/courses';
-import { NextPage } from 'next';
+// import { NextPage } from 'next'; // Not needed
 
-interface CoursesPageProps {
-  searchParams: {
-    search?: string;
-    category?: string;
-  };
-}
-
-// No need for a custom CoursesPageProps interface. NextPage with searchParams works fine.
-const CoursesPage: NextPage<CoursesPageProps> = ({ searchParams }) => {
+// Directly type the searchParams prop in the function signature
+export default function CoursesPage({
+  searchParams,
+}: { searchParams?: { search?: string; category?: string } }) {
   const searchQuery = searchParams?.search?.toLowerCase() || '';
   const categoryFilter = searchParams?.category?.toLowerCase() || '';
 
@@ -32,6 +28,4 @@ const CoursesPage: NextPage<CoursesPageProps> = ({ searchParams }) => {
       <CourseList courses={filteredCourses} /> {/* Pass the filtered courses to CourseList */}
     </div>
   );
-};
-
-export default CoursesPage;
+}

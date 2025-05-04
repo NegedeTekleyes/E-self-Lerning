@@ -3,16 +3,13 @@ import { useCart } from '../../../context/CartContext';
 import { courses } from '@/app/data/courses';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { NextPage } from 'next';
+// No longer need to import PageProps or NextPage for this
+// import { PageProps } from 'next';
+// import { NextPage } from 'next';
 
-// Define the type for the props
-interface CoursePageProps {
-  params: {
-    slug: string;
-  };
-}
 
-const CoursePage: NextPage<CoursePageProps> = ({ params }) => {
+// Directly type the params prop in the function signature
+export default function CoursePage({ params }: { params: { slug: string } }) {
   const { addToCart } = useCart();
   // Ensure `slug` is being correctly matched
   const course = courses.find((c) => c.slug === params.slug);
@@ -137,6 +134,4 @@ const CoursePage: NextPage<CoursePageProps> = ({ params }) => {
       </div>
     </div>
   );
-};
-
-export default CoursePage;
+}
