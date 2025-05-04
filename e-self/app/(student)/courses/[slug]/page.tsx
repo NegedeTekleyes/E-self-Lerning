@@ -3,14 +3,11 @@ import { useCart } from '../../../context/CartContext';
 import { courses } from '@/app/data/courses';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { PageProps } from 'next'; // Import PageProps
 
-interface CoursePageProps {
-  params: {
-    slug: string;
-  };
-}
-
-export default function CoursePage({ params }: CoursePageProps) {
+// Use PageProps directly. It already includes a 'params' property
+// that is correctly typed for dynamic routes.
+export default function CoursePage({ params }: PageProps<{ slug: string }>) {
   const { addToCart } = useCart();
   // Ensure `slug` is being correctly matched
   const course = courses.find((c) => c.slug === params.slug);
