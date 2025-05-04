@@ -1,5 +1,8 @@
 'use client';
+
 import { useState } from "react";
+import React from 'react'; // Import React to use React.ElementType
+
 import {
     BookOpenIcon,
     TagIcon,
@@ -11,7 +14,9 @@ import {
     ArrowUturnRightIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/outline";
+
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid";
+
 import { useRouter } from 'next/navigation'; // Import useRouter to redirect
 
 // --- Match the Course Type needed by InstructorCoursesPage ---
@@ -29,9 +34,10 @@ interface DisplayCourse {
     description: string;
     enrolledStudents: number; // Placeholder for new courses
     rating: number; // Placeholder for new courses
-    publishDate: Date; // Set upon finishing/planning
+    publishDate: Date | null; // Changed to allow null as you set new Date(0)
     reviewCount: string; // Placeholder for new courses
     status: 'published' | 'planned' | 'unfinished' | 'padding-for-publish' | 'top-rating';
+    category?: string; // Added category based on usage in createDisplayCourse
 }
 
 interface Lecture {
@@ -51,26 +57,39 @@ interface Section {
 // Helper to get courses from local storage
 const getLocalCourses = (): DisplayCourse[] => {
     if (typeof window === 'undefined') return []; // Avoid localStorage on server side
+
     const savedCourses = localStorage.getItem('instructorCourses');
     if (!savedCourses) return [];
+
     try {
         // Parse JSON and ensure Date objects are correctly deserialized
-        return JSON.parse(savedCourses).map((course: any) => ({
-             ...course,
-             publishDate: course.publishDate ? new Date(course.publishDate) : null,
-             // Ensure other fields match DisplayCourse interface
-             id: course.id || Date.now() + Math.random(), // Ensure ID exists
-             imageUrl: course.imageUrl || 'https://source.unsplash.com/400x200/?education', // Default image
-             altText: course.altText || 'Course Image',
-             instructorName: course.instructorName || 'Instructor', // Default instructor
-             instructorRole: course.instructorRole || '',
-             instructorCompany: course.instructorCompany || '',
-             yearPublished: course.yearPublished || new Date().getFullYear(),
-             enrolledStudents: course.enrolledStudents || 0,
-             rating: course.rating || 0,
-             reviewCount: course.reviewCount || '0',
-             status: course.status || 'unfinished', // Default status if missing
-        }));
+        // FIX: Replace 'any' with a type that represents the expected structure from localStorage
+        // We expect objects that are roughly CourseShape, but might have missing fields
+        // Let's use DisplayCourse as the target type after mapping.
+        // The object from localStorage should minimally contain properties used in the map.
+        // A simple fix is to assert the parsed data or type the map input based on expected keys.
+        // Typing the map input as `Partial<DisplayCourse>` is also an option,
+        // but given the mapping logic covers missing fields, DisplayCourse is acceptable here.
+        return JSON.parse(savedCourses).map((course: Partial<DisplayCourse>) => ({ // Use Partial as localStorage might not have all fields
+            ...course,
+            // Ensure Date objects are correctly deserialized
+            publishDate: course.publishDate ? new Date(course.publishDate) : null,
+
+            // Ensure other fields match DisplayCourse interface, providing defaults if missing
+            id: course.id || Date.now() + Math.random(), // Ensure ID exists
+            imageUrl: course.imageUrl || 'https://source.unsplash.com/400x200/?education', // Default image
+            altText: course.altText || 'Course Image',
+            instructorName: course.instructorName || 'Instructor', // Default instructor
+            instructorRole: course.instructorRole || '',
+            instructorCompany: course.instructorCompany || '',
+            yearPublished: course.yearPublished || new Date().getFullYear(),
+            enrolledStudents: course.enrolledStudents || 0,
+            rating: course.rating || 0,
+            reviewCount: course.reviewCount || '0',
+            status: course.status || 'unfinished', // Default status if missing
+            category: course.category || 'Unknown', // Default category
+        }) as DisplayCourse); // Assert the result of the map is DisplayCourse
+
     } catch (e) {
         console.error("Failed to parse courses from localStorage", e);
         return [];
@@ -86,6 +105,7 @@ const saveLocalCourses = (courses: DisplayCourse[]) => {
 
 export default function AddCourse() {
     const router = useRouter(); // Initialize useRouter
+
     const [step, setStep] = useState(1);
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("Web Development"); // Match category strings used in sample data
@@ -102,6 +122,7 @@ export default function AddCourse() {
     const [sections, setSections] = useState<Section[]>([ // Course content structure (not saved in target type)
         { title: "Module 1", description: "", lectures: [] },
     ]);
+
     // History/Undo logic omitted for simplicity in this combined example
     // const [history, setHistory] = useState<Section[][]>([]);
     // const [future, setFuture] = useState<Section[][]>([]);
@@ -169,17 +190,17 @@ export default function AddCourse() {
 
     // --- Function to create a Course object for display ---
     const createDisplayCourse = (status: DisplayCourse['status']): DisplayCourse => {
-         // Note: Many fields required by DisplayCourse are NOT in the AddCourse form.
-         // We use placeholders or derived values.
+        // Note: Many fields required by DisplayCourse are NOT in the AddCourse form.
+        // We use placeholders or derived values.
 
-         // Basic slug generation (not in DisplayCourse type, but good practice)
-         // const generatedSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        // Basic slug generation (not in DisplayCourse type, but good practice)
+        // const generatedSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-         // Parse Duration (not saved in DisplayCourse type)
-         // let totalDurationInMinutes = 0; ... (parsing logic from previous example)
+        // Parse Duration (not saved in DisplayCourse type)
+        // let totalDurationInMinutes = 0; ... (parsing logic from previous example)
 
-         // Combine section/lecture info (not saved in DisplayCourse type structure)
-         // const courseContentDetails = sections.map(...)
+        // Combine section/lecture info (not saved in DisplayCourse type structure)
+        // const courseContentDetails = sections.map(...)
 
         const now = new Date();
 
@@ -200,10 +221,10 @@ export default function AddCourse() {
             yearPublished: now.getFullYear(), // Set based on current year
             enrolledStudents: 0, // Start at 0
             rating: 0, // Start at 0
-            publishDate: status === 'planned' || status === 'published' ? now : new Date(0), // Set date if planned/published, else epoch
+            publishDate: status === 'planned' || status === 'published' ? now : null, // Set date if planned/published, else null
             reviewCount: '0', // Start at 0 reviews
-             // detailedDescription, prerequisites, requirements, learningOutcomes, benefits, includes, expectations from previous type are not part of this target DisplayCourse type.
-             // If you needed them, you'd add them to the DisplayCourse interface or store them separately.
+            // detailedDescription, prerequisites, requirements, learningOutcomes, benefits, includes, expectations from previous type are not part of this target DisplayCourse type.
+            // If you needed them, you'd add them to the DisplayCourse interface or store them separately.
         };
 
         return displayCourse;
@@ -219,10 +240,10 @@ export default function AddCourse() {
         const newDraftCourse = createDisplayCourse('unfinished'); // Set status to 'unfinished'
 
         const existingCourses = getLocalCourses();
-         // In a real app, you'd update an existing draft if the user is editing.
-         // For this simple example, we'll just add a new entry each time draft is saved.
-         // To implement editing, you'd need to pass the course ID to the AddCourse component
-         // and check if an existing course with that ID needs to be updated in localStorage.
+        // In a real app, you'd update an existing draft if the user is editing.
+        // For this simple example, we'll just add a new entry each time draft is saved.
+        // To implement editing, you'd need to pass the course ID to the AddCourse component
+        // and check if an existing course with that ID needs to be updated in localStorage.
         saveLocalCourses([...existingCourses, newDraftCourse]);
 
         alert("Draft saved!");
@@ -233,15 +254,15 @@ export default function AddCourse() {
 
     // --- Save and Finish Handler ---
     const handleSaveAndFinish = () => {
-         if (!title || !description || learningObjectives.filter(o => o.trim() !== '').length === 0 || sections.length === 0) {
-             alert("Please fill in basic course details, objectives, and add at least one module/section before finishing.");
-             return; // Simple validation
-         }
+        if (!title || !description || learningObjectives.filter(o => o.trim() !== '').length === 0 || sections.length === 0) {
+            alert("Please fill in basic course details, objectives, and add at least one module/section before finishing.");
+            return; // Simple validation
+        }
 
         const newPlannedCourse = createDisplayCourse('planned'); // Set status to 'planned'
 
         const existingCourses = getLocalCourses();
-         // Similar to draft, in a real app you'd update an existing course.
+        // Similar to draft, in a real app you'd update an existing course.
         saveLocalCourses([...existingCourses, newPlannedCourse]);
 
         alert("Course saved as Planned!");
@@ -251,7 +272,8 @@ export default function AddCourse() {
 
 
     // Helper components (Label, SectionHeader) remain the same
-    const Label = ({ icon: Icon, text }: { icon: any, text: string }) => (
+    // FIX: Replace 'any' for the icon prop type with React.ElementType
+    const Label = ({ icon: Icon, text }: { icon: React.ElementType, text: string }) => (
         <label className="text-sm text-gray-700 font-medium flex items-center gap-1 mb-1">
             <Icon className="h-5 w-5 text-red-500" />
             {text}
@@ -271,7 +293,7 @@ export default function AddCourse() {
             {/* Step 1: Course Basics */}
             {step === 1 && (
                 <>
-                <div className="mt-12"></div>
+                    <div className="mt-12"></div>
                     <SectionHeader title="Create a New Course" />
                     <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
@@ -292,7 +314,7 @@ export default function AddCourse() {
                             onChange={(e) => setCategory(e.target.value)}
                             className="w-full p-3 rounded border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-500"
                         >
-                             {/* Use categories that match InstructorCoursesPage sample data or your planned categories */}
+                            {/* Use categories that match InstructorCoursesPage sample data or your planned categories */}
                             <option value="Web Development">Web Development</option>
                             <option value="UI/UX Design">UI/UX Design</option>
                             <option value="Video Editing">Video Editing</option>
@@ -344,7 +366,7 @@ export default function AddCourse() {
             {/* Step 2: Course Details (Objectives, Prerequisites, Audience) */}
             {step === 2 && (
                 <>
-                <div className="mt-12"></div>
+                    <div className="mt-12"></div>
                     <SectionHeader title="Course Details" />
 
                     <div>
@@ -395,12 +417,12 @@ export default function AddCourse() {
             {/* Step 3: Course Content and Final Details */}
             {step === 3 && (
                 <>
-                <div className="mt-12"></div>
+                    <div className="mt-12"></div>
                     <SectionHeader title="Course Content & Final Details" />
 
                     <div className="grid gap-4 mb-4">
-                         {/* These fields exist in the form but are NOT saved in the target DisplayCourse type */}
-                         {/* They would be saved as part of the detailed course content in a real backend */}
+                        {/* These fields exist in the form but are NOT saved in the target DisplayCourse type */}
+                        {/* They would be saved as part of the detailed course content in a real backend */}
                         <div>
                             <Label icon={VideoCameraIcon} text="Total Video Time (e.g., 2h 30m)" />
                             <input
@@ -433,7 +455,7 @@ export default function AddCourse() {
                         </div>
                     </div>
 
-                     {/* Sections and Lectures - Content details */}
+                    {/* Sections and Lectures - Content details */}
                     {sections.map((section, sectionIdx) => (
                         <div key={sectionIdx} className="mb-6 border p-4 rounded-md bg-white shadow-sm">
                             <div className="flex items-center justify-between mb-3">
@@ -454,14 +476,14 @@ export default function AddCourse() {
 
                             {section.lectures.map((lecture, lectureIdx) => (
                                 <div key={lectureIdx} className="mb-4 p-2 border border-gray-200 rounded">
-                                     <div className="flex justify-between items-center mb-2">
+                                    <div className="flex justify-between items-center mb-2">
                                         <h4 className="text-sm font-medium text-gray-600">Lecture {lectureIdx + 1}</h4>
                                         {section.lectures.length > 0 && (
                                             <button type="button" onClick={() => removeLecture(sectionIdx, lectureIdx)} className="text-xs text-red-500 hover:text-red-700">
                                                 Remove Lecture
                                             </button>
                                         )}
-                                     </div>
+                                    </div>
                                     <input
                                         type="text"
                                         value={lecture.title}
@@ -476,8 +498,8 @@ export default function AddCourse() {
                                         placeholder="Video URL (Optional)"
                                         className="w-full mb-2 p-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
                                     />
-                                     {/* File upload is not saved in local storage example */}
-                                     {/* <input type="file" ... /> */}
+                                    {/* File upload is not saved in local storage example */}
+                                    {/* <input type="file" ... /> */}
 
                                 </div>
                             ))}
@@ -501,7 +523,7 @@ export default function AddCourse() {
                     </button>
 
                     <div className="flex items-center gap-2 mt-4">
-                         {/* Certificate option */}
+                        {/* Certificate option */}
                         <input
                             type="checkbox"
                             checked={certificate}
@@ -513,7 +535,7 @@ export default function AddCourse() {
 
                     <div className="flex justify-between gap-2 pt-6">
                         <button type="button" onClick={handlePreviousStep} className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Previous</button>
-                         {/* Calls handleSaveDraft */}
+                        {/* Calls handleSaveDraft */}
                         <button type="button" onClick={handleSaveDraft} className="text-sm border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Save Draft</button>
                         {/* Calls handleSaveAndFinish */}
                         <button type="button" onClick={handleSaveAndFinish} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">

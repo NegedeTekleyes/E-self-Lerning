@@ -1,7 +1,7 @@
 // app/layoutClient.tsx
 'use client';
 
-import { useAuth } from './context/AuthContext';
+// import { useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Header from './(components)/student/Header';
 import Footer from './(components)/student/Footer';

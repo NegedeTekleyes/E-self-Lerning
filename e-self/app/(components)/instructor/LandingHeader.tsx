@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 
 const LandingHeader = () => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   return (
     <header className="w-screen bg-white shadow-md fixed top-0 left-0 z-50">
