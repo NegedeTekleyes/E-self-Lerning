@@ -5,9 +5,9 @@ const nextConfig: NextConfig = {
     domains: ['images.pexels.com'], // Add the domain here
   },
   
-  eslint: {
-    ignoreDuringBuilds: true, // <-- Now correctly placed inside nextConfig
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true, // <-- Now correctly placed inside nextConfig
+  // },
 };
 
 
