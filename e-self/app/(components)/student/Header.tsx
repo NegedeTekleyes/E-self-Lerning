@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
+import Link from "next/link";
+import { ModeToggle } from "../../../components/ModeToggle";
 import { useState } from 'react';
-// Removed useRouter as it's not used
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+
 import { Search, X, Menu } from 'lucide-react';
 import CartButton from './CartButton';
 import { useAuth } from '../../context/AuthContext';
 import ProfileDropdown from './ProfileDropdown';
+
+
 
 export default function Header() {
     const [search, setSearch] = useState('');
@@ -97,7 +100,12 @@ export default function Header() {
                         <Link href="/instructor/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Instructor</Link>
                         <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign Up</Link>
                         <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign In</Link>
+                            
+                         <ModeToggle />
+  
                     </div>
+                          
+
                 )}
             </div>
 

@@ -5,7 +5,8 @@ import { AuthProvider } from './context/AuthContext';
 import '../styles/globals.css';
 import React from 'react';
 import LayoutClient from '../app/layoutClient';
-
+import { ThemeProvider } from "@/components/theme-provider";
+import Header from "./(components)/student/Header";
 export const metadata = {
     title: 'E-Self Learning Platform',
     description: 'Online learning platform with various courses',
@@ -34,12 +35,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {/* You might also want to add your favicon link here */}
             </head>
             <body className="flex flex-col min-h-screen bg-[#EEEEEE] text-[#1D1616]">
+            <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
                 <AuthProvider>
                     {/* FIX: Nest children inside LayoutClient */}
                     <LayoutClient>
+                        
                         {children}
                     </LayoutClient>
                 </AuthProvider>
+                </ThemeProvider>
             </body>
         </html>
     );
