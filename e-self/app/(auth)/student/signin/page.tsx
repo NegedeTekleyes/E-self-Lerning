@@ -1,69 +1,35 @@
+// app/(auth)/student/signin/page.tsx
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext';
-import Link from 'next/link';
+import { useAuth } from '../../../context/AuthContext'; // Adjust the path as needed
+import AuthForm from '@/components/ui/AuthForm'; // Adjust the path as needed
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-
-const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const StudentSignIn = () => {
   const router = useRouter();
   const { login } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSignIn = (email: string, password: string) => {
+    // Add your actual sign-in logic here (e.g., API call)
+    // For now, keeping the placeholder logic
     if (email && password) {
-      login(email, 'student');
-      router.push('/');
+      login(email, 'student'); // Assuming login handles the role
+      router.push('/'); // Redirect to student home/dashboard
+    } else {
+      alert('Please enter email and password.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted">
-      <Card className="w-full max-w-md p-6 shadow-lg">
-        <CardContent>
-          <h2 className="text-2xl font-bold mb-6 text-center">student Sign In</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Enter your email"
-              />
-            </div>
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="Enter your password"
-              />
-            </div>
-            <Button type="submit" className="w-full">Sign In</Button>
-          </form>
-          <p className="mt-4 text-center text-sm">
-            Don't have an account?{' '}
-            <Link href="/student/signup" className="text-primary hover:underline">
-              Sign Up
-            </Link>
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+    <AuthForm
+      title="Student Sign In"
+      buttonText="Sign In"
+      linkHref="/student/signup"
+      linkText="Sign Up"
+      linkPrompt="Don't have an account?"
+      onSubmit={handleSignIn}
+    />
   );
 };
 
-export default SignIn;
+export default StudentSignIn;
