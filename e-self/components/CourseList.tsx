@@ -1,5 +1,5 @@
 import CourseCard from './CourseCard';
-import { Course } from '@/app/data/courses';
+import { Course } from '@/app/types/course';
 
 interface CourseListProps {
   courses: Course[];

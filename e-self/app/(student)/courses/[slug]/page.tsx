@@ -1,72 +1,39 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { courses } from '../../../data/courses';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { courses } from '@/app/data/courses';
+import CourseModuleSection from '@/components/CourseModuleSection';
 
-interface CoursePageProps {
-  params: { slug: string };
-}
-
-export default function CoursePage({ params }: CoursePageProps) {
-  const [course, setCourse] = useState(() => courses.find(c => c.slug === params.slug) || null);
-  const [isAcquired, setIsAcquired] = useState(false);
-  const [isInCart, setIsInCart] = useState(false);
-
-  useEffect(() => {
-    if (!course) return;
-
-    const acquired = JSON.parse(localStorage.getItem('acquiredCourses') || '[]');
-    setIsAcquired(acquired.includes(course.slug));
-
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setIsInCart(cart.includes(course.slug));
-  }, [course]);
-
+export default function CourseDetail({ params }: { params: { slug: string } }) {
+  const course = courses.find((c) => c.slug === params.slug);
   if (!course) return notFound();
 
-  const handleAcquire = () => {
-    const acquired = JSON.parse(localStorage.getItem('acquiredCourses') || '[]');
-    if (!acquired.includes(course.slug)) {
-      acquired.push(course.slug);
-      localStorage.setItem('acquiredCourses', JSON.stringify(acquired));
-      setIsAcquired(true);
-    }
-  };
-
-  const handleAddToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    if (!cart.includes(course.slug)) {
-      cart.push(course.slug);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      setIsInCart(true);
-    }
-  };
-
   return (
-    <div className="container mx-auto max-w-4xl p-6">
-      <div className="bg-white shadow-md rounded-lg p-6">
-        <div className="relative w-full h-64 rounded-md overflow-hidden mb-6">
-          <Image src={course.image} alt={course.title} fill className="object-cover" />
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+        <div className="w-full h-72 relative">
+          <Image src={course.image} alt={course.title} fill className="object-cover rounded-md" />
         </div>
 
-        <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
-        <p className="text-gray-600 mb-2">Rating: ⭐ {course.rating}</p>
-        <p className="text-gray-600 mb-2">Duration: {course.duration} hours</p>
-        <p className="text-gray-600 mb-4"><strong>${course.price}</strong></p>
+        <div>
+          <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
+          <p className="text-muted-foreground mb-4">{course.description}</p>
+          <p className="text-sm">{course.detailedDescription}</p>
 
-        <p className="mb-6">{course.detailedDescription}</p>
-
-        <div className="flex gap-4">
-          <Button onClick={handleAcquire} disabled={isAcquired}>
-            {isAcquired ? 'Acquired ✅' : 'Acquire Course'}
-          </Button>
-          <Button onClick={handleAddToCart} variant="outline" disabled={isInCart}>
-            {isInCart ? 'In Cart 🛒' : 'Add to Cart'}
-          </Button>
+          <div className="mt-6 space-y-2">
+            <div><strong>Duration:</strong> {course.duration} hours</div>
+            <div><strong>Price:</strong> ${course.price}</div>
+            <div><strong>Rating:</strong> ⭐ {course.rating}</div>
+            <div><strong>Category:</strong> {course.category}</div>
+            <div><strong>Instructor:</strong> {course.instructor.name} ({course.instructor.rating}⭐)</div>
+          </div>
         </div>
+      </div>
+
+      <div className="mt-12">
+        <h2 className="text-2xl font-semibold mb-4">Course Content</h2>
+        {course.modules.map((module, index) => (
+          <CourseModuleSection key={index} module={module} />
+        ))}
       </div>
     </div>
   );

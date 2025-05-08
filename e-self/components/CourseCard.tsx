@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Course } from '@/app/data/courses';
+import { Course } from '../app/types/course';
 
 interface CourseCardProps {
   course: Course;
