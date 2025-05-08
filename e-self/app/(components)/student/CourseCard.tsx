@@ -8,7 +8,7 @@ interface CourseCardProps {
 
 export default function CourseCard({ course }: CourseCardProps) {
   const {
-    image = '/placeholder.jpg',
+    image = '/',
     title = 'Untitled Course',
     category = 'General',
     rating = 0,

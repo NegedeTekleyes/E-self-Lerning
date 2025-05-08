@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ModeToggle } from "../../../components/ModeToggle";
+// import { ModeToggle } from "../../../components/ModeToggle";
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -101,7 +101,7 @@ export default function Header() {
                         <Link href="/student/signup" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign Up</Link>
                         <Link href="/student/signin" className="bg-[#8E1616] px-4 py-2 rounded text-white hover:bg-[#D84040]">Sign In</Link>
                             
-                         <ModeToggle />
+                         {/* <ModeToggle /> */}
   
                     </div>
                           

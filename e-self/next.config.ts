@@ -1,13 +1,19 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    domains: ['images.pexels.com'], // Add the domain here
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'source.unsplash.com',
+        port: '',
+        pathname: '/**', // Allows any path from this hostname
+      },
+      // Add other remote patterns here if needed
+    ],
+    // If you were using the older 'domains' config, you would add it like this:
+    // domains: ['source.unsplash.com'], // Older approach, remotePatterns is preferred
   },
-  
-  // eslint: {
-  //   ignoreDuringBuilds: true, // <-- Now correctly placed inside nextConfig
-  // },
+  // ... other configurations you might have (like experimental, webpack, etc.)
 };
 
-
+module.exports = nextConfig;

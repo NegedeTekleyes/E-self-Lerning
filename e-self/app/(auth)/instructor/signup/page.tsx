@@ -1,84 +1,83 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext';  // If using context for auth
+import { useAuth } from '../../../context/AuthContext';
 import Link from 'next/link';
-import Image from 'next/image';
+
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 const InstructorSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
-  const { login } = useAuth();  // Use context for login if needed
-  const handleSignUp = async (e: React.FormEvent) => {
+  const { login } = useAuth();
+
+  const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      login(email, 'instructor'); // Set the role here
-      router.push('/dashboard'); //redirect to the dashboard.
-    } else {
+    if (password !== confirmPassword) {
       alert('Passwords do not match!');
+      return;
     }
+
+    login(email, 'instructor');
+    router.push('/dashboard');
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
-      <div className="flex flex-col sm:flex-row w-full max-w-5xl lg:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
-        {/* Left side - Image */}
-        <div className="hidden sm:block sm:w-1/2 relative">
-          <Image
-            src="/signup1.png"
-            alt="Sign Up Illustration"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        {/* Right side - Sign Up Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh] xl:min-h-[80vh]">
-          <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">Instructor Sign Up</h2>
-          <form onSubmit={handleSignUp}>
-            <div className="mb-6">
-              <input
+    <div className="flex items-center justify-center min-h-screen bg-muted">
+      <Card className="w-full max-w-md p-6 shadow-lg">
+        <CardContent>
+          <h2 className="text-2xl font-bold text-center mb-6">Instructor Sign Up</h2>
+          <form onSubmit={handleSignUp} className="space-y-4">
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
                 type="email"
-                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                placeholder="Enter your email"
                 required
               />
             </div>
-            <div className="mb-6">
-              <input
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
                 type="password"
-                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                placeholder="Enter password"
                 required
               />
             </div>
-            <div className="mb-6">
-              <input
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
                 type="password"
-                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
+                placeholder="Confirm your password"
                 required
               />
             </div>
-            <button type="submit" className="w-full bg-[#8E1616] text-white py-2 rounded-md hover:bg-[#D84040] transition duration-300">
-              Sign Up
-            </button>
+            <Button type="submit" className="w-full">Sign Up</Button>
           </form>
-          <div className="mt-6 text-center">
-            <p className="text-xs text-[#1D1616]">
-              Already have an account? <Link href="/instructor/signin" className="text-[#8E1616] hover:text-[#D84040]">Log In</Link>
-            </p>
-          </div>
-        </div>
-      </div>
+
+          <p className="mt-4 text-center text-sm">
+            Already have an account?{' '}
+            <Link href="/instructor/signin" className="text-primary hover:underline">
+              Log In
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
