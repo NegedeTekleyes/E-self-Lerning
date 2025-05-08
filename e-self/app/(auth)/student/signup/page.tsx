@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../context/AuthContext'; // Adjust the path as needed
-import AuthForm from '@/components/ui/AuthForm'; // Adjust the path as needed
+import AuthForm from '@/components/AuthForm'; // Adjust the path as needed
 
 const StudentSignUp = () => {
   const router = useRouter();

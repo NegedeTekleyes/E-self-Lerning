@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import CourseCard from './CourseCard';
+import CourseCard from '../../../components/CourseCard'
 import { Course } from '../../data/courses';
 
 interface CourseListSliderProps {
