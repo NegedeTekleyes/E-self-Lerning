@@ -6,5 +6,6 @@ export type Lecture = {
 
 export type CourseModule = {
   title: string;
+  description?: string;
   lectures: Lecture[];
 };

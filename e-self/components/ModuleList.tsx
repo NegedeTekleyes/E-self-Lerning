@@ -1,7 +1,8 @@
-import { Module } from "../app/types/course";
+import { CourseModule } from '../app/types/module';
+
 
 interface ModuleListProps {
-  modules: Module[];
+  modules: CourseModule[];
 }
 
 export default function ModuleList({ modules }: ModuleListProps) {
