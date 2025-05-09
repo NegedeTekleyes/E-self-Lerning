@@ -1,23 +1,26 @@
+'use client';
+
+import { useParams } from 'next/navigation';
 import { courses } from '../../../data/courses';
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import CourseModuleSection from '@/components/CourseModuleSection';
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+export default function CoursePage() {
+  const { slug } = useParams() as { slug: string };
+  const course = courses.find(course => course.id === slug);
 
-export default function CoursePage({ params }: PageProps) {
-  const course = courses.find(course => course.id === params.slug);
   if (!course) return <div>Course not found</div>;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         <div className="w-full h-72 relative">
-          <Image src={course.image} alt={course.title} fill className="object-cover rounded-md" />
+          <Image
+            src={course.image}
+            alt={course.title}
+            fill
+            className="object-cover rounded-md"
+          />
         </div>
 
         <div>
