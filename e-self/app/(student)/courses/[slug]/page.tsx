@@ -9,9 +9,9 @@ interface PageProps {
   };
 }
 
-export default function CourseDetail({ params }: PageProps) {
-  const course = courses.find((c) => c.id === params.slug);
-  if (!course) return notFound();
+export default function CoursePage({ params }: PageProps) {
+  const course = courses.find(course => course.id === params.slug);
+  if (!course) return <div>Course not found</div>;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
