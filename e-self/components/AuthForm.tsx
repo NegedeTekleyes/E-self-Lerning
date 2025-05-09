@@ -77,7 +77,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 />
               </div>
             )}
-            <Button type="submit" className="w-full">{buttonText}</Button>
+            <Button type="submit" className="w-full bg-[#8E1616] hover:bg-[#7a1212] text-white">
+            {buttonText}
+          </Button>
+
           </form>
           <p className="mt-4 text-center text-sm">
             {linkPrompt}{' '}
