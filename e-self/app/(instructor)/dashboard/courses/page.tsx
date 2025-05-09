@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import {
   PlusIcon,
   UsersIcon,
@@ -14,14 +13,24 @@ import {
   PencilIcon,
   CheckCircleIcon,
 } from '@heroicons/react/24/outline';
-
 import { BookOpenIcon } from '@heroicons/react/24/solid';
-
 import { getLocalCourses, saveLocalCourses, DisplayCourse } from '@/lib/localStorageUtils';
 
 type CourseCardProps = DisplayCourse & {
   onDelete: (id: number) => void;
   onPublish?: (id: number) => void;
+};
+
+// ✅ Status label styling helper
+const getStatusStyle = (status: string) => {
+  const styles: Record<string, string> = {
+    published: 'bg-green-100 text-green-800',
+    planned: 'bg-blue-100 text-blue-800',
+    unfinished: 'bg-yellow-100 text-yellow-800',
+    'padding-for-publish': 'bg-purple-100 text-purple-800',
+    'top-rating': 'bg-pink-100 text-pink-800',
+  };
+  return styles[status] || 'bg-gray-100 text-gray-800';
 };
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -78,19 +87,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
         <div className="text-xs font-medium mb-4">
           Status:
-          <span className={`ml-2 px-2 py-1 rounded-full ${
-            status === 'published'
-              ? 'bg-green-100 text-green-800'
-              : status === 'planned'
-              ? 'bg-blue-100 text-blue-800'
-              : status === 'unfinished'
-              ? 'bg-yellow-100 text-yellow-800'
-              : status === 'padding-for-publish'
-              ? 'bg-purple-100 text-purple-800'
-              : status === 'top-rating'
-              ? 'bg-pink-100 text-pink-800'
-              : 'bg-gray-100 text-gray-800'
-          }`}>
+          <span className={`ml-2 px-2 py-1 rounded-full ${getStatusStyle(status)}`}>
             {readableStatus}
           </span>
         </div>
@@ -105,6 +102,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <div className="flex justify-end gap-3 mt-auto pt-3 border-t">
           {(status === 'unfinished' || status === 'padding-for-publish') && (
             <button
+              aria-label={`Edit ${title}`}
               onClick={() => alert(`Editing course: ${title}`)}
               title="Edit"
               className="text-gray-500 hover:text-blue-600"
@@ -115,6 +113,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
           {(status === 'padding-for-publish' || status === 'planned') && onPublish && (
             <button
+              aria-label={`Publish ${title}`}
               onClick={() => onPublish(id)}
               className="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded flex items-center gap-1"
             >
@@ -123,6 +122,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           )}
 
           <button
+            aria-label={`Delete ${title}`}
             onClick={() => onDelete(id)}
             title="Delete"
             className="text-gray-500 hover:text-red-600"
@@ -167,6 +167,12 @@ const InstructorCourses: React.FC = () => {
     return ['published', 'top-rating'].includes(course.status);
   });
 
+  const tabLabels = {
+    unfinished: 'Unfinished Drafts',
+    ready: 'Ready for Publish',
+    published: 'Published Courses',
+  };
+
   return (
     <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-8">
       <div className="flex items-center justify-between border-b pb-4">
@@ -184,7 +190,7 @@ const InstructorCourses: React.FC = () => {
       </div>
 
       <div className="flex space-x-4 border-b pb-3">
-        {(['unfinished', 'ready', 'published'] as const).map(tab => (
+        {(Object.keys(tabLabels) as Array<keyof typeof tabLabels>).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -192,18 +198,21 @@ const InstructorCourses: React.FC = () => {
               activeTab === tab ? 'font-bold text-red-600' : 'text-gray-500'
             }`}
           >
-            {tab === 'unfinished'
-              ? 'Unfinished Drafts'
-              : tab === 'ready'
-              ? 'Ready for Publish'
-              : 'Published Courses'}
+            {tabLabels[tab]}
           </button>
         ))}
       </div>
 
       <div>
         {filteredCourses.length === 0 ? (
-          <p className="text-gray-600 italic">No courses in this section.</p>
+          <div className="text-center text-gray-600 space-y-2">
+            <p className="italic">No courses in this section.</p>
+            <Link href="/dashboard/add-course">
+              <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm">
+                Create your first course
+              </button>
+            </Link>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredCourses.map(course => (
