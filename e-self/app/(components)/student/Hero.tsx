@@ -39,7 +39,7 @@ const Hero = () => {
               <span className="block text-[#8E1616]"> – A Great Choice!</span>
             </h1>
             <p className="mt-4 text-base text-gray-600 sm:text-lg md:text-xl max-w-xl">
-              We provide high-quality courses at the best prices. Want to become an instructor? It's easy and the perfect place to start!
+              We provide high-quality courses at the best prices. Want to become an instructor? It`&apos;`s easy and the perfect place to start!
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
