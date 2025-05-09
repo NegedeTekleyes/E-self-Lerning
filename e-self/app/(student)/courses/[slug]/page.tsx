@@ -4,7 +4,7 @@ import Image from 'next/image';
 import CourseModuleSection from '@/components/CourseModuleSection';
 
 export default function CourseDetail({ params }: { params: { slug: string } }) {
-  const course = courses.find((c) => c.slug === params.slug);
+  const course = courses.find((c) => c.id === params.slug);
   if (!course) return notFound();
 
   return (

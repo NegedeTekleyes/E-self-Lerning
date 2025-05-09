@@ -27,7 +27,7 @@ export default function CartPage() {
           <div className="lg:col-span-3 space-y-4">
             {cartItems.map((item) => (
               <div
-                key={item.slug}
+                key={item.id}
                 className="flex justify-between items-center p-4 bg-white rounded-lg shadow-md"
               >
                 <div>
@@ -35,7 +35,7 @@ export default function CartPage() {
                   <p className="text-gray-600">${item.price.toFixed(2)}</p>
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.slug)}
+                  onClick={() => removeFromCart(item.id)}
                   className="bg-[#8E1616] text-white px-4 py-2 rounded hover:bg-[#D84040] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D84040]"
                 >
                   Remove
