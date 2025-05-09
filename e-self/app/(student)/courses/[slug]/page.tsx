@@ -3,7 +3,13 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import CourseModuleSection from '@/components/CourseModuleSection';
 
-export default function CourseDetail({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default function CourseDetail({ params }: PageProps) {
   const course = courses.find((c) => c.id === params.slug);
   if (!course) return notFound();
 
