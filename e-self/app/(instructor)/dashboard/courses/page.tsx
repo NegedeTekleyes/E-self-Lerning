@@ -1,20 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import {
-  PlusIcon,
-  UsersIcon,
-  StarIcon,
-  CalendarDaysIcon,
-  UserCircleIcon,
-  TrashIcon,
-  PencilIcon,
-  CheckCircleIcon,
-} from '@heroicons/react/24/outline';
-import { BookOpenIcon } from '@heroicons/react/24/solid';
-import { getLocalCourses, saveLocalCourses, DisplayCourse } from '@/lib/localStorageUtils';
+import { UsersIcon, StarIcon, CalendarDaysIcon, UserCircleIcon, TrashIcon, PencilIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { DisplayCourse } from '@/lib/localStorageUtils';
 
 type CourseCardProps = DisplayCourse & {
   onDelete: (id: number) => void;
@@ -53,12 +41,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
     <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
       <div className="relative w-full h-40">
         <Image
-          src={imageUrl || '/default-course-image.jpg'} // Fallback to default image if no URL
+          src={imageUrl || '/default-course-image.jpg'}
           alt={altText}
           fill
-          style={{ objectFit: 'cover' }}
+          className="rounded-t-xl object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="rounded-t-xl"
         />
       </div>
 
@@ -134,97 +121,4 @@ const CourseCard: React.FC<CourseCardProps> = ({
   );
 };
 
-const InstructorCourses: React.FC = () => {
-  const [courses, setCourses] = useState<DisplayCourse[]>([]);
-  const [activeTab, setActiveTab] = useState<'unfinished' | 'ready' | 'published'>('unfinished');
-
-  useEffect(() => {
-    setCourses(getLocalCourses());
-  }, []);
-
-  const handleDeleteCourse = (id: number) => {
-    if (confirm('Are you sure you want to delete this course?')) {
-      const updated = courses.filter(course => course.id !== id);
-      setCourses(updated);
-      saveLocalCourses(updated);
-    }
-  };
-
-  const handlePublishCourse = (id: number) => {
-    const updated = courses.map(course =>
-      course.id === id && ['planned', 'padding-for-publish'].includes(course.status)
-        ? { ...course, status: 'published', publishDate: new Date() }
-        : course
-    );
-    setCourses(updated);
-    saveLocalCourses(updated);
-  };
-
-  const filteredCourses = courses.filter(course => {
-    if (activeTab === 'unfinished') return course.status === 'unfinished';
-    if (activeTab === 'ready') return ['planned', 'padding-for-publish'].includes(course.status);
-    return ['published', 'top-rating'].includes(course.status);
-  });
-
-  const tabLabels = {
-    unfinished: 'Unfinished Drafts',
-    ready: 'Ready for Publish',
-    published: 'Published Courses',
-  };
-
-  return (
-    <div className="w-full min-h-screen p-6 bg-gray-50 rounded-lg space-y-8">
-      <div className="flex items-center justify-between border-b pb-4">
-        <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-          <BookOpenIcon className="h-7 w-7 text-red-600" />
-          My Courses
-        </h1>
-
-        <Link href="/dashboard/add-course">
-          <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2 text-sm">
-            <PlusIcon className="h-4 w-4" />
-            Create New Course
-          </button>
-        </Link>
-      </div>
-
-      <div className="flex space-x-4 border-b pb-3">
-        {(Object.keys(tabLabels) as Array<keyof typeof tabLabels>).map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`text-sm ${activeTab === tab ? 'font-bold text-red-600' : 'text-gray-500'}`}
-          >
-            {tabLabels[tab]}
-          </button>
-        ))}
-      </div>
-
-      <div>
-        {filteredCourses.length === 0 ? (
-          <div className="text-center text-gray-600 space-y-2">
-            <p className="italic">No courses in this section.</p>
-            <Link href="/dashboard/add-course">
-              <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm">
-                Create your first course
-              </button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredCourses.map(course => (
-              <CourseCard
-                key={course.id}
-                {...course}
-                onDelete={handleDeleteCourse}
-                onPublish={handlePublishCourse}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default InstructorCourses;
+export default CourseCard;
