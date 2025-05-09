@@ -1,84 +1,35 @@
+// app/(auth)/student/signin/page.tsx
 'use client';
-import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext'; 
-import Link from 'next/link';
-import Image from 'next/image';
+import { useAuth } from '../../../context/AuthContext'; // Adjust the path as needed
+import AuthForm from '@/components/AuthForm'; // Adjust the path as needed
 
-const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const StudentSignIn = () => {
   const router = useRouter();
-  const { login } = useAuth();  // Use context for login if needed
+  const { login } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSignIn = (email: string, password: string) => {
+    // Add your actual sign-in logic here (e.g., API call)
+    // For now, keeping the placeholder logic
     if (email && password) {
-      login(email, 'student'); // Set the role here
-      router.push('/'); //redirect to the dashboard.
+      login(email, 'student'); // Assuming login handles the role
+      router.push('/'); // Redirect to student home/dashboard
+    } else {
+      alert('Please enter email and password.');
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#EEEEEE]">
-      <div className="flex flex-col sm:flex-row w-full max-w-5xl lg:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-md overflow-hidden">
-        {/* Left Side - Image */}
-        <div className="hidden sm:block sm:w-1/2 relative">
-          <Image
-            src="/signin.png"
-            alt="Sign In Illustration"
-            fill
-            className="object-cover"
-          />
-        </div>
-
-        {/* Right Side - Sign In Form */}
-        <div className="w-full sm:w-1/2 p-8 flex flex-col justify-between min-h-[60vh] xl:min-h-[80vh]">
-          <h2 className="text-3xl font-bold text-center mb- text-[#1D1616]">Student Sign In</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="password" className="block text-sm font-medium mb-2">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-[#8E1616]"
-                placeholder="Enter your password"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-[#8E1616] text-white py-2 rounded-md hover:bg-[#D84040] transition-all"
-            >
-              Sign In
-            </button>
-          </form>
-
-          <p className="mt-4 text-center">
-          <p>Don&apos;t have an account?</p>
-
-            <Link href="/student/signup" className="text-[#8E1616] hover:underline">
-              Sign Up
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
+    <AuthForm
+      title="Student Sign In"
+      buttonText="Sign In"
+      linkHref="/student/signup"
+      linkText="Sign Up"
+      linkPrompt="Don't have an account?"
+      onSubmit={handleSignIn}
+    />
   );
 };
 
-export default SignIn;
+export default StudentSignIn;

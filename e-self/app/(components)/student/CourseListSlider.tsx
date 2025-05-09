@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
-import CourseCard from './CourseCard';
-import { Course } from '../../data/courses';
+import CourseCard from '../../../components/CourseCard'
+import { Course } from '../../types/course';
 
 interface CourseListSliderProps {
   title: string;
@@ -29,8 +29,8 @@ export default function CourseListSlider({ title, courses }: CourseListSliderPro
         >
           {validCourses.length > 0 ? (
             validCourses.map((course) =>
-              course && course.slug ? (
-                <div key={course.slug} className="flex-shrink-0 w-72">
+              course && course.id ? (
+                <div key={course.id} className="flex-shrink-0 w-72">
                   <CourseCard course={course} />
                 </div>
               ) : null

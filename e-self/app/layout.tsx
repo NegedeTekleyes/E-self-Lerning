@@ -1,12 +1,13 @@
 // app/layout.tsx (Server Component)
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from '../app/context/CartContext';
 // import { CartProvider } from './context/CartContext';
 // import Footer from './(components)/student/Footer';
 import '../styles/globals.css';
 import React from 'react';
 import LayoutClient from '../app/layoutClient';
-import { ThemeProvider } from "@/components/theme-provider";
-import Header from "./(components)/student/Header";
+// import { ThemeProvider } from "@/components/theme-provider";
+// import Header from "./(components)/student/Header";
 export const metadata = {
     title: 'E-Self Learning Platform',
     description: 'Online learning platform with various courses',
@@ -35,20 +36,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {/* You might also want to add your favicon link here */}
             </head>
             <body className="flex flex-col min-h-screen bg-[#EEEEEE] text-[#1D1616]">
-            <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+           
                 <AuthProvider>
                     {/* FIX: Nest children inside LayoutClient */}
+                    <CartProvider>
                     <LayoutClient>
                         
                         {children}
                     </LayoutClient>
+                    </CartProvider>
                 </AuthProvider>
-                </ThemeProvider>
+            
             </body>
         </html>
     );

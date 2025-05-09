@@ -19,7 +19,7 @@ import { MdLeaderboard } from "react-icons/md" // Used for Students
 
 const menuItems = [
     { name: "Overview", icon: FaChartLine, link: "/dashboard" },
-    { name: "Create Course", icon: FaBook, link: "/dashboard/create-course" },
+    { name: "Create Course", icon: FaBook, link: "/dashboard/add-course" },
     { name: "Students", icon: MdLeaderboard, link: "/dashboard/students" },
     { name: "Settings", icon: FiSettings, link: "/dashboard/settings" },
 ];

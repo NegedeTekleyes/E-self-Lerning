@@ -1,34 +1,38 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-
-export type CartItem = {
-  slug: string;
-  title: string;
-  price: number;
-};
+import { Course } from '../types/course'; // Make sure path is correct
 
 type CartContextType = {
-  cartItems: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (slug: string) => void;
+  cartItems: Course[];
+  addToCart: (course: Course) => void;
+  removeFromCart: (courseId: string) => void; // Optional: for future use
+  clearCart: () => void; // Optional: for future use
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<Course[]>([]);
 
-  const addToCart = (item: CartItem) => {
-    setCartItems(prev => [...prev, item]);
+  const addToCart = (course: Course) => {
+    // Prevent duplicate courses
+    setCartItems((prev) => {
+      if (prev.some((item) => item.id === course.id)) return prev;
+      return [...prev, course];
+    });
   };
 
-  const removeFromCart = (slug: string) => {
-    setCartItems(prev => prev.filter(item => item.slug !== slug));
+  const removeFromCart = (courseId: string) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== courseId));
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   );
@@ -36,6 +40,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 export const useCart = () => {
   const context = useContext(CartContext);
-  if (!context) throw new Error('useCart must be used within a CartProvider');
+  if (!context) throw new Error('useCart must be used within CartProvider');
   return context;
 };

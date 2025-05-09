@@ -1,80 +1,70 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useState, useEffect } from "react";
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsSmallScreen(true);
-      } else {
-        setIsSmallScreen(false);
-      }
+      setIsSmallScreen(window.innerWidth < 768);
     };
 
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    handleResize();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
     <div className="relative bg-white overflow-hidden z-40 h-screen">
       <div className="max-w-7xl mx-auto h-full">
-        <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32 h-full">
-          <main
-            className={` lg:min-h-[calc(100vh+100px)] ${
-              !isSmallScreen ? "  lg:mb-100" : "pt-24 pb-24" //Added lg:mb-50 for full screen
+        <div
+          className={`relative z-10 bg-white h-full flex flex-col lg:flex-row ${
+            isSmallScreen ? 'justify-center items-center text-center' : ''
+          }`}
+        >
+          {/* Text Section */}
+          <div
+            className={`flex flex-col ${
+              isSmallScreen
+                ? 'justify-center items-center px-6 py-12'
+                : 'justify-center text-left lg:w-1/2 px-6 lg:px-12 py-12'
             }`}
           >
-            {/* Text Section */}
-            <div className="text-center lg:text-left lg:w-1/2 lg:pt-20 ">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Welcome to E-Self</span>
-                <span className="block text-[#8E1616] xl:inline"> – A Great Choice!</span>
-              </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                We provide high-quality courses at the best prices. If you want to become an instructor, it’s easy and the perfect place to start!
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#8E1616] hover:bg-[#D84040] md:py-4 md:text-lg md:px-10"
-                  >
-                    Get started
-                  </a>
-                </div>
-                <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#8E1616] bg-white hover:bg-gray-100 md:py-4 md:text-lg md:px-10"
-                  >
-                    Live demo
-                  </a>
-                </div>
-              </div>
-            </div>
+            <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl leading-tight">
+              <span>Welcome to E-Self</span>
+              <span className="block text-[#8E1616]"> – A Great Choice!</span>
+            </h1>
+            <p className="mt-4 text-base text-gray-600 sm:text-lg md:text-xl max-w-xl">
+              We provide high-quality courses at the best prices. Want to become an instructor? It's easy and the perfect place to start!
+            </p>
 
-            {/* Image Section */}
-            <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 sm:w-full md:w-3/4 h-full">
+            <div className="mt-6 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
+              <Button className="bg-[#8E1616] hover:bg-[#D84040] text-white px-8 py-4 text-lg">
+                Get started
+              </Button>
+              <Button variant="outline" className="text-[#8E1616] border-[#8E1616] hover:bg-gray-100 px-8 py-4 text-lg">
+                Live demo
+              </Button>
+            </div>
+          </div>
+
+          {/* Image Section - only shown on md and up */}
+          {!isSmallScreen && (
+            <div className="lg:w-1/2 w-full flex justify-center items-center">
               <Image
-                src={isSmallScreen ? "/hero-.png" : "/Adobe Express - file.png"}
-                className="w-full object-cover lg:object-top"
+                src="/Adobe Express - file.png"
                 alt="Hero Image"
-                width={isSmallScreen ? 400 : 500}
-                height={isSmallScreen ? 300 : 500}
-                style={{
-                  objectPosition: isSmallScreen ? "top" : "center",
-                }}
+                width={500}
+                height={500}
+                className="object-cover lg:object-top w-full h-auto"
+                style={{ objectPosition: 'center' }}
               />
             </div>
-          </main>
+          )}
         </div>
       </div>
     </div>

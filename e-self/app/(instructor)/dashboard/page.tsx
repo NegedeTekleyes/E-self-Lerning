@@ -18,7 +18,7 @@ export default function Page() {
             icon: FaBook,
             title: "Total Courses",
             value: "12",
-            onClick: () => router.push("/dashboard/total-courses"),
+            onClick: () => router.push("/dashboard/courses"),
         },
         {
             icon: FaUserGraduate,
