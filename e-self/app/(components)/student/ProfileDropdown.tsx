@@ -1,4 +1,12 @@
 'use client';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 
 interface ProfileDropdownProps {
@@ -11,37 +19,32 @@ export default function ProfileDropdown({ isOpen, onClose, onLogout }: ProfileDr
   if (!isOpen) return null;
 
   return (
-    <div className="absolute right-0 top-12 bg-white shadow-lg rounded-md p-4 w-48 z-50">
-      <Link
-        href="/profile/edit"
-        className="block py-2 px-4 hover:bg-gray-100 rounded-md"
-        onClick={onClose}
-      >
-        Edit Profile
-      </Link>
-      <Link
-        href="/profile/change-password"
-        className="block py-2 px-4 hover:bg-gray-100 rounded-md"
-        onClick={onClose}
-      >
-        Change Password
-      </Link>
-      <Link
-        href="/settings"
-        className="block py-2 px-4 hover:bg-gray-100 rounded-md"
-        onClick={onClose}
-      >
-        Settings
-      </Link>
-      <button
-        onClick={() => {
-          onLogout();
-          onClose();
-        }}
-        className="w-full text-left py-2 px-4 hover:bg-gray-100 rounded-md text-red-600"
-      >
-        Logout
-      </button>
-    </div>
+    <DropdownMenu open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DropdownMenuTrigger asChild>
+        {/* The trigger can be your avatar or a button; empty trigger if controlled externally */}
+        <div className="hidden" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48">
+        <Link href="/profile/edit" passHref legacyBehavior>
+          <DropdownMenuItem onSelect={onClose}>Edit Profile</DropdownMenuItem>
+        </Link>
+        <Link href="/profile/change-password" passHref legacyBehavior>
+          <DropdownMenuItem onSelect={onClose}>Change Password</DropdownMenuItem>
+        </Link>
+        <Link href="/settings" passHref legacyBehavior>
+          <DropdownMenuItem onSelect={onClose}>Settings</DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onSelect={() => {
+            onLogout();
+            onClose();
+          }}
+          className="text-red-600"
+        >
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

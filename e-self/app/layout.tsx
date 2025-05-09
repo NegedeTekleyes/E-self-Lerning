@@ -1,5 +1,6 @@
 // app/layout.tsx (Server Component)
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from '../app/context/CartContext';
 // import { CartProvider } from './context/CartContext';
 // import Footer from './(components)/student/Footer';
 import '../styles/globals.css';
@@ -38,10 +39,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
            
                 <AuthProvider>
                     {/* FIX: Nest children inside LayoutClient */}
+                    <CartProvider>
                     <LayoutClient>
                         
                         {children}
                     </LayoutClient>
+                    </CartProvider>
                 </AuthProvider>
             
             </body>

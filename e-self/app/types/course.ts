@@ -1,7 +1,7 @@
 import { CourseModule } from './module';
 
 export type Course = {
-  slug: string;
+  id: string;
   title: string;
   description: string;
   detailedDescription: string;

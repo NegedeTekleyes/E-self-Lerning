@@ -2,7 +2,7 @@ import { Course } from '../types/course';
 
 export const courses: Course[] = [
   {
-    slug: "web-development",
+    id: "web-development",
     title: "Complete Web Development",
     rating: 4.7,
     overallRating: "4.7/5",
