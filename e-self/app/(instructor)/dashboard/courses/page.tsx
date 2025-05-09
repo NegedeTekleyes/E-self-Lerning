@@ -21,7 +21,6 @@ type CourseCardProps = DisplayCourse & {
   onPublish?: (id: number) => void;
 };
 
-// ✅ Status label styling helper
 const getStatusStyle = (status: string) => {
   const styles: Record<string, string> = {
     published: 'bg-green-100 text-green-800',
@@ -37,7 +36,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   id,
   title,
   imageUrl,
-  altText,
+  altText = 'Course Image',
   instructorName,
   description,
   enrolledStudents,
@@ -54,7 +53,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
     <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full">
       <div className="relative w-full h-40">
         <Image
-          src={imageUrl}
+          src={imageUrl || '/default-course-image.jpg'} // Fallback to default image if no URL
           alt={altText}
           fill
           style={{ objectFit: 'cover' }}
@@ -194,9 +193,7 @@ const InstructorCourses: React.FC = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`text-sm ${
-              activeTab === tab ? 'font-bold text-red-600' : 'text-gray-500'
-            }`}
+            className={`text-sm ${activeTab === tab ? 'font-bold text-red-600' : 'text-gray-500'}`}
           >
             {tabLabels[tab]}
           </button>
