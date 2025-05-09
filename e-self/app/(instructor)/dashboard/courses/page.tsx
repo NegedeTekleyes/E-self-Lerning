@@ -1,23 +1,13 @@
 // components/CourseCard.tsx
 
 import React from 'react';
-
-interface Course {
-  id: number;
-  title: string;
-  description: string;
-  level: string;
-  duration: string;
-  price: number;
-  videoUrl: string;
-  isPublished: boolean;
-}
+import { Course } from '../../../types/course';
+// adjust the path based on where your type is
 
 interface CourseCardProps {
   course: Course;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
-
 const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
   return (
     <div className="border p-4 rounded shadow">
