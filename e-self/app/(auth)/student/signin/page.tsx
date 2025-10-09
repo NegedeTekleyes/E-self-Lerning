@@ -1,9 +1,8 @@
-// app/(auth)/student/signin/page.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext'; // Adjust the path as needed
-import AuthForm from '@/components/AuthForm'; // Adjust the path as needed
+import { useAuth } from '../../../context/AuthContext'; 
+import AuthForm from '@/components/AuthForm'; 
 
 const StudentSignIn = () => {
   const router = useRouter();
@@ -11,10 +10,9 @@ const StudentSignIn = () => {
 
   const handleSignIn = (email: string, password: string) => {
     // Add your actual sign-in logic here (e.g., API call)
-    // For now, keeping the placeholder logic
     if (email && password) {
-      login(email, 'student'); // Assuming login handles the role
-      router.push('/'); // Redirect to student home/dashboard
+      login(email, 'student'); 
+      router.push('/');
     } else {
       alert('Please enter email and password.');
     }
