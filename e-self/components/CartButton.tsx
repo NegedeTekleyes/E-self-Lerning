@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
-import { useCart } from '../app/context/CartContext'; // Adjust path if necessary
+import { useCart } from '../app/context/CartContext'; 
 
 export default function CartButton() {
   // Now useCart provides cartItems (the array)
