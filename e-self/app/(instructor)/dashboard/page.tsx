@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     FaBook,
     FaUserGraduate,
@@ -12,6 +12,14 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 export default function Page() {
     const router = useRouter();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [studentCounts, setStudentCounts] = useState<number[]>([]);
+
+    useEffect(() => {
+        const counts = Array.from({ length: 3 }, () =>
+            Math.floor(Math.random() * 200) + 50
+        );
+        setStudentCounts(counts);
+    }, []);
 
     const stats = [
         {
@@ -34,6 +42,12 @@ export default function Page() {
         },
     ];
 
+    const recentCourses = [
+        "Advanced JavaScript",
+        "React for Beginners",
+        "Node.js Masterclass",
+    ];
+
     return (
         <div className="p-6 bg-[#EEEEEE] min-h-screen">
             {/* Header */}
@@ -42,7 +56,6 @@ export default function Page() {
                     <p className="text-lg font-medium text-[#1D1616]">
                         Hi, <span className="font-semibold">Instructor Name</span>
                     </p>
-                    {/* Fixed: Escaped the apostrophe */}
                     <p className="text-sm text-[#1D1616]/70">Today&apos;s Report</p>
                 </div>
 
@@ -57,7 +70,7 @@ export default function Page() {
                             <ul className="space-y-3">
                                 <li>
                                     <button
-                                        onClick={() => router.push("/instructor/edit-profile")}
+                                        onClick={() => router.push("/dashboard/Profile")}
                                         className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                                     >
                                         Edit Profile
@@ -65,7 +78,7 @@ export default function Page() {
                                 </li>
                                 <li>
                                     <button
-                                        onClick={() => router.push("/instructor/settings")}
+                                        onClick={() => router.push("/dashboard/settings")}
                                         className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                                     >
                                         Settings
@@ -73,7 +86,7 @@ export default function Page() {
                                 </li>
                                 <li>
                                     <button
-                                        onClick={() => router.push("/instructor/change-password")}
+                                        onClick={() => router.push("/dashboard/password")}
                                         className="text-[#1D1616] hover:text-[#D84040] w-full text-left"
                                     >
                                         Change Password
@@ -119,19 +132,19 @@ export default function Page() {
                 </CardHeader>
                 <CardContent>
                     <ul className="space-y-4">
-                        {["Advanced JavaScript", "React for Beginners", "Node.js Masterclass"].map(
-                            (course, index) => (
-                                <li
-                                    key={index}
-                                    className="bg-[#F9F9F9] p-4 rounded-lg shadow-sm flex justify-between items-center"
-                                >
-                                    <span className="font-medium text-[#1D1616]">{course}</span>
-                                    <span className="text-[#1D1616]/70">
-                                        {Math.floor(Math.random() * 200) + 50} Students
-                                    </span>
-                                </li>
-                            )
-                        )}
+                        {recentCourses.map((course, index) => (
+                            <li
+                                key={index}
+                                className="bg-[#F9F9F9] p-4 rounded-lg shadow-sm flex justify-between items-center"
+                            >
+                                <span className="font-medium text-[#1D1616]">{course}</span>
+                                <span className="text-[#1D1616]/70">
+                                    {studentCounts[index] !== undefined
+                                        ? `${studentCounts[index]} Students`
+                                        : "Loading..."}
+                                </span>
+                            </li>
+                        ))}
                     </ul>
                 </CardContent>
             </Card>
@@ -139,7 +152,7 @@ export default function Page() {
             {/* Analytics Button */}
             <div className="mt-6 text-center">
                 <a
-                    href="/analytics"
+                    href="/dashboard/analytics"
                     className="inline-block py-2 px-6 bg-[#8E1616] text-white rounded-full shadow-md hover:bg-[#D84040] transition"
                 >
                     View Analytics
