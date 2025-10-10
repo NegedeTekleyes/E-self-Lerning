@@ -14,7 +14,8 @@ import {
 } from "recharts";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { Card, CardContent } from "@/components/ui/card";
-import { studentData as studentsData, Student } from "@/app/data/student"; // Import student data
+import { motion } from "framer-motion";
+import { studentData as studentsData, Student } from "@/app/data/student";
 
 const COLORS = ["#8E1616", "#D84040", "#FF9F66", "#FFC857", "#89CFF0", "#7D5BA6"];
 
@@ -70,50 +71,72 @@ const StudentsList = () => {
   }, [students]);
 
   return (
-    <div className="bg-gray-50 min-h-screen p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <header className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-            <UserCircleIcon className="h-7 w-7 text-red-600" />
+    <div className="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen p-6">
+      <motion.div
+        className="max-w-7xl mx-auto space-y-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Header */}
+        <motion.header
+          className="flex items-center justify-between"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+            <UserCircleIcon className="h-8 w-8 text-red-600" />
             Enrolled Students
           </h1>
-        </header>
+        </motion.header>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {/* Search & Filter */}
+        <motion.div
+          className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
           <input
             type="text"
             placeholder="Search by name or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full sm:w-1/2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition"
           />
           <div className="flex gap-2 overflow-x-auto">
             {allCourses.map((course) => (
-              <button
+              <motion.button
                 key={course}
                 onClick={() => setSelectedCourse(course)}
+                whileTap={{ scale: 0.95 }}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition whitespace-nowrap ${
                   selectedCourse === course
-                    ? "bg-red-600 text-white"
+                    ? "bg-red-600 text-white shadow-md"
                     : "bg-white text-gray-700 hover:bg-gray-100"
                 }`}
               >
                 {course}
-              </button>
+              </motion.button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-6">
-              Enrollment Analytics
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="h-96 w-full">
-                <h4 className="text-md font-semibold text-gray-600 mb-4">
-                  Course Enrollment Distribution
-                </h4>
+        {/* Analytics Section */}
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          {/* Pie Chart */}
+          <Card className="bg-white shadow-lg hover:shadow-xl transition rounded-2xl">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                Course Enrollment Distribution
+              </h3>
+              <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -129,93 +152,115 @@ const StudentsList = () => {
                       }
                     >
                       {courseStats.map((_, i) => (
-                        <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+                        <Cell
+                          key={`cell-${i}`}
+                          fill={COLORS[i % COLORS.length]}
+                          stroke="white"
+                          strokeWidth={2}
+                        />
                       ))}
                     </Pie>
                     <Tooltip />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
+            </CardContent>
+          </Card>
 
-              <div className="h-96 w-full">
-                <h4 className="text-md font-semibold text-gray-600 mb-4">
-                  Student Enrollment by Day
-                </h4>
+          {/* Line Chart */}
+          <Card className="bg-white shadow-lg hover:shadow-xl transition rounded-2xl">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                Student Enrollment by Day
+              </h3>
+              <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={dailyEnrollments}>
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
-                    <Line type="monotone" dataKey="count" stroke="#8E1616" strokeWidth={2} />
+                    <Line
+                      type="monotone"
+                      dataKey="count"
+                      stroke="#D84040"
+                      strokeWidth={3}
+                      dot={{ r: 4 }}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Student List</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Enrolled Courses
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Category
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Enrolled Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Progress
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredStudents.map((student) => (
-                    <tr key={student.email}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {student.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.email}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.enrolledCourses.join(", ")}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.category}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.status}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.enrolledDate}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {student.progress}%
-                      </td>
+        {/* Students Table */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Card className="bg-white shadow-md hover:shadow-lg transition rounded-2xl">
+            <CardContent className="p-6">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                Student List
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="min-w-full border-collapse text-sm text-gray-700">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      {[
+                        "Name",
+                        "Email",
+                        "Enrolled Courses",
+                        "Category",
+                        "Status",
+                        "Enrolled Date",
+                        "Progress",
+                      ].map((header) => (
+                        <th
+                          key={header}
+                          className="px-6 py-3 text-left font-medium uppercase tracking-wider text-gray-600"
+                        >
+                          {header}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  </thead>
+                  <tbody>
+                    {filteredStudents.map((student, i) => (
+                      <motion.tr
+                        key={student.email}
+                        className="hover:bg-gray-50 transition"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: i * 0.03 }}
+                      >
+                        <td className="px-6 py-3 font-medium">{student.name}</td>
+                        <td className="px-6 py-3">{student.email}</td>
+                        <td className="px-6 py-3">{student.enrolledCourses.join(", ")}</td>
+                        <td className="px-6 py-3">{student.category}</td>
+                        <td className="px-6 py-3">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                              student.status === "active"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-red-100 text-red-700"
+                            }`}
+                          >
+                            {student.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-3">{student.enrolledDate}</td>
+                        <td className="px-6 py-3">{student.progress}%</td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
