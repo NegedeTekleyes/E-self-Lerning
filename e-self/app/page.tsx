@@ -2,6 +2,7 @@
 import CourseListSlider from './(components)/student/CourseListSlider';
 import Hero from './(components)/student/Hero';
 import { courses } from './data/courses';
+import { Course } from './types/course';
 
 export default function Home() {
   
