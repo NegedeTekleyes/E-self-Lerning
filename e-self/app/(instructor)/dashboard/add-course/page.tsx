@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import React from 'react'; // Import React to use React.ElementType
-
+import React from 'react'; 
 import {
     BookOpenIcon,
     TagIcon,
@@ -17,35 +16,34 @@ import {
 
 import { BookOpenIcon as SolidBookOpenIcon } from "@heroicons/react/24/solid";
 
-import { useRouter } from 'next/navigation'; // Import useRouter to redirect
+import { useRouter } from 'next/navigation'; 
 
-// Import the shared helpers and types
+
 import { getLocalCourses, saveLocalCourses, DisplayCourse, Section, Lecture } from '@/lib/localStorageUtils';
 
 
 export default function AddCourse() {
-    const router = useRouter(); // Initialize useRouter
-
+    const router = useRouter(); 
     const [step, setStep] = useState(1);
     const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("Web Development"); // Match category strings used in sample data
-    const [level, setLevel] = useState("beginner"); // This data won't be saved in the target Course type
-    const [description, setDescription] = useState(""); // Maps to description
-    const [learningObjectives, setLearningObjectives] = useState<string[]>([""]); // Not directly in target type
-    const [prerequisites, setPrerequisites] = useState(""); // Not directly in target type
-    const [courseAudience, setCourseAudience] = useState(""); // Not directly in target type
-    const [videoTime, setVideoTime] = useState(""); // Used to calculate duration (not saved in target type)
-    const [numArticles, setNumArticles] = useState(""); // Not directly in target type
-    const [accessDevices, setAccessDevices] = useState(""); // Not directly in target type
-    const [certificate, setCertificate] = useState(false); // Not directly in target type
+    const [category, setCategory] = useState("Web Development"); 
+    const [level, setLevel] = useState("beginner"); 
+    const [description, setDescription] = useState(""); 
+    const [learningObjectives, setLearningObjectives] = useState<string[]>([""]); 
+    const [prerequisites, setPrerequisites] = useState(""); 
+    const [courseAudience, setCourseAudience] = useState(""); 
+    const [videoTime, setVideoTime] = useState(""); 
+    const [numArticles, setNumArticles] = useState(""); 
+    const [accessDevices, setAccessDevices] = useState(""); 
+    const [certificate, setCertificate] = useState(false); 
 
-    const [sections, setSections] = useState<Section[]>([ // Course content structure (not saved in target type)
+    const [sections, setSections] = useState<Section[]>([ 
         { title: "Module 1", description: "", lectures: [] },
     ]);
 
     // History/Undo logic omitted for simplicity in this combined example
-    // const [history, setHistory] = useState<Section[][]>([]);
-    // const [future, setFuture] = useState<Section[][]>([]);
+    const [history, setHistory] = useState<Section[][]>([]);
+    const [future, setFuture] = useState<Section[][]>([]);
 
 
     const handleNextStep = () => setStep(step + 1);
@@ -64,13 +62,13 @@ export default function AddCourse() {
         setSections(updated);
     };
 
-    const updateLecture = (sectionIdx: number, lectureIdx: number, field: keyof Lecture, value: string) => { // Removed File type
+    const updateLecture = (sectionIdx: number, lectureIdx: number, field: keyof Lecture, value: string) => {
         const updated = [...sections];
         if (updated[sectionIdx]?.lectures?.[lectureIdx]) {
             updated[sectionIdx].lectures[lectureIdx] = {
                 ...updated[sectionIdx].lectures[lectureIdx],
-                [field]: value, // Save only string values (videoLink, title)
-                // upload field is ignored for localStorage saving
+                [field]: value,
+                
             };
             setSections(updated);
         }
@@ -110,34 +108,27 @@ export default function AddCourse() {
 
     // --- Function to create a Course object for display ---
     const createDisplayCourse = (status: DisplayCourse['status']): DisplayCourse => {
-        // Note: Many fields required by DisplayCourse are NOT in the AddCourse form.
-        // We use placeholders or derived values.
 
         const now = new Date();
 
         const displayCourse: DisplayCourse = {
             // --- Fields collected/derived from AddCourse form state ---
-            id: Date.now() + Math.random(), // Simple unique ID generation for local storage
-            title: title || 'Untitled Course', // Use title or default
-            description: description || 'No description provided.', // Use description or default
-            category: category, // From state
-            status: status, // Set based on which button was clicked
+            id: Date.now() + Math.random(), 
+            title: title || 'Untitled Course', 
+            description: description || 'No description provided.', 
+            category: category, 
+            status: status, 
 
-            // --- Fields that are NOT collected in AddCourse form, using placeholders/defaults ---
-            imageUrl: 'https://source.unsplash.com/400x200/?online-course', // Default image (Ensure hostname is in next.config.js)
-            altText: `${title || 'Course'} image`, // Default alt text
-            instructorName: 'Instructor Name', // Placeholder
-            instructorRole: 'Educator', // Placeholder
-            instructorCompany: 'Your Platform', // Placeholder
-            yearPublished: now.getFullYear(), // Set based on current year
-            enrolledStudents: 0, // Start at 0
-            rating: 0, // Start at 0
-            // Set publishDate only if the status is explicitly 'published'.
-            // 'padding-for-publish' and 'unfinished' do NOT set the publish date yet.
+            imageUrl: 'https://source.unsplash.com/400x200/?online-course', 
+            altText: `${title || 'Course'} image`, 
+            instructorName: 'Instructor Name', 
+            instructorRole: 'Educator', 
+            instructorCompany: 'Your Platform', 
+            yearPublished: now.getFullYear(), 
+            enrolledStudents: 0, 
+            rating: 0, 
             publishDate: status === 'published' ? now : null,
-            reviewCount: '0', // Start at 0 reviews
-            // Other potential fields like detailed content, requirements, outcomes are not
-            // stored in the simple DisplayCourse interface but would be needed in a real app.
+            reviewCount: '0', 
         };
 
         return displayCourse;
@@ -150,35 +141,30 @@ export default function AddCourse() {
             alert("Course title is required to save a draft.");
             return;
         }
-        const newDraftCourse = createDisplayCourse('unfinished'); // Set status to 'unfinished'
+        const newDraftCourse = createDisplayCourse('unfinished'); 
 
         const existingCourses = getLocalCourses();
-        // In a real app, you'd update an existing draft if editing. Here, we just add.
         saveLocalCourses([...existingCourses, newDraftCourse]);
 
         alert("Draft saved!");
         console.log("Draft saved:", newDraftCourse);
-         // Optional: Redirect or stay on the same step
     };
 
     // --- Save and Finish Handler (Saves as 'padding-for-publish') ---
     const handleSaveAsPadding = () => {
-        // Basic validation before marking as ready
         if (!title || !description || learningObjectives.filter(o => o.trim() !== '').length === 0 || sections.length === 0) {
             alert("Please fill in basic course details, objectives, and add at least one module/section before marking as ready.");
             return;
         }
 
-        // Set status to 'padding-for-publish' to be reviewed/published later
         const newPaddingCourse = createDisplayCourse('padding-for-publish');
 
         const existingCourses = getLocalCourses();
-         // In a real app, you'd update an existing course. Here, we just add.
         saveLocalCourses([...existingCourses, newPaddingCourse]);
 
         alert("Course saved as Ready for Publish!");
         console.log("Padding course saved:", newPaddingCourse);
-        router.push('/dashboard/courses'); // Redirect to the courses list page
+        router.push('/dashboard/courses'); 
     };
 
 
@@ -203,7 +189,7 @@ export default function AddCourse() {
             {/* Step 1: Course Basics */}
             {step === 1 && (
                 <>
-                    <div className="mt-12"></div>{/* Spacer for fixed header if any */}
+                    <div className="mt-12"></div>
                     <SectionHeader title="Create a New Course" />
                     <p className="text-sm text-gray-500 mb-4">Start by adding the course basics.</p>
 
@@ -253,7 +239,7 @@ export default function AddCourse() {
             {/* Step 2: Course Details (Objectives, Prerequisites, Audience) */}
             {step === 2 && (
                 <>
-                    <div className="mt-12"></div>{/* Spacer */}
+                    <div className="mt-12"></div>
                     <SectionHeader title="Course Details" />
 
                     {/* ... (Input fields for Objectives, Prerequisites, Audience - same as before) ... */}
@@ -289,7 +275,7 @@ export default function AddCourse() {
             {/* Step 3: Course Content and Final Details */}
             {step === 3 && (
                 <>
-                    <div className="mt-12"></div>{/* Spacer */}
+                    <div className="mt-12"></div>
                     <SectionHeader title="Course Content & Final Details" />
 
                      {/* ... (Input fields for Video Time, Articles, Devices, Certificate - same as before) ... */}
@@ -309,7 +295,6 @@ export default function AddCourse() {
                      </div>
 
                     {/* Sections and Lectures - Content details */}
-                    {/* ... (Rendering Sections, Lectures, Add Section/Lecture buttons - same as before) ... */}
                      {sections.map((section, sectionIdx) => (
                          <div key={sectionIdx} className="mb-6 border p-4 rounded-md bg-white shadow-sm">
                              <div className="flex items-center justify-between mb-3">

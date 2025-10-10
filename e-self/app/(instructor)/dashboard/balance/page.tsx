@@ -1,7 +1,6 @@
 // app/(instructor)/dashboard/analytics/page.tsx
 "use client";
 
-// Removed unused imports: useEffect, useState
 import {
     LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,
     BarChart, Bar, ResponsiveContainer,
