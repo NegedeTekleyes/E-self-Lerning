@@ -7,7 +7,7 @@ import LandingHeader from "../../(components)/instructor/LandingHeader";
 export default function InstructorLanding() {
   return (
     <>
-      <LandingHeader /> {/* Updated Header with Profile */}
+      <LandingHeader /> 
 
       <main className="flex items-center justify-center min-h-screen bg-[#EEEEEE] p-6 pt-16">
         <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
