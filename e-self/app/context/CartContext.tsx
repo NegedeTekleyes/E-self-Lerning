@@ -1,8 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { Course } from '../types/course'; // Make sure path is correct
-
+import { Course } from '../types/course'; 
 type CartContextType = {
   cartItems: Course[];
   addToCart: (course: Course) => void;
