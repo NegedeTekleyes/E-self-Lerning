@@ -1,27 +1,42 @@
 'use client';
 
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
+import { LogOut, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const LandingHeader = () => {
-  // const pathname = usePathname();
-
   return (
-    <header className="w-screen bg-white shadow-md fixed top-0 left-0 z-50">
-      <div className="w-full flex items-center justify-between px-6 py-3">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link href="/instructor/landing" className="text-2xl font-bold flex items-center">
+        <Link href="/instructor/landing" className="text-2xl font-extrabold tracking-tight flex items-center gap-1 hover:opacity-90 transition-opacity">
           <span className="text-[#1D1616]">E</span>
           <span className="text-[#8E1616]">-Self</span>
         </Link>
 
-        {/* Sign out */}
-        <Link
-          href="/"
-          className="px-4 py-2 border border-[#1D1616] rounded-md text-sm hover:bg-[#8E1616] hover:text-white transition"
-        >
-          Sign Out
-        </Link>
+        {/* Right Section */}
+        <div className="flex items-center gap-4">
+          {/* Future Profile or Dashboard Button */}
+          <Link
+            href="/instructor/dashboard"
+            className="hidden sm:flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-[#8E1616] transition-colors"
+          >
+            <User size={16} />
+            Dashboard
+          </Link>
+
+          {/* Sign Out Button */}
+          <Button
+            variant="outline"
+            className="flex items-center gap-1 border-[#8E1616] text-[#8E1616] hover:bg-[#8E1616] hover:text-white transition-all duration-300"
+            asChild
+          >
+            <Link href="/">
+              <LogOut size={16} />
+              Sign Out
+            </Link>
+          </Button>
+        </div>
       </div>
     </header>
   );

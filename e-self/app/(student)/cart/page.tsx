@@ -18,7 +18,7 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 pl-42">Your Cart</h1>
+      <h1 className="text-3xl font-bold mb-6 pl-42 mt-8">Your Cart</h1>
       {cartItems.length === 0 ? (
         <p className="text-[#8E1616]">Your cart is empty</p>
       ) : (

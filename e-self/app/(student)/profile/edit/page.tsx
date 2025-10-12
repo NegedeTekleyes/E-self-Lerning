@@ -1,96 +1,100 @@
-// app/profile/edit/page.tsx
 'use client';
+
 import { useAuth } from '../../../context/AuthContext';
 import { useState } from 'react';
-// Import the Image component for optimized images
 import Image from 'next/image';
-
+import { Camera } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function ProfileEdit() {
-    const { user, updateUser } = useAuth();
-    const [username, setUsername] = useState(user?.username || '');
-    // profileImage holds the data URL or the default image path for display
-    const [profileImage, setProfileImage] = useState(user?.profileImage || '/default-profile.png');
-    // Removed the unused 'selectedImage' state variable
-    // const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const { user, updateUser } = useAuth();
+  const [username, setUsername] = useState(user?.username || '');
+  const [profileImage, setProfileImage] = useState(user?.profileImage || '/default-profile.png');
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            // Removed the unused setSelectedImage(file);
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                // Set the profileImage state with the data URL for preview
-                setProfileImage(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-            // NOTE: In a real application, you would typically also store the 'file' object
-            // to upload it to your backend storage (e.g., S3, Cloudinary) when the user saves.
-            // For this example, we are only updating the display URL.
-        }
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateUser({ username, profileImage });
+    alert('Profile updated (client-side only for now)');
+  };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Add actual API call here to send username and the new profile image (if selected)
-        // If you need to send the actual file, you'd use the 'selectedImage' state (if you kept it)
-        // or the 'file' object from handleImageUpload and send it in a FormData object.
-        // For this simplified example, we are just passing the display URL.
-        updateUser({ username, profileImage });
-        alert('Profile updated (client-side state only)'); // Placeholder confirmation
-    };
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#fef6f6] to-[#ffffff] px-4 py-12">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-100 transition-transform transform hover:scale-[1.01]">
+        <h2 className="text-3xl font-bold text-center mb-6 text-[#1D1616]">
+          Edit Profile
+        </h2>
 
-    return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-[#1D1616]">Edit Profile</h2>
-            <form onSubmit={handleSubmit}>
-                {/* Container for the profile image and upload button */}
-                {/* FIX: Ensure parent div has relative positioning for Image fill */}
-                <div className="mb-6 relative w-32 h-32 mx-auto rounded-full overflow-hidden">
-                    {/* FIX: Replace <img> with Next.js <Image> component */}
-                    <Image
-                        src={profileImage} // Can be a data URL or a public path
-                        alt="Profile"
-                        fill // Makes the image fill the parent container
-                        style={{ objectFit: 'cover' }} // Replicates object-cover behavior
-                        sizes="100vw" // Basic size hint for optimization
-                        // Note: rounded-full applied to parent div handles the shape
-                    />
-                    {/* Upload button overlay */}
-                    <label className="absolute bottom-0 right-0 bg-[#8E1616] p-2 rounded-full cursor-pointer z-10"> {/* Added z-10 to ensure it's above the image */}
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                        />
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
-                        </svg>
-                    </label>
-                </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Profile image section */}
+          <div className="relative w-36 h-36 mx-auto rounded-full overflow-hidden group shadow-md border-4 border-[#8E1616]/20">
+            <Image
+              src={profileImage}
+              alt="Profile"
+              fill
+              className="object-cover transition-all duration-300 group-hover:opacity-80"
+              sizes="100vw"
+            />
+            {/* Overlay upload icon */}
+            <label className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 cursor-pointer transition-all duration-300">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              <Camera className="w-6 h-6 text-white" />
+            </label>
+          </div>
 
-                <div className="mb-4">
-                    <label htmlFor="username" className="block text-sm font-medium mb-2 text-gray-700">Username</label>
-                    <input
-                        id="username" // Added id for label association
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:border-[#8E1616] text-[#1D1616]" // Added focus styles and text color
-                    />
-                </div>
+          {/* Username */}
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium mb-2 text-gray-700">
+              Username
+            </label>
+            <Input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              className="w-full border-gray-300 focus:ring-[#8E1616] focus:border-[#8E1616] text-[#1D1616]"
+            />
+          </div>
 
-                {/* Add other profile fields like bio, etc. if needed */}
+          {/* (Optional) Bio field */}
+          <div>
+            <label htmlFor="bio" className="block text-sm font-medium mb-2 text-gray-700">
+              Bio <span className="text-gray-400 text-xs">(optional)</span>
+            </label>
+            <textarea
+              id="bio"
+              placeholder="Tell us something about yourself..."
+              className="w-full p-2 border border-gray-300 rounded-md focus:ring-[#8E1616] focus:border-[#8E1616] text-[#1D1616] resize-none"
+              rows={3}
+            ></textarea>
+          </div>
 
-                <button
-                    type="submit"
-                    className="w-full bg-[#8E1616] text-white p-2 rounded-md hover:bg-[#D84040] transition-all focus:outline-none focus:ring-2 focus:ring-[#8E1616] focus:ring-opacity-50" // Added focus styles
-                >
-                    Save Changes
-                </button>
-            </form>
-        </div>
-    );
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            className="w-full bg-[#8E1616] hover:bg-[#D84040] text-white font-medium py-3 rounded-md transition-all duration-300"
+          >
+            Save Changes
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
 }

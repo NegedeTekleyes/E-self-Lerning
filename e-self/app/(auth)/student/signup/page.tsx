@@ -1,9 +1,8 @@
-// app/(auth)/student/signup/page.tsx
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../context/AuthContext'; // Adjust the path as needed
-import AuthForm from '@/components/AuthForm'; // Adjust the path as needed
+import { useAuth } from '../../../context/AuthContext'; 
+import AuthForm from '@/components/AuthForm'; 
 
 const StudentSignUp = () => {
   const router = useRouter();
@@ -16,9 +15,8 @@ const StudentSignUp = () => {
     }
 
     // Add your actual sign-up logic here (e.g., API call to create user)
-    // For now, keeping the placeholder logic
-    login(email, 'student'); // Assuming login handles the role and perhaps calls your signup API internally
-    router.push('/'); // Redirect after successful signup
+    login(email, 'student'); 
+    router.push('/');
   };
 
   return (

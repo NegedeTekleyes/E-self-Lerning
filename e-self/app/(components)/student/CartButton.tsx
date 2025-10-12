@@ -1,4 +1,3 @@
-// app/(components)/CartButton.tsx
 "use client";
 import Link from 'next/link';
 import { useCart } from '../../context/CartContext';
