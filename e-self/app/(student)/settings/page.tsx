@@ -6,7 +6,7 @@ export default function Settings() {
   const { user } = useAuth();
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-16">
       <h2 className="text-2xl font-bold mb-6 text-[#1D1616]">Settings</h2>
       
       <div className="space-y-6">
