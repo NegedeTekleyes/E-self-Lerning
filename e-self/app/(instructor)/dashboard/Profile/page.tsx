@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface FormData {
   fullName: string;
@@ -72,28 +73,22 @@ export default function EditProfilePage() {
           transition={{ duration: 0.5 }}
         >
           {/* Avatar */}
-          <div className="flex items-center gap-4">
-            <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden border-2 border-gray-300">
-              {formData.avatar ? (
-                <img
-                  src={URL.createObjectURL(formData.avatar)}
-                  alt="Avatar"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="flex items-center justify-center h-full text-gray-500 text-lg">
-                  Avatar
-                </span>
-              )}
-            </div>
-            <input
-              type="file"
-              name="avatar"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="text-sm text-gray-500"
-            />
-          </div>
+          <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden border-2 border-gray-300">
+  {formData.avatar ? (
+    <Image
+      src={URL.createObjectURL(formData.avatar)}
+      alt="Profile"
+      width={100}
+      height={100}
+      className="object-cover"
+    />
+  ) : (
+    <span className="flex items-center justify-center h-full text-gray-500 text-lg">
+      Avatar
+    </span>
+  )}
+</div>
+
 
           {/* Full Name */}
           <div>
