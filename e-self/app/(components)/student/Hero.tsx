@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-
+import heroImage from '@/public/hero-image.png'
 const Hero = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -56,7 +56,7 @@ const Hero = () => {
           <div className="lg:w-1/2 w-full flex justify-center items-center relative">
             <div className="rounded-xl overflow-hidden shadow-2xl animate-float">
               <Image
-                src="/hero-image.png"
+                src={heroImage}
                 alt="Hero Image"
                 width={500}
                 height={500}
