@@ -6,17 +6,20 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Course } from '../app/types/course';
-import { useCart } from '../app/context/CartContext'; 
+import { useCart } from '../app/context/CartContext';
+
 interface CourseCardProps {
   course: Course;
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
-  if(!course){
-    return <div className='p-4 text-red-500'>Invalid course data</div>
-  }
-  const { image, title, category, rating, description, duration, price, id } = course;
   const { addToCart } = useCart();
+
+  if (!course) {
+    return <div className="p-4 text-red-500">Invalid course data</div>;
+  }
+
+  const { image, title, category, rating, description, duration, price, id } = course;
 
   const handleAddToCart = () => {
     addToCart(course);
@@ -44,9 +47,15 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
         <div className="w-full flex justify-between gap-2">
           <Link href={`/courses/${id}`} className="w-1/2">
-            <Button className="w-full bg-[#8E1616] hover:bg-[#D84040]" size="sm">Details</Button>
+            <Button className="w-full bg-[#8E1616] hover:bg-[#D84040]" size="sm">
+              Details
+            </Button>
           </Link>
-          <Button onClick={handleAddToCart} className="w-1/2 bg-[#8e4c16] hover:bg-[#d8aa40]" size="sm">
+          <Button
+            onClick={handleAddToCart}
+            className="w-1/2 bg-[#8e4c16] hover:bg-[#d8aa40]"
+            size="sm"
+          >
             Add to Cart
           </Button>
         </div>
