@@ -1,26 +1,28 @@
-"use client"
-import React from 'react';
-import { Course } from '../../../types/course';
+'use client';
 
-interface CourseCardProps {
-  course: Course;
-  onDelete: (id: string) => void;
-}
-const CourseCard: React.FC<CourseCardProps> = ({ course, onDelete }) => {
+import React, { useState } from 'react';
+import CourseCard from '@/components/CourseCard';
+import { courses as initialCourses } from '@/app/data/courses';
+import { Course } from '@/app/types/course';
+
+export default function CoursesPage() {
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
+
+  const handleDelete = (id: string) => {
+    setCourses(courses.filter((course) => course.id !== id));
+  };
+
   return (
-    <div className="border p-4 rounded shadow">
-      <h2 className="text-lg font-semibold">{course.title}</h2>
-      <p>{course.description}</p>
-      <p>Duration: {course.duration}</p>
-      <p>Price: ${course.price}</p>
-      <button
-        onClick={() => onDelete(course.id)}
-        className="mt-2 text-red-600 hover:underline"
-      >
-        Delete
-      </button>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">My Courses</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courses.map((course) => (
+          <CourseCard 
+          key={course.id} 
+          course={course} 
+          onDelete={handleDelete} />
+        ))}
+      </div>
     </div>
   );
-};
-
-export default CourseCard;
+}
