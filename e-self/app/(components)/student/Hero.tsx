@@ -56,7 +56,7 @@ const Hero = () => {
           <div className="lg:w-1/2 w-full flex justify-center items-center relative">
             <div className="rounded-xl overflow-hidden shadow-2xl animate-float">
               <Image
-                src="/Adobe Express - file.png"
+                src="/hero-image.png"
                 alt="Hero Image"
                 width={500}
                 height={500}
