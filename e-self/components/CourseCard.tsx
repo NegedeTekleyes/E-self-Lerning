@@ -10,7 +10,7 @@ import { useCart } from '../app/context/CartContext';
 
 interface CourseCardProps {
   course: Course;
-  onDelete: (id: string) => void
+  onDelete?: (id: string) => void
 }
 
 export default function CourseCard({ course }: CourseCardProps) {
