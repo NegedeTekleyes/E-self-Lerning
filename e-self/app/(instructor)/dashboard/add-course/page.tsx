@@ -40,12 +40,6 @@ export default function AddCourse() {
     const [sections, setSections] = useState<Section[]>([ 
         { title: "Module 1", description: "", lectures: [] },
     ]);
-
-    // History/Undo logic omitted for simplicity in this combined example
-    const [history, setHistory] = useState<Section[][]>([]);
-    const [future, setFuture] = useState<Section[][]>([]);
-
-
     const handleNextStep = () => setStep(step + 1);
     const handlePreviousStep = () => setStep(step - 1);
     const handleAddLearningObjective = () => setLearningObjectives([...learningObjectives, ""]);
